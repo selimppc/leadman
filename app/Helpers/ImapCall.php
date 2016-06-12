@@ -20,7 +20,7 @@ class ImapCall
         $password = $password; //'yourpassword';
 
         /* try to connect */
-        $inbox = imap_open($hostname,$username,$password) or die('Cannot connect to Gmail: ' . imap_last_error());
+        $inbox = imap_open($hostname,$username,$password) or die('Cannot connect to Email : ' . imap_last_error());
 
         /* grab emails */
         $emails = imap_search($inbox,'ALL');
@@ -36,6 +36,10 @@ class ImapCall
 
             /* for every email... */
             foreach($emails as $email_number) {
+
+                $headerInfo = imap_headerinfo($inbox,$email_number);
+                $structure = imap_fetchstructure($inbox, $email_number);
+
                 /* get information specific to this email */
                 $overview = imap_fetch_overview($inbox,$email_number,0);
                 $message = imap_fetchbody($inbox,$email_number,2);
