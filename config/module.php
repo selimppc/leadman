@@ -7,7 +7,7 @@
  */
 
 return [
-    'moudles'=> [
+    'modules'=> [
         'admin',
         'user',
         'www'
