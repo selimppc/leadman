@@ -7,4 +7,8 @@
  */
 Route::Group(['namespace'=>'Modules\Admin'],function(){
 
+    Route::get('/', function () {
+        return view('admin::layouts.master');
+    });
+
 });
