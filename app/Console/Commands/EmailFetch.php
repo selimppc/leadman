@@ -11,14 +11,14 @@ class EmailFetch extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'leadman:email-fetch';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Feth/Crawl Email from a GMAIL or other emails';
 
     /**
      * Create a new command instance.
