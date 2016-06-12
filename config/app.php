@@ -145,6 +145,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Module service provider
+         * */
+        \Modules\ModuleServiceProvider::class,
+
     ],
 
     /*
