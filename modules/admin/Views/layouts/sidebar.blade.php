@@ -63,6 +63,22 @@
 </li>
 
 <li class="sub-menu">
+    <a href="javascript:;">
+        <i class="fa fa-user"></i>
+        <span>User</span>
+    </a>
+    <ul class="sub">
+        <li class="active"><a href="{{--{{route('user-profile')}}--}}"> Profile</a></li>
+        <li><a href="{{route('user-list')}}">User List</a></li>
+        <li><a href="{{--{{route('index-role-user')}--}}}">Role User</a></li>
+        <li><a href="{{--{{route('index-permission-role')}}--}}"><span class="mm-text">Permission Role</span></a></li>
+        <li><a href="{{--{{route('user-activity')}}--}}"><span class="mm-text">User Activity </span></a></li>
+        <li><a href="{{--{{route('menu-panel')}}--}}"><span class="mm-text">Menu Panel </span></a></li>
+        <li><a href="{{--{{route('menu-panel')}}--}}"><span class="mm-text">Department </span></a></li>
+    </ul>
+</li>
+
+<li class="sub-menu">
     <a href={{--{{URL::to('article/index')}}--}}>
         <i class="icon-cog"></i>
         <span>Settings</span>
@@ -75,22 +91,7 @@
 
 
 
-{{--
-<li class="sub-menu">
-    <a href="javascript:;">
-        <i class="icon-bookmark"></i>
-        <span>Gallery</span>
-    </a>
-    <ul class="sub">
-        <li class="active"><a  href=--}}
-{{--{{URL::to('cat_gallery/index')}}--}}{{--
->Cat Gallery</a></li>
-        <li><a  href=--}}
-{{--{{URL::to('gal_image/index')}}--}}{{--
->Gallery Image</a></li>
-    </ul>
-</li>
---}}
+
 
 
 
