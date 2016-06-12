@@ -64,8 +64,9 @@
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
 
-                    @section('sidebar')
-                    @show
+                    {{--@section('sidebar')
+                    @show--}}
+                    @include('admin::layouts.sidebar')
 
 
                 </ul>
