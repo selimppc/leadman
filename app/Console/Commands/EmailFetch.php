@@ -61,7 +61,7 @@ class EmailFetch extends Command
                 if($imap->host =='imap.gmail.com')
                 {
                     // call GoogleClientCall.php
-                    
+
                 }else{
                     $hostname = '{'.$imap->host.':993/imap/ssl/novalidate-cert}INBOX';
                     $username = $pop_email->email;
