@@ -1,6 +1,5 @@
-<script src="assets/bitd/js/jquery.min.js"></script>
-<script src="assets/bitd/js/validation.js"></script>
-<script src="assets/bitd/js/bootstrap.min.js"></script>
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
 
 
 <div class="modal-header">
@@ -47,6 +46,9 @@
             <a href="{{route('index-role-user')}}" class=" btn btn-default" data-placement="top" data-content="click close button for close this entry form">Close</a>
         </div>
     {!! Form::close() !!}
+</div>
+
+    </div>
 </div>
 
 <script>

@@ -38,7 +38,7 @@
 
                 {{-------------- Filter :Ends -------------------------------------------}}
                 <div class="table-primary">
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-example">
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table-example">
                         <thead>
                         <tr>
                             <th> Title </th>
@@ -73,7 +73,7 @@
 
 
 <div id="addData" class="modal fade" tabindex="" role="dialog" style="display: none;">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" title="click x button for close this entry form">×</button>
@@ -81,7 +81,7 @@
             </div>
             <div class="modal-body">
                 {!! Form::open(['route' => 'store-role','class' => 'form-horizontal','id' => 'form_2']) !!}
-                @include('admin::role._form')
+                @include('user::role._form')
                 {!! Form::close() !!}
             </div> <!-- / .modal-body -->
         </div> <!-- / .modal-content -->

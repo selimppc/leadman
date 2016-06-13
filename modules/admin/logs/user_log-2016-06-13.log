@@ -1,2 +1,7 @@
 [2016-06-13 14:56:12] user-add.INFO: Successfully added! ["Username: shajjad"] []
 [2016-06-13 09:01:18] destroy-user.INFO: Successfully Deleted!change status to cancel ["User id:3"] []
+[2016-06-13 09:33:51] store-role.INFO: Successfully added ["Role title: shajjad"] []
+[2016-06-13 09:40:25] store-role.INFO: Successfully added ["Role title: babu"] []
+[2016-06-13 09:40:37] update-role.INFO: Successfully updated. ["Role title: babu2"] []
+[2016-06-13 09:40:40] delete-role.INFO: Successfully status cancel ["Role title: babu2"] []
+[2016-06-13 09:45:42] store-role-user.INFO: Successfully added ["Role user (user_id): 3"] []
