@@ -235,12 +235,9 @@ class UserController extends Controller
      */
     public function index()
     {
-
         $pageTitle = "User List";
-
-
         $model = User::with('relDepartment')->where('status','!=','cancel')->orderBy('id', 'DESC')->paginate(30);
-print_r($model);exit;
+
         $department_data =  [''=>'Select Department'] + Department::lists('title','id')->all();
         $role =  [''=>'Select Role'] +  Role::lists('title','id')->all();
         /*set 30days for expire-date to user*/
