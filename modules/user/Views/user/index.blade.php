@@ -2,10 +2,13 @@
 @section('sidebar')
 @include('admin::layouts.sidebar')
 @stop
-
 @section('content')
 
-
+<style>
+    #search_height{
+        height: 35px;
+    }
+</style>
 
         <!-- page start-->
 <div class="row">
@@ -38,7 +41,8 @@
                     </div>
                 </div>
                 {!! Form::close() !!}
-                <p> &nbsp;</p>
+
+                <p id="search_height"> &nbsp;</p>
 
                 {{------------- Filter :Ends -------------------------------------------}}
                 <div class="table-primary">
@@ -91,7 +95,7 @@
             </div>
             <div class="modal-body">
                 {!! Form::open(['route' => 'add-user','id' => 'form_2']) !!}
-                @include('admin::user._form')
+                @include('user::user._form')
                 {!! Form::close() !!}
             </div> <!-- / .modal-body -->
         </div> <!-- / .modal-content -->
