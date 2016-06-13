@@ -42,6 +42,7 @@
     <link href="{{ URL::asset('assets/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" >
     <link href="{{ URL::asset('assets/bootstrap-datetimepicker/css/datetimepicker.css') }}" rel="stylesheet" type="text/css" >
     <link href="{{ URL::asset('assets/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ URL::asset('assets/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" >
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -96,7 +97,8 @@
 </section>
 <!-- js placed at the end of the document so the pages load faster -->
 
-<script type="text/javascript" src="{{ URL::asset('assets/js/jquery-1.8.3.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/jquery-1.8.min.js') }}"></script>
+{{--<script type="text/javascript" src="{{ URL::asset('assets/js/jquery.min.js') }}"></script>--}}
 <script type="text/javascript" src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ URL::asset('assets/js/jquery.scrollTo.min.js') }}"></script>
@@ -137,9 +139,11 @@
 <script type="text/javascript" src="{{ URL::asset('assets/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/jquery-multi-select/js/jquery.multi-select.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/jquery-multi-select/js/jquery.quicksearch.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
 
 <!--Advanced Form plugins-->
 <script type="text/javascript" src="{{ URL::asset('assets/js/advanced-form-components.js') }}"></script>
+
 
 
 <!--Custom S-->
@@ -170,6 +174,34 @@
     $(function(){
         $('select.styled').customSelect();
     });
+
+
+    $(function() {
+        /*$('.default-date-picker').datetimepicker({
+            language: 'pt-BR'
+        });*/
+        /*$('.default-date-picker').datepicker({
+            format: 'yyyy-mm-dd (D)',
+        });*/
+
+
+    });
+
+    $(function(){
+
+        $('.datapicker2').datepicker({
+            format: 'yyyy-mm-dd (D)',
+        });
+        $('.input-group.date').datepicker({
+        });
+        $('.input-daterange').datepicker({ });
+
+    });
+
+
+
+
+
 
 
 </script>
