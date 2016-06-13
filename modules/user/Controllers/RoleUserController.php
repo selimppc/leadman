@@ -1,6 +1,6 @@
 <?php
 #namespace App\Modules\Web\Controllers;
-namespace Modules\Admin\Controllers;
+namespace Modules\User\Controllers;
 
 use App\Helpers\LogFileHelper;
 use App\Permission;
@@ -56,7 +56,7 @@ class RoleUserController extends Controller
 
         $role_id =  [''=>'Select Role'] +  Role::where('role.title', '!=', 'super-admin')->lists('title','id')->all();
 
-        return view('admin::role_user.index', ['data' => $data, 'pageTitle'=> $pageTitle, 'user_id'=>$user_id,'role_id'=>$role_id]);
+        return view('user::role_user.index', ['data' => $data, 'pageTitle'=> $pageTitle, 'user_id'=>$user_id,'role_id'=>$role_id]);
     }
 
     public function search_role_user(){
@@ -90,7 +90,7 @@ class RoleUserController extends Controller
         $user_id = [''=>'Select User'] + User::lists('username','id')->all();
 
         $role_id = [''=>'Select Role'] +  Role::where('role.title', '!=', 'super-admin')->lists('title','id')->all();
-        return view('admin::role_user.index', ['data' => $data, 'pageTitle'=> $pageTitle, 'user_id'=>$user_id,'role_id'=>$role_id]);
+        return view('user::role_user.index', ['data' => $data, 'pageTitle'=> $pageTitle, 'user_id'=>$user_id,'role_id'=>$role_id]);
     }
 
     public function store(Requests\RoleUserRequest $request){
@@ -127,7 +127,7 @@ class RoleUserController extends Controller
         $pageTitle = 'View Role User Informations';
         $data = RoleUser::where('id',$id)->first();
 
-        return view('admin::role_user.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
+        return view('user::role_user.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
     }
 
     /**
@@ -142,7 +142,7 @@ class RoleUserController extends Controller
         $data = RoleUser::where('id',$id)->first();
         $user_id = User::lists('username','id');
         $role_id = Role::lists('title','id');
-        return view('admin::role_user.update', ['data' => $data, 'pageTitle'=> $pageTitle, 'user_id' => $user_id, 'role_id'=>$role_id]);
+        return view('user::role_user.update', ['data' => $data, 'pageTitle'=> $pageTitle, 'user_id' => $user_id, 'role_id'=>$role_id]);
     }
 
     /**

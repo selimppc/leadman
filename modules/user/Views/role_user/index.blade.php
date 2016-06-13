@@ -40,7 +40,7 @@
 
                 {{-------------- Filter :Ends -------------------------------------------}}
                 <div class="table-primary">
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-example">
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table-example">
                         <thead>
                         <tr>
                             <th> User </th>
@@ -84,7 +84,7 @@
             </div>
             <div class="modal-body">
                 {!! Form::open(['route' => 'store-role-user','id' => 'form_2']) !!}
-                @include('admin::role_user._form')
+                @include('user::role_user._form')
                 {!! Form::close() !!}
             </div> <!-- / .modal-body -->
         </div> <!-- / .modal-content -->
