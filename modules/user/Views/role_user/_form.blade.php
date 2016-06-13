@@ -1,4 +1,4 @@
-<script src="assets/bitd/js/jquery.min.js"></script>
+
 <div class="form-group no-margin-hr panel-padding-h no-padding-t no-border-t">
 
     <div class="row">

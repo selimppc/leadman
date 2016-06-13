@@ -54,52 +54,6 @@ Route::group(array('modules'=>'User', 'namespace' => 'Modules\User\Controllers')
     ]);
 
 
-//Bord...............
-
-    Route::any('bord', [
-        'as' => 'bord',
-        'uses' => 'BordController@bord_index'
-    ]);
-
-    Route::any('channel', [
-        'as' => 'channel',
-        'uses' => 'BordController@channel'
-    ]);
-    Route::any('store-channel', [
-        'as' => 'store-channel',
-        'uses' => 'BordController@store_channel'
-    ]);
-
-    Route::any('flat', [
-        'as' => 'flat',
-        'uses' => 'BordController@flat'
-    ]);
-
-    Route::any('store-flat', [
-        'as' => 'store-flat',
-        'uses' => 'BordController@store_flat'
-    ]);
-
-    Route::any('achtergrond', [
-        'as' => 'achtergrond',
-        'uses' => 'BordController@achtergrond'
-    ]);
-
-    Route::any('store-achtergrond', [
-        'as' => 'store-achtergrond',
-        'uses' => 'BordController@store_achtergrond'
-    ]);
-
-    Route::any('lichtbakken', [
-        'as' => 'lichtbakken',
-        'uses' => 'BordController@lichtbakken'
-    ]);
-
-    Route::any('store-lichtbakken', [
-        'as' => 'store-lichtbakken',
-        'uses' => 'BordController@store_lichtbakken'
-    ]);
-
     /**Menu Panel**/
 
     Route::get("menu-panel", [
@@ -188,7 +142,7 @@ Route::group(array('modules'=>'User', 'namespace' => 'Modules\User\Controllers')
     ]);
 
     Route::any('search-user', [
-        'middleware' => 'acl_access:search-user',
+        //'middleware' => 'acl_access:search-user',
         'as' => 'search-user',
         'uses' => 'UserController@search_user'
     ]);
@@ -255,7 +209,7 @@ Route::group(array('modules'=>'User', 'namespace' => 'Modules\User\Controllers')
         ]);
 
         Route::any('add-user', [
-            'middleware' => 'acl_access:add-user',
+            //'middleware' => 'acl_access:add-user',
             'as' => 'add-user',
             'uses' => 'UserController@add_user'
         ]);
@@ -263,37 +217,37 @@ Route::group(array('modules'=>'User', 'namespace' => 'Modules\User\Controllers')
         /*Role */
 
         Route::any('role', [
-            'middleware' => 'acl_access:role',
+            //'middleware' => 'acl_access:role',
             'as' => 'role',
             'uses' => 'RoleController@index'
         ]);
 
         Route::any('store-role', [
-            'middleware' => 'acl_access:store-role',
+            //'middleware' => 'acl_access:store-role',
             'as' => 'store-role',
             'uses' => 'RoleController@store_role'
         ]);
 
         Route::any('view-role/{slug}', [
-            'middleware' => 'acl_access:view-role/{slug}',
+           // 'middleware' => 'acl_access:view-role/{slug}',
             'as' => 'view-role',
             'uses' => 'RoleController@show'
         ]);
 
         Route::any('edit-role/{slug}', [
-            'middleware' => 'acl_access:edit-role/{slug}',
+            //'middleware' => 'acl_access:edit-role/{slug}',
             'as' => 'edit-role',
             'uses' => 'RoleController@edit'
         ]);
 
         Route::any('update-role/{slug}', [
-            'middleware' => 'acl_access:update-role/{slug}',
+           // 'middleware' => 'acl_access:update-role/{slug}',
             'as' => 'update-role',
             'uses' => 'RoleController@update'
         ]);
 
         Route::any('delete-role/{slug}', [
-            'middleware' => 'acl_access:delete-role/{slug}',
+           // 'middleware' => 'acl_access:delete-role/{slug}',
             'as' => 'delete-role',
             'uses' => 'RoleController@destroy'
         ]);
@@ -307,121 +261,121 @@ Route::group(array('modules'=>'User', 'namespace' => 'Modules\User\Controllers')
         ]);
 
         Route::any('search-role-user', [
-            'middleware' => 'acl_access:search-role-user',
+            //'middleware' => 'acl_access:search-role-user',
             'as' => 'search-role-user',
             'uses' => 'RoleUserController@search_role_user'
         ]);
 
         Route::any('store-role-user', [
-            'middleware' => 'acl_access:store-role-user',
+            //'middleware' => 'acl_access:store-role-user',
             'as' => 'store-role-user',
             'uses' => 'RoleUserController@store'
         ]);
 
         Route::any('view-role-user/{id}', [
-            'middleware' => 'acl_access:view-role-user/{id}',
+            //'middleware' => 'acl_access:view-role-user/{id}',
             'as' => 'view-role-user',
             'uses' => 'RoleUserController@show'
         ]);
 
         Route::any('edit-role-user/{id}', [
-            'middleware' => 'acl_access:edit-role-user/{id}',
+           // 'middleware' => 'acl_access:edit-role-user/{id}',
             'as' => 'edit-role-user',
             'uses' => 'RoleUserController@edit'
         ]);
 
         Route::any('update-role-user/{id}', [
-            'middleware' => 'acl_access:update-role-user/{id}',
+            //'middleware' => 'acl_access:update-role-user/{id}',
             'as' => 'update-role-user',
             'uses' => 'RoleUserController@update'
         ]);
 
         Route::any('delete-role-user/{id}', [
-            'middleware' => 'acl_access:delete-role-user/{id}',
+           // 'middleware' => 'acl_access:delete-role-user/{id}',
             'as' => 'delete-role-user',
             'uses' => 'RoleUserController@destroy'
         ]);
 
         Route::any('user-profile', [
-            'middleware' => 'acl_access:user-profile',
+            //'middleware' => 'acl_access:user-profile',
             'as' => 'user-profile',
             'uses' => 'UserController@create_user_info'
         ]);
 
         Route::any('user-info/{value}', [
-            'middleware' => 'acl_access:user-info/{value}',
+           // 'middleware' => 'acl_access:user-info/{value}',
             'as' => 'user-info',
             'uses' => 'UserController@user_info'
         ]);
 
         Route::any('inactive-user-dashboard', [
-            'middleware' => 'acl_access:inactive-user-dashboard',
+            //'middleware' => 'acl_access:inactive-user-dashboard',
             'as' => 'inactive-user-dashboard',
             'uses' => 'UserController@inactive_user_dashboard'
         ]);
 
         Route::any('store-user-profile', [
-            'middleware' => 'acl_access:store-user-profile',
+            //'middleware' => 'acl_access:store-user-profile',
             'as' => 'store-user-profile',
             'uses' => 'UserController@store_user_profile'
         ]);
 
         Route::any('edit-user-profile/{id}', [
-            'middleware' => 'acl_access:edit-user-profile/{id}',
+            //'middleware' => 'acl_access:edit-user-profile/{id}',
             'as' => 'edit-user-profile',
             'uses' => 'UserController@edit_user_profile'
         ]);
 
         Route::any('update-user-profile/{id}', [
-            'middleware' => 'acl_access:update-user-profile/{id}',
+            //'middleware' => 'acl_access:update-user-profile/{id}',
             'as' => 'update-user-profile',
             'uses' => 'UserController@update_user_profile'
         ]);
 
         Route::any('store-meta-data', [
-            'middleware' => 'acl_access:store-meta-data',
+            //'middleware' => 'acl_access:store-meta-data',
             'as' => 'store-meta-data',
             'uses' => 'UserController@store_meta_data'
         ]);
 
         Route::any('edit-meta-data/{id}', [
-            'middleware' => 'acl_access:edit-meta-data/{id}',
+            //'middleware' => 'acl_access:edit-meta-data/{id}',
             'as' => 'edit-meta-data',
             'uses' => 'UserController@edit_meta_data'
         ]);
 
         Route::any('update-meta-data/{id}', [
-            'middleware' => 'acl_access:update-meta-data/{id}',
+            //'middleware' => 'acl_access:update-meta-data/{id}',
             'as' => 'update-meta-data',
             'uses' => 'UserController@update_meta_data'
         ]);
 
 
         Route::any('change-password-view', [
-            'middleware' => 'acl_access:change-password-view',
+            //'middleware' => 'acl_access:change-password-view',
             'as' => 'change-password-view',
             'uses' => 'UserController@change_user_password_view'
         ]);
 
         Route::any('update-password', [
-            'middleware' => 'acl_access:update-password',
+           // 'middleware' => 'acl_access:update-password',
             'as' => 'update-password',
             'uses' => 'UserController@update_password'
         ]);
 
         Route::any('store-profile-image', [
-            'middleware' => 'acl_access:store-profile-image',
+           // 'middleware' => 'acl_access:store-profile-image',
             'as' => 'store-profile-image',
             'uses' => 'UserController@store_profile_image'
         ]);
 
         Route::any('edit-profile-image/{user_image_id}', [
-            'middleware' => 'acl_access:edit-profile-image/{user_image_id}',
+           // 'middleware' => 'acl_access:edit-profile-image/{user_image_id}',
             'as' => 'edit-profile-image',
             'uses' => 'UserController@edit_profile_image'
         ]);
         Route::any('update-profile-image/{user_image_id}', [
-            'middleware' => 'acl_access:update-profile-image/{user_image_id}',
+            //'middleware' => 'acl_access:update-profile-image/{user_image_id}',
             'as' => 'update-profile-image',
             'uses' => 'UserController@update_profile_image'
         ]);
@@ -429,43 +383,43 @@ Route::group(array('modules'=>'User', 'namespace' => 'Modules\User\Controllers')
 
 //   Department...
         Route::any('department', [
-            'middleware' => 'acl_access:department',
+            //'middleware' => 'acl_access:department',
             'as' => 'department',
             'uses' => 'DepartmentController@index'
         ]);
 
         Route::any('add-department', [
-            'middleware' => 'acl_access:add-department',
+            //'middleware' => 'acl_access:add-department',
             'as' => 'add-department',
             'uses' => 'DepartmentController@store'
         ]);
 
         Route::any('view-department/{id}', [
-            'middleware' => 'acl_access:view-department/{id}',
+            //'middleware' => 'acl_access:view-department/{id}',
             'as' => 'view-department',
             'uses' => 'DepartmentController@view'
         ]);
 
         Route::any('delete-department/{id}', [
-            'middleware' => 'acl_access:delete-department/{id}',
+            //'middleware' => 'acl_access:delete-department/{id}',
             'as' => 'delete-department',
             'uses' => 'DepartmentController@delete'
         ]);
 
         Route::any('edit-department/{id}', [
-            'middleware' => 'acl_access:edit-department/{id}',
+            //'middleware' => 'acl_access:edit-department/{id}',
             'as' => 'edit-department',
             'uses' => 'DepartmentController@edit'
         ]);
 
         Route::any('update-department/{id}', [
-            'middleware' => 'acl_access:update-department/{id}',
+            //'middleware' => 'acl_access:update-department/{id}',
             'as' => 'update-department',
             'uses' => 'DepartmentController@update'
         ]);
 
         Route::any('search-department', [
-            'middleware' => 'acl_access:search-department',
+            //'middleware' => 'acl_access:search-department',
             'as' => 'search-department',
             'uses' => 'DepartmentController@search_department'
         ]);

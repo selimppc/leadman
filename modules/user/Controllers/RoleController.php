@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Admin\Controllers;
+namespace Modules\User\Controllers;
 
 use App\Helpers\LogFileHelper;
 use App\Role;
@@ -25,7 +25,7 @@ class RoleController extends Controller
         $pageTitle = "List of Role Informations";
         $data = Role::where('status','!=','cancel')->where('title', 'LIKE', '%'.$role_title.'%')->paginate(30);
         //print_r($data);exit;
-        return view('admin::role.index',['data'=>$data, 'pageTitle'=>$pageTitle]);
+        return view('user::role.index',['data'=>$data, 'pageTitle'=>$pageTitle]);
 
     }
 
@@ -68,7 +68,7 @@ class RoleController extends Controller
     {
         $pageTitle = 'View Role Informations';
         $data = Role::where('slug',$slug)->first();
-        return view('admin::role.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
+        return view('user::role.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
     }
 
     /**
@@ -81,7 +81,7 @@ class RoleController extends Controller
     {
         $pageTitle = "Update Role Informations";
         $data = Role::where('slug',$slug)->first();
-        return view('admin::role.update', ['data' => $data,'pageTitle'=> $pageTitle]);
+        return view('user::role.update', ['data' => $data,'pageTitle'=> $pageTitle]);
     }
 
     /**
