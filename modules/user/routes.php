@@ -6,7 +6,8 @@
  * Time: 10:10 AM
  */
 
-Route::Group(['namespace'=>'Modules\User\Controllers'],function(){
+/*Route::Group(['namespace'=>'Modules\User\Controllers'],function(){*/
+    Route::group(array('modules'=>'User', 'namespace' => 'Modules\User\Controllers'), function() {
 
     Route::any('user-list', [
         //'middleware' => 'acl_access:user-list',

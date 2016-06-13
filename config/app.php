@@ -148,7 +148,7 @@ return [
         /*
          * Module service provider
          * */
-        \Modules\ModuleServiceProvider::class,
+        Modules\ModuleServiceProvider::class,
 
     ],
 
