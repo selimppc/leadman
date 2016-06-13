@@ -20,6 +20,14 @@ class InvoiceHead extends Model
         'total_cost',
         'status',
     ];
+    public function relPoppingEmail()
+    {
+        return $this->belongsTo('Modules\Admin\PoppingEmail','popping_email_id','id');
+    }
+    public function relInvoiceDetail()
+    {
+        return $this->hasMany('Modules\Admin\InvoiceDetail','invoice_head_id','id');
+    }
 
     // TODO :: boot
     // boot() function used to insert logged user_id at 'created_by' & 'updated_by'

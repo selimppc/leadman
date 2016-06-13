@@ -19,6 +19,10 @@ class InvoiceDetail extends Model
         'lead_id',
         'unit_price',
     ];
+    public function relInvoiceHead()
+    {
+        return $this->belongsTo('Modules\Admin\InvoiceHead','invoice_head_id','id');
+    }
 
     // TODO :: boot
     // boot() function used to insert logged user_id at 'created_by' & 'updated_by'

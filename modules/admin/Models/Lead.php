@@ -16,9 +16,14 @@ class Lead extends Model
     protected $table='lead';
     protected $fillable=[
         'email',
-        'popping_email',
+        'popping_email_id',
         'status',
     ];
+
+    public function relPoppingEmail()
+    {
+        return $this->belongsTo('Modules\Admin\PoppingEmail','popping_email_id','id');
+    }
 
     // TODO :: boot
     // boot() function used to insert logged user_id at 'created_by' & 'updated_by'

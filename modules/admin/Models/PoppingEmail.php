@@ -30,4 +30,28 @@ class PoppingEmail extends Model
         'status',
         'user_id',
     ];
+    public function relImap()
+    {
+        return $this->belongsTo('Modules\Admin\Imap','imap_id','id');
+    }
+    public function relSmtp()
+    {
+        return $this->belongsTo('Modules\Admin\Smtp','smtp_id','id');
+    }
+    public function relSchedule()
+    {
+        return $this->belongsTo('Modules\Admin\Schedule','schedule_id','id');
+    }
+    public function relCountry()
+    {
+        return $this->belongsTo('Modules\Admin\Country','country_id','id');
+    }
+    public function relLead()
+    {
+        return $this->hasMany('Modules\Admin\Lead','popping_email_id','id');
+    }
+    public function relInvoiceHead()
+    {
+        return $this->hasMany('Modules\Admin\InvoiceHead','popping_email_id','id');
+    }
 }

@@ -21,6 +21,10 @@ class Smtp extends Model
         'smtp',
         'c_port',
     ];
+    public function relPoppingEmail()
+    {
+        return $this->hasOne('Modules\Admin\PoppingEmail','smtp_id','id');
+    }
 
     // TODO :: boot
     // boot() function used to insert logged user_id at 'created_by' & 'updated_by'

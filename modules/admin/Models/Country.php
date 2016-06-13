@@ -18,6 +18,10 @@ class Country extends Model
         'code',
         'title',
     ];
+    public function relPoppingEmail()
+    {
+        return $this->hasOne('Modules\Admin\PoppingEmail','country_id','id');
+    }
 
     // TODO :: boot
     // boot() function used to insert logged user_id at 'created_by' & 'updated_by'
