@@ -1,13 +1,5 @@
-<script src="assets/bitd/js/jquery.min.js"></script>
-<script src="assets/bitd/js/bootstrap.min.js"></script>
-
-<script src="assets/bitd/js/validation.js"></script>
-
-
-<link rel="stylesheet" href="assets/bitd/css/bootstrap-datepicker3.min.css">
-
-{{--datepicker--}}
-<script src="assets/bitd/js/bootstrap-datepicker.min.js"></script>
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
 
 <div class="modal-header">
     <a href="{{ URL::previous() }}" class="close" type="button" title="click x button for close this entry form"> × </a>
@@ -105,6 +97,8 @@
     </div>
 
         {!! Form::close() !!}
+</div>
+    </div>
 </div>
 
 <script>

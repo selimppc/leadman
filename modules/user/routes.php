@@ -16,7 +16,7 @@
     ]);
 
     Route::any('add-user', [
-        'middleware' => 'acl_access:add-user',
+        //'middleware' => 'acl_access:add-user',
         'as' => 'add-user',
         'uses' => 'UserController@add_user'
     ]);
@@ -28,25 +28,25 @@
     ]);
 
     Route::any('show-user/{id}', [
-        'middleware' => 'acl_access:show-user/{id}',
+        //'middleware' => 'acl_access:show-user/{id}',
         'as' => 'show-user',
         'uses' => 'UserController@show_user'
     ]);
 
     Route::any('edit-user/{id}', [
-        'middleware' => 'acl_access:edit-user/{id}',
+        //'middleware' => 'acl_access:edit-user/{id}',
         'as' => 'edit-user',
         'uses' => 'UserController@edit_user'
     ]);
 
     Route::any('update-user/{id}', [
-        'middleware' => 'acl_access:update-user/{id}',
+        //'middleware' => 'acl_access:update-user/{id}',
         'as' => 'update-user',
         'uses' => 'UserController@update_user'
     ]);
 
     Route::any('delete-user/{id}', [
-        'middleware' => 'acl_access:delete-user/{id}',
+        //'middleware' => 'acl_access:delete-user/{id}',
         'as' => 'delete-user',
         'uses' => 'UserController@destroy_user'
     ]);

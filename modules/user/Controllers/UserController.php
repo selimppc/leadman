@@ -44,7 +44,7 @@ class UserController extends Controller
     }
     public function create_sign_up()
     {
-        return view('admin::signup._form');
+        return view('user::signup._form');
     }
     public function store_signup_info(Requests\UserRequest $request)
     {
@@ -79,7 +79,7 @@ class UserController extends Controller
     public function forget_password_view()
     {
         //exit('exit');
-        return view('admin::forget_password._form');
+        return view('user::forget_password._form');
     }
     public function forget_password()
     {
@@ -100,7 +100,7 @@ class UserController extends Controller
             if($model->save()) {
 
                 try{
-                    Mail::send('admin::forget_password.email_notification', array('link'=>$token,'user'=>$user),
+                    Mail::send('user::forget_password.email_notification', array('link'=>$token,'user'=>$user),
                         function($message) use ($user)
                         {
                             $message->from('devdhaka405@gmail.com', 'User Password Set Notification');
@@ -137,7 +137,7 @@ class UserController extends Controller
             ];
             if ($data['reset_password_expire'] > $current_time && $data['status'] == 2) {
                 $id =  isset($user->id) ?$data['user_id']:'';
-                return view('admin::forget_password.reset_password_form',['id'=>$id]);
+                return view('user::forget_password.reset_password_form',['id'=>$id]);
             }
             if($data['reset_password_expire'] < $current_time){
                 Session::flash('error', 'Time Expired.Please Try Again.');
@@ -289,7 +289,7 @@ class UserController extends Controller
         $role =  [''=>'Select Role'] +  Role::lists('title','id')->all();
 
 
-        return view('admin::user.index',['pageTitle'=>$pageTitle,'department_data'=>$department_data,'model'=>$model,'role'=>$role,'days'=>$days]);
+        return view('user::user.index',['pageTitle'=>$pageTitle,'department_data'=>$department_data,'model'=>$model,'role'=>$role,'days'=>$days]);
     }
     public function add_user(Requests\UserRequest $request){
 
@@ -345,7 +345,7 @@ class UserController extends Controller
         $pageTitle = 'User Informations';
         $data = User::with('relDepartment','relRoleInfo')->where('id',$id)->first();
 
-        return view('admin::user.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
+        return view('user::user.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
     }
 
     /**
@@ -363,7 +363,7 @@ class UserController extends Controller
         $department_data =  [''=>'Select Department'] + Department::lists('title','id')->all();
         $role =  [''=>'Select Role'] +  Role::lists('title','id')->all();
 
-        return view('admin::user.update', ['pageTitle'=>$pageTitle,'data' => $data,'department_data'=>$department_data,'role'=>$role]);
+        return view('user::user.update', ['pageTitle'=>$pageTitle,'data' => $data,'department_data'=>$department_data,'role'=>$role]);
     }
 
     /**
@@ -460,7 +460,7 @@ class UserController extends Controller
             $user = User::where('id',$user_id)->first();
             $department_data =  [''=>'Select Department'] + Department::lists('title','id')->all();
 
-            return view('admin::user_info.index',['user_id'=>$user_id,'profile_data'=>$profile_data,'user_image'=>$user_image,'user'=>$user,'department_data'=>$department_data,'pageTitle'=>$pageTitle]);
+            return view('user::user_info.index',['user_id'=>$user_id,'profile_data'=>$profile_data,'user_image'=>$user_image,'user'=>$user,'department_data'=>$department_data,'pageTitle'=>$pageTitle]);
         }
     }
     public function user_info($value){
@@ -471,16 +471,16 @@ class UserController extends Controller
         try{
             if($value == 'profile'){
                 $data = UserProfile::with('relUser')->where('user_id',$user_id)->first();
-                return Response::json(view('admin::user_info.profile.ajax_profile_data', ['data' => $data])->render());
+                return Response::json(view('user::user_info.profile.ajax_profile_data', ['data' => $data])->render());
             }
             if($value == 'meta'){
                 $data = UserMeta::with('relUser')->where('user_id',$user_id)->first();
-                return Response::json(view('admin::user_info.meta_data.ajax_meta_data', ['data' => $data])->render());
+                return Response::json(view('user::user_info.meta_data.ajax_meta_data', ['data' => $data])->render());
             }
             if($value == 'acc-settings'){
                 $profile_data = UserProfile::with('relUser')->where('user_id',$user_id)->first();
                 $user_data = User::with('relRoleInfo')->where('id',$user_id)->first();
-                return Response::json(view('admin::user_info.account_settings._ajax_data', ['user_data' => $user_data,'profile_data'=>$profile_data])->render());
+                return Response::json(view('user::user_info.account_settings._ajax_data', ['user_data' => $user_data,'profile_data'=>$profile_data])->render());
             }
 
         }catch(\Exception $e){
@@ -494,7 +494,7 @@ class UserController extends Controller
     }
 
     public function inactive_user_dashboard(){
-        return view('admin::user_info.inactive_user_dashboard');
+        return view('user::user_info.inactive_user_dashboard');
     }
 
 
@@ -584,7 +584,7 @@ class UserController extends Controller
         $user_image = UserImage::where('user_id',$user_id)->first();
         #$user_image_id = ($user_image->id)?$user_image->id:'';
 
-        return view('admin::user_info.profile.update', ['pageTitle'=>$pageTitle,'data' => $data,'user_id'=>$user_id,'user_image'=>$user_image]);
+        return view('user::user_info.profile.update', ['pageTitle'=>$pageTitle,'data' => $data,'user_id'=>$user_id,'user_image'=>$user_image]);
     }
 
     public function update_user_profile(Requests\UserProfileRequest $request,$id){
@@ -727,7 +727,7 @@ class UserController extends Controller
 
         $pageTitle = 'Edit User Profile Picture';
         $model = UserImage::findOrFail($user_image_id);
-        return view('admin::user_info.profile_image.update_image', ['pageTitle'=>$pageTitle,'model'=>$model,'user_image_id'=>$user_image_id]);
+        return view('user::user_info.profile_image.update_image', ['pageTitle'=>$pageTitle,'model'=>$model,'user_image_id'=>$user_image_id]);
     }
 
     public function update_profile_image(Request $request,$user_image_id){
@@ -832,7 +832,7 @@ class UserController extends Controller
         $data = UserMeta::findOrFail($id);
         $user_id = Auth::user()->id;
 
-        return view('admin::user_info.meta_data.update', ['pageTitle'=>$pageTitle,'data' => $data,'user_id'=>$user_id]);
+        return view('user::user_info.meta_data.update', ['pageTitle'=>$pageTitle,'data' => $data,'user_id'=>$user_id]);
     }
 
     public function update_meta_data(Request $request,$id){
