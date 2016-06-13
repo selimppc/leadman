@@ -58,9 +58,9 @@
 }
 
 .dataTables_filter {
-	width: 50%;
+	width: 30%;
 	float: right;
-	text-align: right;
+	text-align: left;
 }
 
 .dataTables_info {

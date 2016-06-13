@@ -2672,7 +2672,7 @@ ul.amounts li {
 }
 
 .dataTables_length , .dataTables_filter{
-    padding:15px;
+    padding:0px;
 }
 .dataTables_info{
     padding:0 15px;
@@ -2696,7 +2696,7 @@ ul.amounts li {
 }
 
 .dataTables_filter label input {
-    width: 78%;
+    width: 100%;
 }
 
 .border-top {
