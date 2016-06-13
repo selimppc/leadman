@@ -1,4 +1,4 @@
-<script src="assets/bitd/js/jquery.min.js"></script>
+<script src="assets/js/jquery-1.8.min.js"></script>
 {{--<script src="assets/bitd/js/jquery-ui.min.js"></script>--}}
 <div class="form-group form-group no-margin-hr panel-padding-h no-padding-t no-border-t">
 
@@ -66,6 +66,7 @@
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
             </div>
         </div>
+
         <div class="col-sm-6">
             {!! Form::label('status', 'Status:', ['class' => 'control-label']) !!}
             <small class="narration">(Inactive status Selected)</small>
