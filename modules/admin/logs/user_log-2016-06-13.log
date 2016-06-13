@@ -5,3 +5,4 @@
 [2016-06-13 09:40:37] update-role.INFO: Successfully updated. ["Role title: babu2"] []
 [2016-06-13 09:40:40] delete-role.INFO: Successfully status cancel ["Role title: babu2"] []
 [2016-06-13 09:45:42] store-role-user.INFO: Successfully added ["Role user (user_id): 3"] []
+[2016-06-13 16:02:56] user-add.INFO: Successfully added! ["Username: babu"] []

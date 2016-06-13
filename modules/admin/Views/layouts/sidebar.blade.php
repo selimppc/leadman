@@ -68,7 +68,7 @@
         <span>User</span>
     </a>
     <ul class="sub">
-        <li class="active"><a href="{{--{{route('user-profile')}}--}}"> Profile</a></li>
+        <li class="active"><a href="{{route('user-profile')}}"> Profile</a></li>
         <li><a href="{{route('user-list')}}">User List</a></li>
         <li><a href="{{route('index-role-user')}}">Role User</a></li>
         <li><a href="{{route('index-permission-role')}}"><span class="mm-text">Permission Role</span></a></li>

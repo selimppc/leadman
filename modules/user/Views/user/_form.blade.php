@@ -1,4 +1,15 @@
-<script src="assets/js/jquery-1.8.min.js"></script>
+@if($errors->any())
+    <ul class="alert alert-danger">
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+@endif
+@if(Session::has('error'))
+    <div class="alert alert-danger">
+        <p>{{ Session::get('error') }}</p>
+    </div>
+@endif
 {{--<script src="assets/bitd/js/jquery-ui.min.js"></script>--}}
 <div class="form-group form-group no-margin-hr panel-padding-h no-padding-t no-border-t">
 
