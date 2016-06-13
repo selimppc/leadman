@@ -4649,3 +4649,11 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
     background: #598b9c;
     font-weight: bold;
 }
+
+/*--Modal----*/
+
+@media (min-width: 992px) {
+    .modal-lg {
+        width: 900px;
+    }
+}
