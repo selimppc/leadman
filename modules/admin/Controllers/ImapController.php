@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use Modules\Admin\Imap;
 
 class ImapController extends Controller
 {
@@ -22,7 +24,8 @@ class ImapController extends Controller
      */
     public function index()
     {
-        //
+        $data['pageTitle'] = " IMAP ";
+        return view('admin::imap.index', $data);
     }
 
     /**
@@ -43,7 +46,9 @@ class ImapController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Imap::create($request->except('_token'));
+        Session::flash('message', 'IMAP has been successfully stored.');
+        return redirect()->back();
     }
 
     /**

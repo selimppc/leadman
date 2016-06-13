@@ -6,7 +6,7 @@
 </li>
 
 <li class="sub-menu">
-    <a href={{--{{URL::to('article/index')}}--}}>
+    <a href='{{URL::to('admin/imap')}}'>
         <i class="icon-laptop"></i>
         <span>Imap</span>
     </a>

@@ -5,10 +5,20 @@
  * Date: 6/12/16
  * Time: 10:10 AM
  */
-Route::Group(['namespace'=>'Modules\Admin'],function(){
+Route::get('/', function () {
+    return view('admin::layouts.master');
+});
+Route::Group(['modules'=>'admin','prefix'=>'admin','namespace'=>'Modules\Admin\Controllers'],function(){
 
-    Route::get('/', function () {
-        return view('admin::layouts.master');
-    });
+    Route::get('imap',[
+        #'middleware'=>'acl_access::imap',
+        'route'=>'imap',
+        'uses'=>'ImapController@index'
+    ]);
+    Route::post('imap',[
+        #'middleware'=>'acl_access::imap',
+        'route'=>'imap',
+        'uses'=>'ImapController@store'
+    ]);
 
 });
