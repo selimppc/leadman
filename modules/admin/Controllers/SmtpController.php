@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use Modules\Admin\Smtp;
 
 class SmtpController extends Controller
 {
@@ -22,7 +24,9 @@ class SmtpController extends Controller
      */
     public function index()
     {
-        //
+        $data['pageTitle'] = " SMTP ";
+        $data['smtp']= Smtp::all();
+        return view('admin::smtp.index', $data);
     }
 
     /**
@@ -43,7 +47,9 @@ class SmtpController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Smtp::create($request->except('_token'));
+        Session::flash('message', 'SMTP has been successfully stored.');
+        return redirect()->back();
     }
 
     /**
@@ -65,7 +71,8 @@ class SmtpController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['smtp'] = Smtp::findOrFail($id);
+        return view('admin::smtp.update', $data);
     }
 
     /**
@@ -77,7 +84,17 @@ class SmtpController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data=$request->all();
+        $smtp=Smtp::findOrFail($id);
+        $smtp->server_username= $data['server_username'];
+        $smtp->server_password= $data['server_password'];
+        $smtp->host= $data['host'];
+        $smtp->port= $data['port'];
+        $smtp->smtp= $data['smtp'];
+        $smtp->c_port= $data['c_port'];
+        $smtp->save();
+        Session::flash('message', 'SMTP has been successfully updated.');
+        return redirect()->back();
     }
 
     /**
@@ -88,6 +105,9 @@ class SmtpController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $smtp=Smtp::findOrFail($id);
+        $smtp->delete();
+        Session::flash('message', 'SMTP has been successfully deleted.');
+        return redirect()->back();
     }
 }

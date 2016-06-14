@@ -13,7 +13,7 @@
 </li>
 
 <li class="sub-menu">
-    <a href={{--{{URL::to('article/index')}}--}}>
+    <a href='{{URL::to('admin/smtp')}}'>
         <i class="icon-dashboard"></i>
         <span>Smtp</span>
     </a>

@@ -37,5 +37,32 @@ Route::Group(['modules'=>'admin','prefix'=>'admin','namespace'=>'Modules\Admin\C
             'uses'=>'ImapController@destroy'
         ]);
     });
+    Route::Group(['prefix'=>'smtp'],function(){
+        Route::get('',[
+            #'middleware'=>'acl_access::smtp',
+            'route'=>'',
+            'uses'=>'SmtpController@index'
+        ]);
+        Route::post('',[
+            #'middleware'=>'acl_access::smtp',
+            'route'=>'',
+            'uses'=>'SmtpController@store'
+        ]);
+        Route::get('edit/{id}',[
+            #'middleware'=>'acl_access::smtp/edit',
+            'route'=>'smtp.edit',
+            'uses'=>'SmtpController@edit'
+        ]);
+        Route::patch('{id}',[
+            #'middleware'=>'acl_access::smtp/edit',
+            'route'=>'smtp',
+            'uses'=>'SmtpController@update'
+        ]);
+        Route::get('delete/{id}',[
+            #'middleware'=>'acl_access::smtp/edit',
+            'route'=>'smtp.delete',
+            'uses'=>'SmtpController@destroy'
+        ]);
+    });
 
 });

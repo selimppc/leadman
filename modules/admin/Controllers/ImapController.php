@@ -25,7 +25,7 @@ class ImapController extends Controller
     public function index()
     {
         $data['pageTitle'] = " IMAP ";
-        $data['imaps']= Imap::paginate(10);
+        $data['imaps']= Imap::all();
         return view('admin::imap.index', $data);
     }
 

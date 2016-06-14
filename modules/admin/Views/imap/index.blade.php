@@ -1,7 +1,7 @@
 @extends('admin::layouts.master')
 @section('sidebar')
-    @parent
-    @include('admin::layouts.sidebar')
+@parent
+@include('admin::layouts.sidebar')
 @stop
 
 @section('content')
@@ -81,7 +81,7 @@
                         </tr>
                         @endforeach
                     </table>
-                    <span class="pull-right">{!! str_replace('/?', '?', $imaps->render()) !!} </span>
+{{--                    <span class="pull-right">{!! str_replace('/?', '?', $imaps->render()) !!} </span>--}}
                 </div>
             </div>
         </section>
