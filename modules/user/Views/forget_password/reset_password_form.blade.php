@@ -14,13 +14,13 @@
 
     <!-- Vendor styles -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="../assets/bitd/css/font-awesome.css" />
-    <link rel="stylesheet" href="../assets/bitd/css/metisMenu.css" />
-    <link rel="stylesheet" href="../assets/bitd/css/animate.css" />
-    <link rel="stylesheet" href="../assets/bitd/css/bootstrap.css" />
-    <link rel="stylesheet" href="../assets/bitd/css/pe-icon-7-stroke.css" />
-    <link rel="stylesheet" href="../assets/bitd/css/helper.css" />
-    <link rel="stylesheet" href="../assets/bitd/css/style.css">
+    <link rel="stylesheet" href="../assets/css/font-awesome.css" />
+    <link rel="stylesheet" href="../assets/css/metisMenu.css" />
+    <link rel="stylesheet" href="../assets/css/animate.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="../assets/css/pe-icon-7-stroke.css" />
+    <link rel="stylesheet" href="../assets/css/helper.css" />
+    <link rel="stylesheet" href="../assets/css/style.css">
 
 </head>
 <body class="blank">
@@ -100,23 +100,23 @@
 
 
 <!-- Vendor scripts -->
-<script src="../assets/bitd/js/jquery.min.js"></script>
-<script src="../assets/bitd/js/jquery-ui.min.js"></script>
-<script src="assets/bitd/js/jquery.slimscroll.min.js"></script>
-<script src="../assets/bitd/js/bootstrap.min.js"></script>
-{{--<script src="assets/bitd/js/jquery.flot.js"></script>--}}
-{{--<script src="assets/bitd/js/jquery.flot.resize.js"></script>--}}
-<script src="assets/bitd/js/jquery.flot.pie.js"></script>
-<script src="assets/bitd/js/curvedLines.js"></script>
-<script src="assets/bitd/js/spline.index.js"></script>
-<script src="assets/bitd/js/metisMenu.min.js"></script>
-<script src="assets/bitd/js/icheck.min.js"></script>
-<script src="assets/bitd/js/jquery.peity.min.js"></script>
-<script src="assets/bitd/js/index.js"></script>
-<script src="../assets/bitd/js/validation.js"></script>
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/jquery-ui.min.js"></script>
+<script src="assets/js/jquery.slimscroll.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+{{--<script src="assets/js/jquery.flot.js"></script>--}}
+{{--<script src="assets/js/jquery.flot.resize.js"></script>--}}
+<script src="assets/js/jquery.flot.pie.js"></script>
+<script src="assets/js/curvedLines.js"></script>
+<script src="assets/js/spline.index.js"></script>
+<script src="assets/js/metisMenu.min.js"></script>
+<script src="assets/js/icheck.min.js"></script>
+<script src="assets/js/jquery.peity.min.js"></script>
+<script src="assets/js/index.js"></script>
+<script src="../assets/js/validation.js"></script>
 <!-- App scripts -->
-<script src="assets/bitd/js/homer.js"></script>
-<script src="assets/bitd/js/charts.js"></script>
+<script src="assets/js/homer.js"></script>
+<script src="assets/js/charts.js"></script>
 <script>
 
     //document.onload = function() {

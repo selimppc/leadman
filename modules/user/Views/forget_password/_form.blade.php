@@ -1,4 +1,4 @@
-@extends('admin::layouts.login')
+@extends('user::layouts.login')
 
 @section('content')
     <div class="row">

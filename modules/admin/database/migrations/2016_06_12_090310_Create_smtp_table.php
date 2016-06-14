@@ -14,6 +14,7 @@ class CreateSmtpTable extends Migration
     {
         Schema::create('smtp', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name',64)->nullable();
             $table->string('server_username',64)->nullable();
             $table->string('server_password',128)->nullable();
             $table->string('host',128)->nullable();

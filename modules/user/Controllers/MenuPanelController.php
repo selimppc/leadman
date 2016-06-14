@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-namespace Modules\Admin\Controllers;
+namespace Modules\User\Controllers;
 
 use App\MenuPanel;
 use App\Helpers\LogFileHelperAcc;
@@ -32,7 +32,7 @@ class MenuPanelController extends Controller
         $pageTitle = "Menu Panel Informations";
         $model = MenuPanel::orderBy('id', 'DESC')->where('status','!=','cancel')->paginate(30);
 
-        return view('admin::menu_panel.index', ['model' => $model, 'pageTitle'=> $pageTitle]);
+        return view('user::menu_panel.index', ['model' => $model, 'pageTitle'=> $pageTitle]);
     }
 
     /**
@@ -93,7 +93,7 @@ class MenuPanelController extends Controller
             $model = MenuPanel::orderBy('id', 'DESC')->where('status','!=','cancel')->paginate(30);
         }
 
-        return view('admin::menu_panel.index',['pageTitle'=>$pageTitle,'model'=>$model]);
+        return view('user::menu_panel.index',['pageTitle'=>$pageTitle,'model'=>$model]);
 
     }
 
@@ -108,7 +108,7 @@ class MenuPanelController extends Controller
         $pageTitle = 'View Menu Panel Informations';
         $data = MenuPanel::where('id',$id)->first();
 
-        return view('admin::menu_panel.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
+        return view('user::menu_panel.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
     }
 
     /**
@@ -123,7 +123,7 @@ class MenuPanelController extends Controller
         $data = MenuPanel::where('id',$id)->first();
         $menu_data = MenuPanel::where('id',$parent_menu_id)->lists('menu_name', 'id');
 
-        return view('admin::menu_panel.update', ['data' => $data, 'menu_data'=> $menu_data, 'pageTitle'=> $pageTitle]);
+        return view('user::menu_panel.update', ['data' => $data, 'menu_data'=> $menu_data, 'pageTitle'=> $pageTitle]);
     }
 
     /**

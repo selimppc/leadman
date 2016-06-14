@@ -6,7 +6,7 @@
  * Time: 4:25 PM
  */
 
-namespace Modules\Admin\Controllers;
+namespace Modules\User\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\UserActivity;
@@ -40,7 +40,7 @@ class UserActivityController extends Controller
         $data = UserActivity::with('relUser')->orderBy('id', 'DESC')->paginate(30);
         $user_list = User::lists('username', 'id');
 
-        return view('admin::user_activity.index', [
+        return view('user::user_activity.index', [
             'data' => $data,
             'pageTitle'=> $pageTitle,
             'user_list'=> $user_list,
@@ -82,7 +82,7 @@ class UserActivityController extends Controller
 
         $user_list = User::lists('username', 'id');
 
-        return view('admin::user_activity.index', [
+        return view('user::user_activity.index', [
             'data' => $data,
             'pageTitle'=> $pageTitle,
             'user_list'=> $user_list,
