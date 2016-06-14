@@ -13,6 +13,12 @@
 
 
 <div class="form-group">
+    {!! Form::label('name', 'SMTP Name', ['class' => 'control-label']) !!}
+    <small class="required">(Required)</small><br>
+    {{--<i>(for gmail, ymail user email/username | for domain put server username)</i>--}}
+    {!! Form::text('name', null, ['class' => 'form-control','required']) !!}
+</div>
+<div class="form-group">
     {!! Form::label('server_username', 'Server User Name', ['class' => 'control-label']) !!}
     <small class="required">(Required)</small><br>
     {{--<i>(for gmail, ymail user email/username | for domain put server username)</i>--}}

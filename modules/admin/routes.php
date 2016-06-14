@@ -64,5 +64,33 @@ Route::Group(['modules'=>'admin','prefix'=>'admin','namespace'=>'Modules\Admin\C
             'uses'=>'SmtpController@destroy'
         ]);
     });
+    Route::Group(['prefix'=>'popping-email'],function(){
+        Route::get('',[
+            #'middleware'=>'acl_access::popping-email',
+            'route'=>'',
+            'uses'=>'PoppingEmailController@index'
+        ]);
+        Route::post('',[
+            #'middleware'=>'acl_access::popping-email',
+            'route'=>'',
+            'uses'=>'PoppingEmailController@store'
+        ]);
+        Route::get('edit/{id}',[
+            #'middleware'=>'acl_access::popping-email/edit',
+            'route'=>'popping-email.edit',
+            'uses'=>'PoppingEmailController@edit'
+        ]);
+        Route::patch('{id}',[
+            #'middleware'=>'acl_access::popping-email/edit',
+            'route'=>'popping-email',
+            'uses'=>'PoppingEmailController@update'
+        ]);
+        Route::get('delete/{id}',[
+            #'middleware'=>'acl_access::popping-email/edit',
+            'route'=>'popping-email.delete',
+            'uses'=>'PoppingEmailController@destroy'
+        ]);
+    });
 
 });
+Route::get('callback','PoppingEmailController@callback');

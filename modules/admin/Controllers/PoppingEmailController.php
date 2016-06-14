@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Modules\Admin\Imap;
+use Modules\Admin\Smtp;
 
 class PoppingEmailController extends Controller
 {
@@ -22,7 +24,10 @@ class PoppingEmailController extends Controller
      */
     public function index()
     {
-        //
+        $data['pageTitle'] = " Popping Email ";
+        $data['smtp_id'] = Smtp::lists('name','id');
+        $data['imap_id'] = Imap::lists('name','id');
+        return view('admin::popping_email.index', $data);
     }
 
     /**

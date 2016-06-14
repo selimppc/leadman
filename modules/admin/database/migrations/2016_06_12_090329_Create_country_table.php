@@ -14,10 +14,10 @@ class CreateCountryTable extends Migration
     {
         Schema::create('country', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code',8);
-            $table->string('title',128);
-            $table->unsignedInteger('created_by',false);
-            $table->unsignedInteger('updated_by',false);
+            $table->string('code',8)->nullable();
+            $table->string('title',128)->nullable();
+            $table->unsignedInteger('created_by',false)->nullable();
+            $table->unsignedInteger('updated_by',false)->nullable();
             $table->timestamps();
         });
     }

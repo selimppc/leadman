@@ -9,11 +9,12 @@
 namespace Modules\Admin;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Auth;
 class Smtp extends Model
 {
     protected $table='smtp';
     protected $fillable=[
+        'name',
         'server_username',
         'server_password',
         'host',
@@ -29,7 +30,7 @@ class Smtp extends Model
     // TODO :: boot
     // boot() function used to insert logged user_id at 'created_by' & 'updated_by'
 
-    /*public static function boot(){
+    public static function boot(){
         parent::boot();
         static::creating(function($query){
             if(Auth::check()){
@@ -41,5 +42,5 @@ class Smtp extends Model
                 $query->updated_by = Auth::user()->id;
             }
         });
-    }*/
+    }
 }
