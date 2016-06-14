@@ -1,5 +1,4 @@
-<script type="text/javascript" src="{{ URL::asset('assets/bitd/js/jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/bitd/js/custom.min.js') }}"></script>
+
 
 <div class="form-group no-margin-hr panel-padding-h no-padding-t no-border-t">
     <div class="row">
@@ -64,4 +63,4 @@
     <a href="{{route('menu-panel')}}" class=" btn btn-default" data-placement="top" data-content="click close button for close this entry form">Close</a>
 </div>
 
-@include('admin::menu_panel._script')
+@include('user::menu_panel._script')

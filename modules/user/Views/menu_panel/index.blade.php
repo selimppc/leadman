@@ -40,7 +40,7 @@
 
                 {{-------------- Filter :Ends -------------------------------------------}}
                 <div class="table-primary">
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-example">
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table-example">
                         <thead>
                         <tr>
                             <th> Menu Id </th>
@@ -92,7 +92,7 @@
             </div>
             <div class="modal-body">
                 {!! Form::open(['route' => 'store-menu-panel','id' => 'jq-validation-form']) !!}
-                @include('admin::menu_panel._form')
+                @include('user::menu_panel._form')
                 {!! Form::close() !!}
             </div> <!-- / .modal-body -->
         </div> <!-- / .modal-content -->
