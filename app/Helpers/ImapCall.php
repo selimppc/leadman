@@ -99,12 +99,10 @@ class ImapCall
                     //TODO:: store to
                 }
 
-                $lead_email_data = [
+                $lead_email_data []= [
                     'from_email'=>$user_email,
                     'to_email'=>$to_email,
                 ];
-
-
 
             }
         }
@@ -126,7 +124,7 @@ class ImapCall
         if($lead_email_data){
             return $lead_email_data;
         }else{
-            return "No Data Found ! ";
+            return null;
         }
 
     }
