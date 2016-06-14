@@ -10,15 +10,32 @@ Route::get('/', function () {
 });
 Route::Group(['modules'=>'admin','prefix'=>'admin','namespace'=>'Modules\Admin\Controllers'],function(){
 
-    Route::get('imap',[
-        #'middleware'=>'acl_access::imap',
-        'route'=>'imap',
-        'uses'=>'ImapController@index'
-    ]);
-    Route::post('imap',[
-        #'middleware'=>'acl_access::imap',
-        'route'=>'imap',
-        'uses'=>'ImapController@store'
-    ]);
+    Route::Group(['prefix'=>'imap'],function(){
+        Route::get('',[
+            #'middleware'=>'acl_access::imap',
+            'route'=>'imap',
+            'uses'=>'ImapController@index'
+        ]);
+        Route::post('',[
+            #'middleware'=>'acl_access::imap',
+            'route'=>'imap',
+            'uses'=>'ImapController@store'
+        ]);
+        Route::get('edit/{id}',[
+            #'middleware'=>'acl_access::imap/edit',
+            'route'=>'imap.edit',
+            'uses'=>'ImapController@edit'
+        ]);
+        Route::patch('{id}',[
+            #'middleware'=>'acl_access::imap/edit',
+            'route'=>'imap',
+            'uses'=>'ImapController@update'
+        ]);
+        Route::get('delete/{id}',[
+            #'middleware'=>'acl_access::imap/edit',
+            'route'=>'imap.delete',
+            'uses'=>'ImapController@destroy'
+        ]);
+    });
 
 });

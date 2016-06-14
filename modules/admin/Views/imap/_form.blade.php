@@ -5,9 +5,9 @@
         @endforeach
     </ul>
 @endif
-@if(Session::has('flash_message_error'))
+@if(Session::has('error'))
     <div class="alert alert-danger">
-        <p>{{ Session::get('flash_message_error') }}</p>
+        <p>{{ Session::get('error') }}</p>
     </div>
 @endif
 

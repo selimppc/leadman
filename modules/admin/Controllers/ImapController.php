@@ -25,6 +25,7 @@ class ImapController extends Controller
     public function index()
     {
         $data['pageTitle'] = " IMAP ";
+        $data['imaps']= Imap::paginate(10);
         return view('admin::imap.index', $data);
     }
 
@@ -70,7 +71,8 @@ class ImapController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['imap'] = Imap::findOrFail($id);
+        return view('admin::imap.update', $data);
     }
 
     /**
@@ -82,7 +84,14 @@ class ImapController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data=$request->all();
+        $imap=Imap::findOrFail($id);
+        $imap->name= $data['name'];
+        $imap->host= $data['host'];
+        $imap->port= $data['port'];
+        $imap->save();
+        Session::flash('message', 'IMAP has been successfully updated.');
+        return redirect()->back();
     }
 
     /**
@@ -93,6 +102,9 @@ class ImapController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $imap=Imap::findOrFail($id);
+        $imap->delete();
+        Session::flash('message', 'IMAP has been successfully deleted.');
+        return redirect()->back();
     }
 }
