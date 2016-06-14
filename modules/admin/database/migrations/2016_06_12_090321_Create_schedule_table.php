@@ -14,10 +14,10 @@ class CreateScheduleTable extends Migration
     {
         Schema::create('schedule', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('day',false);
-            $table->decimal('time',4,2);
-            $table->unsignedInteger('created_by',false);
-            $table->unsignedInteger('updated_by',false);
+            $table->unsignedInteger('day',false)->nullable();
+            $table->decimal('time',4,2)->nullable();
+            $table->unsignedInteger('created_by',false)->nullable();
+            $table->unsignedInteger('updated_by',false)->nullable();
             $table->timestamps();
         });
     }

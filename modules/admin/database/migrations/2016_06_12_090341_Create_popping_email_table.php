@@ -14,26 +14,26 @@ class CreatePoppingEmailTable extends Migration
     {
         Schema::create('popping_email', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email',256);
-            $table->string('password',64);
-            $table->unsignedInteger('smtp_id',false);
+            $table->string('email',256)->nullable();
+            $table->string('password',64)->nullable();
+            $table->unsignedInteger('smtp_id',false)->nullable();
             $table->foreign('smtp_id')->references('id')->on('smtp');
-            $table->unsignedInteger('imap_id',false);
+            $table->unsignedInteger('imap_id',false)->nullable();
             $table->foreign('imap_id')->references('id')->on('imap');
-            $table->unsignedInteger('country_origin',false);
+            $table->unsignedInteger('country_origin',false)->nullable();
             $table->foreign('country_origin')->references('id')->on('imap');
-            $table->float('price',2);
-            $table->unsignedInteger('schedule_id',false);
+            $table->float('price')->nullable();
+            $table->unsignedInteger('schedule_id',false)->nullable();
             $table->foreign('schedule_id')->references('id')->on('schedule');
-            $table->timestamp('execution_time');
-            $table->text('token');
-            $table->string('code',128);
-            $table->string('auth_id',64);
-            $table->enum('auth_type',['google','yahoo','outlook']);
-            $table->enum('status',['new','active','inactive','cancel']);
-            $table->unsignedInteger('user_id',false);
-            $table->unsignedInteger('created_by',false);
-            $table->unsignedInteger('updated_by',false);
+            $table->timestamp('execution_time')->nullable();
+            $table->text('token')->nullable();
+            $table->string('code',128)->nullable();
+            $table->string('auth_id',64)->nullable();
+            $table->enum('auth_type',['google','yahoo','outlook'])->nullable();
+            $table->enum('status',['new','active','inactive','cancel'])->nullable();
+            $table->unsignedInteger('user_id',false)->nullable();
+            $table->unsignedInteger('created_by',false)->nullable();
+            $table->unsignedInteger('updated_by',false)->nullable();
             $table->timestamps();
         });
     }

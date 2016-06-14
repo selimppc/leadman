@@ -14,10 +14,10 @@ class CreateFilterTable extends Migration
     {
         Schema::create('filter', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',64);
-            $table->string('filtercol',45);
-            $table->unsignedInteger('created_by',false);
-            $table->unsignedInteger('updated_by',false);
+            $table->string('name',64)->nullable();
+            $table->string('filtercol',45)->nullable();
+            $table->unsignedInteger('created_by',false)->nullable();
+            $table->unsignedInteger('updated_by',false)->nullable();
             $table->timestamps();
         });
     }

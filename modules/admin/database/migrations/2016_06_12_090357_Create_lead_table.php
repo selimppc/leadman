@@ -14,12 +14,12 @@ class CreateLeadTable extends Migration
     {
         Schema::create('lead', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email',256);
-            $table->unsignedInteger('popping_email_id',false);
+            $table->string('email',256)->nullable();
+            $table->unsignedInteger('popping_email_id',false)->nullable();
             $table->foreign('popping_email_id')->references('id')->on('popping_email');
-            $table->string('status',45);
-            $table->unsignedInteger('created_by',false);
-            $table->unsignedInteger('updated_by',false);
+            $table->string('status',45)->nullable();
+            $table->unsignedInteger('created_by',false)->nullable();
+            $table->unsignedInteger('updated_by',false)->nullable();
             $table->timestamps();
         });
     }

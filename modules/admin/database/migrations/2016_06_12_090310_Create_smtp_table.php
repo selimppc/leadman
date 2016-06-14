@@ -14,14 +14,14 @@ class CreateSmtpTable extends Migration
     {
         Schema::create('smtp', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('server_username',64);
-            $table->string('server_password',128);
-            $table->string('host',128);
-            $table->string('smtp',128);
-            $table->string('port',128);
-            $table->unsignedInteger('c_port',false);
-            $table->unsignedInteger('updated_by',false);
-            $table->unsignedInteger('created_by',false);
+            $table->string('server_username',64)->nullable();
+            $table->string('server_password',128)->nullable();
+            $table->string('host',128)->nullable();
+            $table->string('smtp',128)->nullable();
+            $table->string('port',128)->nullable();
+            $table->unsignedInteger('c_port',false)->nullable();
+            $table->unsignedInteger('updated_by',false)->nullable();
+            $table->unsignedInteger('created_by',false)->nullable();
             $table->timestamps();
         });
     }
