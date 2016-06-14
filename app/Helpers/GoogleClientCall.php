@@ -64,8 +64,6 @@ class GoogleClientCall
                         $to_email = $msg['messageTo'];
                     }
 
-                    /* Check campaign and user_email exists or not */
-                    #$exists_email = PoppedMessageHeader::where('campaign_id', $camp->id)->where('user_email', $user_email)->exists();
 
                 }
             }
