@@ -5,9 +5,9 @@
  * Date: 6/12/16
  * Time: 10:10 AM
  */
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('admin::layouts.master');
-});
+});*/
 Route::Group(['modules'=>'admin','prefix'=>'admin','namespace'=>'Modules\Admin\Controllers'],function(){
 
     Route::Group(['prefix'=>'imap'],function(){
