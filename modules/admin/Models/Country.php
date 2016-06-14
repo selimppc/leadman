@@ -21,7 +21,7 @@ class Country extends Model
     ];
     public function relPoppingEmail()
     {
-        return $this->hasOne('Modules\Admin\PoppingEmail','country_id','id');
+        return $this->hasOne('Modules\Admin\PoppingEmail','country_origin','id');
     }
 
     // TODO :: boot

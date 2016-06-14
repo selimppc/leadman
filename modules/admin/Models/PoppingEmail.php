@@ -20,7 +20,7 @@ class PoppingEmail extends Model
         'password',
         'smtp_id',
         'imap_id',
-        'country_orgin',
+        'country_origin',
         'price',
         'schedule_id',
         'execution_time',
@@ -45,7 +45,7 @@ class PoppingEmail extends Model
     }
     public function relCountry()
     {
-        return $this->belongsTo('Modules\Admin\Country','country_id','id');
+        return $this->belongsTo('Modules\Admin\Country','country_origin','id');
     }
     public function relLead()
     {
