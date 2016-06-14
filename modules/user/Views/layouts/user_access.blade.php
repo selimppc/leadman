@@ -20,7 +20,7 @@
                 <div class="modal-body">
                     <h3 style="color: #ad6704;">You are not authorized to perform this action! </h3>
                     <div>
-                        <img src="{{ URL::to('/assets/user/img/forbidden_anime.png') }}">
+                        <img src="{{ URL::to('/assets/img/forbidden_anime.png') }}">
                     </div>
                 </div>
                 <div class="modal-footer">
