@@ -9,11 +9,12 @@
 namespace Modules\Admin;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Auth;
 class Smtp extends Model
 {
     protected $table='smtp';
     protected $fillable=[
+        'name',
         'server_username',
         'server_password',
         'host',

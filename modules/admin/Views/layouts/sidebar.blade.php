@@ -20,7 +20,7 @@
 </li>
 
 <li class="sub-menu">
-    <a href={{--{{URL::to('article/index')}}--}}>
+    <a href='{{URL::to('admin/popping-email')}}'>
         <i class="icon-envelope"></i>
         <span>Popping Email</span>
     </a>

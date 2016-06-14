@@ -10,6 +10,7 @@ namespace Modules\Admin;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Filter extends Model
 {

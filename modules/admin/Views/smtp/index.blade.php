@@ -26,6 +26,7 @@
                         <tr>
                             <th> ID </th>
                             <th> Name </th>
+                            <th> User Name </th>
                             <th> Host </th>
                             <th> Port </th>
                             <th> Smtp </th>
@@ -37,6 +38,7 @@
                         @foreach($smtp as $values)
                             <tr class="gradeX">
                                 <td>{{$values->id}}</td>
+                                <td>{{$values->name}}</td>
                                 <td>{{$values->server_username}}</td>
                                 <td>{{$values->host}}</td>
                                 <td>{{$values->port}}</td>

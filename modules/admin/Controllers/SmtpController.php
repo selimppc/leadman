@@ -86,6 +86,7 @@ class SmtpController extends Controller
     {
         $data=$request->all();
         $smtp=Smtp::findOrFail($id);
+        $smtp->name= $data['name'];
         $smtp->server_username= $data['server_username'];
         $smtp->server_password= $data['server_password'];
         $smtp->host= $data['host'];
