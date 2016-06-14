@@ -12,6 +12,9 @@ namespace App\Helpers;
 class GoogleClientCall
 {
 
+    /**
+     * @param $pop_email
+     */
     public static function run($pop_email){
 
         session_start();
@@ -39,7 +42,7 @@ class GoogleClientCall
             // Get List of messages
             $message_data = GmailListMessages::lists($gmail_service, $pop_email->email);
 
-
+            $lead_email_data = [];
             if ($message_data) {
                 foreach ($message_data as $msg) {
 
@@ -65,9 +68,19 @@ class GoogleClientCall
                     }
 
 
+                    $lead_email_data []= [
+                        'from_email'=>$user_email,
+                        'to_email'=>$to_email,
+                    ];
+
+
                 }
             }
+            return $lead_email_data;
+        }else{
+            return null;
         }
+
 
     }
 
