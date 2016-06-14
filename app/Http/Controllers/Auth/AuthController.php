@@ -20,6 +20,13 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Session\TokenMismatchException;
 
+use App\Helpers\MenuItems;
+use Illuminate\Support\Facades\Schema;
+use App\RoleUser;
+use App\Permission;
+use App\PermissionRole;
+use App\MenuPanel;
+
 class AuthController extends Controller
 {
     /*
@@ -190,7 +197,11 @@ class AuthController extends Controller
                                 }
 
                                 Session::put('email', $user_data->email);
+                                Session::put('user_id', $user_data->id);
                                 Session::flash('message', "Successfully  Logged In.");
+
+                                $this->menu_permission();
+
                                 return redirect()->intended('dashboard');
                             }else{
                                 Session::flash('danger', "Password Incorrect.Please Try Again");
@@ -209,6 +220,51 @@ class AuthController extends Controller
                 Session::flash('danger', "UserName/Email does not exists.Please Try Again");
             }
             return redirect()->back();
+        }
+    }
+
+    protected function menu_permission()
+    {
+        if(Schema::hasTable('role_user') && Schema::hasTable('menu_panel')){
+            if(!Session::has('sidebar_menu_user')) {
+                // Get User ID
+                $user_id = \Auth::user()->id;
+                //print_r($user_id);exit;
+
+                //get Role(s)
+                $role_list = RoleUser::where('user_id','=',$user_id)
+                    ->select('role_user.role_id')
+                    ->get()->toArray();
+
+                //print_r($role_list); exit;
+
+
+                //routes per role(s)
+                $permis_route = Permission::join('permission_role', 'permission_role.permission_id', '=', 'permissions.id')
+                    ->whereIn('permission_role.role_id', $role_list)
+                    ->select('permissions.route_url')
+                    ->get()->toArray();
+                //module route
+                $arr []=[
+                    'route_url'=>'#'
+                ];
+                // Merge all routes per ROLE(S) and USER ID
+                $per_routes = array_merge($permis_route, $arr);
+
+                //print_r($per_routes); exit;
+
+                //Get Menu Lists by PERMISSION (ROLE+USER+Permission)
+                $tree = MenuPanel::select('id','menu_id','menu_type','menu_name','route','parent_menu_id','icon_code','menu_order','status')->whereIn('menu_panel.route',$per_routes)->orderBy('menu_order', 'ASC')->get()->toArray();
+                //print_r($tree); exit;
+
+                $parent = 0;
+
+                $result = MenuItems::menu_tree($tree, $parent);
+                //print_r($result); exit;
+
+                // put the menu items in session
+                Session::put('sidebar_menu_user', $result);
+            }
         }
     }
 }

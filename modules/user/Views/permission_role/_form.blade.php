@@ -1,4 +1,7 @@
 <script src="assets/bitd/js/jquery.min.js"></script>
+<link href="{{ asset('assets/css/bootstrap-duallistbox.css') }}" rel="stylesheet" type="text/css" >
+<link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" >
+
 <div class="form-group no-margin-hr panel-padding-h no-padding-t no-border-t">
     <div class="row">
         <div class="col-sm-12">
@@ -31,7 +34,7 @@
 </div>
 
 
-<script type="text/javascript" src="assets/bitd/js/jquery.bootstrap-duallistbox.js"></script>
+<script type="text/javascript" src="assets/js/jquery.bootstrap-duallistbox.js"></script>
 <script type="text/javascript">
     $("#permission_list").bootstrapDualListbox();
 </script>

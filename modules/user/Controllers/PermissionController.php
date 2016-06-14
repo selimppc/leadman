@@ -1,6 +1,6 @@
 <?php
 #namespace App\Modules\Web\Controllers;
-namespace Modules\Admin\Controllers;
+namespace Modules\User\Controllers;
 
 use App\Permission;
 use App\User;
@@ -38,7 +38,7 @@ class PermissionController extends Controller
         }*/
 
         $data = Permission::where('title', 'LIKE', '%'.$title.'%')->orderBy('id', 'DESC')->paginate(30);
-        return view('admin::permission.index', ['data' => $data, 'pageTitle'=> $pageTitle]);
+        return view('user::permission.index', ['data' => $data, 'pageTitle'=> $pageTitle]);
     }
 
     public function store(Requests\PermissionRequest $request){
@@ -81,7 +81,7 @@ class PermissionController extends Controller
         $pageTitle = 'View Permission';
         $data = Permission::where('id',$id)->first();
 
-        return view('admin::permission.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
+        return view('user::permission.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
     }
 
     /**
@@ -94,7 +94,7 @@ class PermissionController extends Controller
     {
         $pageTitle = 'Update Permission Informations';
         $data = Permission::where('id',$id)->first();
-        return view('admin::permission.update', ['data' => $data, 'pageTitle'=> $pageTitle]);
+        return view('user::permission.update', ['data' => $data, 'pageTitle'=> $pageTitle]);
     }
 
     /**
