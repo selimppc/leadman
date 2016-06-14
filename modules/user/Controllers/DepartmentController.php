@@ -6,7 +6,7 @@
  * Time: 4:04 PM
  */
 
-namespace Modules\Admin\Controllers;
+namespace Modules\User\Controllers;
 
 
 use App\Department;
@@ -30,7 +30,7 @@ class DepartmentController extends Controller
         $pageTitle = "List of Departments";
         $model = Department::orderBy('id', 'DESC')->paginate(30);
 
-        return view('admin::department.index',['pageTitle'=>$pageTitle,'model'=>$model]);
+        return view('user::department.index',['pageTitle'=>$pageTitle,'model'=>$model]);
     }
 
     public function store(DepartmentRequest $request){
@@ -77,21 +77,21 @@ class DepartmentController extends Controller
             $model = Department::paginate(30);
         }
 
-        return view('admin::department.index', ['model' => $model, 'pageTitle'=> $pageTitle]);
+        return view('user::department.index', ['model' => $model, 'pageTitle'=> $pageTitle]);
     }
 
     public function view($id)
     {
         $pageTitle = 'Department Informations';
         $data = Department::where('id',$id)->first();
-        return view('admin::department.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
+        return view('user::department.view', ['data' => $data, 'pageTitle'=> $pageTitle]);
     }
 
     public function edit($id)
     {
         $pageTitle = "Update Department Informations";
         $data = Department::where('id',$id)->first();
-        return view('admin::department.update', ['data' => $data,'pageTitle'=> $pageTitle]);
+        return view('user::department.update', ['data' => $data,'pageTitle'=> $pageTitle]);
     }
 
     public function update(DepartmentRequest $request,$id)

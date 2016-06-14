@@ -36,7 +36,7 @@
                 <p> &nbsp;</p>
                 {{------------- Filter :Ends -------------------------------------------}}
                 <div class="table-primary">
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-example">
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table-example">
                         <thead>
                         <tr>
 
@@ -78,7 +78,7 @@
             </div>
             <div class="modal-body">
                 {!! Form::open(['route' => 'add-department','id' => 'jq-validation-form']) !!}
-                @include('admin::department._form')
+                @include('user::department._form')
                 {!! Form::close() !!}
             </div> <!-- / .modal-body -->
         </div> <!-- / .modal-content -->

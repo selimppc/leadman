@@ -1,3 +1,6 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
 <div class="modal-header">
     <a href="{{ URL::previous() }}" class="close" type="button" title="click x button for close this entry form"> × </a>
     <h4 class="modal-title" id="myModalLabel">{{$pageTitle}}</h4>
@@ -9,6 +12,8 @@
         {!! Form::model($data, ['method' => 'PATCH', 'route'=> ['update-department', $data->id]]) !!}
         @include('admin::department._form')
         {!! Form::close() !!}
+</div>
+    </div>
 </div>
 
 <script>
