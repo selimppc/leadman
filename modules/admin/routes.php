@@ -71,10 +71,20 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers'],funct
                 'route'=>'',
                 'uses'=>'PoppingEmailController@index'
             ]);
+            Route::any('search',[
+                #'middleware'=>'acl_access::search',
+                'route'=>'search',
+                'uses'=>'PoppingEmailController@search'
+            ]);
             Route::post('',[
                 #'middleware'=>'acl_access::popping-email',
                 'route'=>'',
                 'uses'=>'PoppingEmailController@auth_process'
+            ]);
+            Route::get('show/{id}',[
+                #'middleware'=>'acl_access::popping-email/show',
+                'route'=>'popping-email.show',
+                'uses'=>'PoppingEmailController@show'
             ]);
             Route::get('edit/{id}',[
                 #'middleware'=>'acl_access::popping-email/edit',

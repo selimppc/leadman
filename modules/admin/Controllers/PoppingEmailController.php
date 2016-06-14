@@ -40,7 +40,31 @@ class PoppingEmailController extends Controller
         $data['country_id'] = Country::lists('title','id');
         $data['smtp_id'] = Smtp::lists('name','id');
         $data['imap_id'] = Imap::lists('name','id');
+
+
         $data['popping_emails']=PoppingEmail::with(['relSmtp','relimap'])->paginate(10);
+        return view('admin::popping_email.index', $data);
+    }
+    public function search(Request $request)
+    {
+        $data['pageTitle'] = " Popping Email ";
+        $data['country_id'] = Country::lists('title','id');
+        $data['smtp_id'] = Smtp::lists('name','id');
+        $data['imap_id'] = Imap::lists('name','id');
+        if($request->isMethod('post'))
+        {
+            $popmail_filter_name = $request->only('popmail_filter');
+            Session::put('popmail_filter',$popmail_filter_name['popmail_filter']);
+        }else{
+            $popmail_filter_name['popmail_filter']= session('popmail_filter');
+        }
+
+        $obj = (object) $popmail_filter_name;
+        $obj->popmail_filter=$popmail_filter_name['popmail_filter'];
+
+        $data['popping_emails']= PoppingEmail::with(['relSmtp','relimap'])->where('email','LIKE','%'.$popmail_filter_name["popmail_filter"].'%')
+            ->orderBy('id', 'DESC')->paginate(10);
+        $data['popmail_filter']=$obj;
         return view('admin::popping_email.index', $data);
     }
 
@@ -190,7 +214,9 @@ class PoppingEmailController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['pageTitle'] = 'Show the detail';
+        $data['popping_email'] = PoppingEmail::with('relSmtp','relImap','relCountry')->findOrFail($id);
+        return view('admin::popping_email.view', $data);
     }
 
     /**
@@ -201,7 +227,12 @@ class PoppingEmailController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['pageTitle'] = 'Show the detail';
+        $data['country_id'] = Country::lists('title','id');
+        $data['smtp_id'] = Smtp::lists('name','id');
+        $data['imap_id'] = Imap::lists('name','id');
+        $data['popping_email'] = PoppingEmail::with('relSmtp','relImap','relCountry')->findOrFail($id);
+        return view('admin::popping_email.update', $data);
     }
 
     /**
@@ -213,7 +244,24 @@ class PoppingEmailController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $model = PoppingEmail::findOrFail($id);
+        $input = $request->all();
+            // Transaction Start Here
+        DB::beginTransaction();
+        try {
+            if(empty($input['password']))
+            {
+                unset($input['password']);
+            }
+            $model->update($input);
+            DB::commit();
+            Session::flash('message', 'Successfully Updated!');
+        }catch (Exception $e) {
+            //If there are any exceptions, rollback the transaction`
+            DB::rollback();
+            Session::flash('error', "Invalid Request" );
+        }
+        return redirect()->back();
     }
 
     /**
@@ -224,6 +272,9 @@ class PoppingEmailController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $popping_email=PoppingEmail::findOrFail($id);
+        $popping_email->delete();
+        Session::flash('message', 'Popping Email has been successfully deleted.');
+        return redirect()->back();
     }
 }

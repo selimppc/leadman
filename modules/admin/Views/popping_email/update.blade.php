@@ -6,9 +6,8 @@
         </div>
         <div class="modal-body">
 
-            {!! Form::model($data, ['method' => 'PATCH', 'route'=> ['popping_email.update', $data->id]]) !!}
-            {!! Form::hidden('id', $data->id) !!}
-            @include('popping_email._form')
+            {!! Form::model($popping_email, ['method' => 'PATCH', 'url'=> ['admin/popping-email', $popping_email->id]]) !!}
+            @include('admin::popping_email._form')
             {!! Form::close() !!}
 
         </div>

@@ -19,10 +19,14 @@
                 <div class="adv-table">
 
                     {{-------------- Filter :Starts -------------------------------------------}}
-{{--                    {!! Form::open(['route' => 'popping_email.index']) !!}--}}
+                    @if(isset($popmail_filter))
+                    {!! Form::model($popmail_filter,['url' => 'admin/popping-email/search']) !!}
+                    @else
+                        {!! Form::open(['url' => 'admin/popping-email/search']) !!}
+                    @endif
                     <div  class="col-lg-3 pull-left" >
                         <div class="input-group input-group-sm">
-                            {!! Form::text('popmail_filter', Input::old('popmail_filter'), ['id'=>'popmail_filter','placeholder'=>'Search by name','class' => 'form-control','required']) !!}
+                            {!! Form::text('popmail_filter', Input::old('popmail_filter'), ['id'=>'popmail_filter','placeholder'=>'Search by email','class' => 'form-control','required']) !!}
                             <span class="input-group-btn">
                                <button class="btn btn-info btn-flat" type="submit" >Search</button>
                             </span>
@@ -47,15 +51,15 @@
                                 <td>{{ isset($values->relSmtp->name)?$values->relSmtp->name:'' }}</td>
                                 <td>{{ isset($values->relImap->name)?$values->relImap->name:'' }}</td>
                                 <td>
-                                    {{--<a href="{{ route('popping_email.show.data', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>--}}
-{{--                                    <a href="{{ route('popping_email.edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>--}}
-{{--                                    <a href="{{ route('popping_email.destroy', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" title="Popping Email Delete"><i class="icon-trash"></i></a>--}}
+                                    <a href="{{ url('admin/popping-email/show', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>
+                                    <a href="{{ url('admin/popping-email/edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>
+                                    <a href="{{ url('admin/popping-email/delete', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" title="Popping Email Delete"><i class="icon-trash"></i></a>
                                 </td>
                             </tr>
                         @endforeach
                     </table>
 
-{{--                    <span class="pull-right">{!! str_replace('/?', '?', $data->render()) !!} </span>--}}
+                    <span class="pull-right">{!! str_replace('/?', '?', $popping_emails->render()) !!} </span>
 
                 </div>
             </div>
