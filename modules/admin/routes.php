@@ -102,6 +102,33 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers'],funct
                 'uses'=>'PoppingEmailController@destroy'
             ]);
         });
+        Route::Group(['prefix'=>'filter'],function(){
+            Route::get('',[
+                #'middleware'=>'acl_access::filter',
+                'route'=>'',
+                'uses'=>'FilterController@index'
+            ]);
+            Route::post('',[
+                #'middleware'=>'acl_access::filter',
+                'route'=>'',
+                'uses'=>'FilterController@store'
+            ]);
+            Route::get('edit/{id}',[
+                #'middleware'=>'acl_access::filter/edit',
+                'route'=>'filter.edit',
+                'uses'=>'FilterController@edit'
+            ]);
+            Route::patch('{id}',[
+                #'middleware'=>'acl_access::filter/edit',
+                'route'=>'filter',
+                'uses'=>'FilterController@update'
+            ]);
+            Route::get('delete/{id}',[
+                #'middleware'=>'acl_access::filter/edit',
+                'route'=>'filter.delete',
+                'uses'=>'FilterController@destroy'
+            ]);
+        });
     });
 
 });
