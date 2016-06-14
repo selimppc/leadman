@@ -8,9 +8,8 @@
 
     <?php  //echo $data->id;  ?>
 
-    {!! Form::model($data, ['method' => 'PATCH', 'route'=> ['imap.update', $data->id]]) !!}
-        {!! Form::hidden('id', $data->id) !!}
-    @include('imap._form')
+    {!! Form::model($imap, ['method' => 'PATCH', 'url'=> ['admin/imap', $imap->id]]) !!}
+    @include('admin::imap._form')
     {!! Form::close() !!}
 
 </div>

@@ -1,7 +1,7 @@
 @extends('admin::layouts.master')
 @section('sidebar')
-    @parent
-    @include('admin::layouts.sidebar')
+@parent
+@include('admin::layouts.sidebar')
 @stop
 
 @section('content')
@@ -36,15 +36,15 @@
                 <div class="adv-table">
                     {{-------------- Filter :Starts -------------------------------------------}}
 {{--                    {!! Form::open(['route' => 'imap.index']) !!}--}}
-                    <div  class="col-lg-3 pull-left" >
+                    {{--<div  class="col-lg-3 pull-left" >
                         <div class="input-group input-group-sm">
                             {!! Form::text('imap_filter', Input::old('imap_filter'), ['id'=>'imap_filter','placeholder'=>'Search by name','class' => 'form-control','required']) !!}
                             <span class="input-group-btn">
                                <button class="btn btn-info btn-flat" type="submit" >Search</button>
                             </span>
                         </div>
-                    </div>
-                    {!! Form::close() !!}
+                    </div>--}}
+{{--                    {!! Form::close() !!}--}}
             {{--       {!! Form::open(['route' => 'imap.index']) !!}
                     <div  class="col-lg-3 pull-left" >
                         <div class="input-group input-group-sm">
@@ -64,31 +64,24 @@
                             <th> Name </th>
                             <th> Host </th>
                             <th> Port </th>
-                            <th> Charset </th>
-                            <th> Secure </th>
-                            {{--<th> Mails Per Day</th>--}}
                             <th> Action </th>
                         </tr>
                         </thead>
                         <tbody>
-                        {{--@foreach($data as $values)
+                        @foreach($imaps as $imap)
                         <tr class="gradeX">
-                            <td>{{$values->id}}</td>
-                            <td>{{$values->name}}</td>
-                            <td>{{$values->host}}</td>
-                            <td>{{$values->port}}</td>
-                            <td>{{$values->charset}}</td>
-                            <td>{{$values->secure}}</td>
-                            --}}{{--<td>{{$values->mails_per_day}}</td>--}}{{--
+                            <td>{{$imap->id}}</td>
+                            <td>{{$imap->name}}</td>
+                            <td>{{$imap->host}}</td>
+                            <td>{{$imap->port}}</td>
                             <td>
-                                <a href="{{ route('imap.show.data', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Imap View"><i class="icon-eye-open"></i></a>
-                                <a href="{{ route('imap.edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Imap Edit"><i class="icon-edit"></i></a>
-                                <a href="{{ route('imap.destroy', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" title="Imap Delete"><i class="icon-trash"></i></a>
+                                <a href="{{ url('admin/imap/edit', $imap->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Imap Edit"><i class="icon-edit"></i></a>
+                                <a href="{{ url('admin/imap/delete', $imap->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" title="Imap Delete"><i class="icon-trash"></i></a>
                             </td>
                         </tr>
-                        @endforeach--}}
+                        @endforeach
                     </table>
-                    {{--<span class="pull-right">{!! str_replace('/?', '?', $data->render()) !!} </span>--}}
+{{--                    <span class="pull-right">{!! str_replace('/?', '?', $imaps->render()) !!} </span>--}}
                 </div>
             </div>
         </section>
