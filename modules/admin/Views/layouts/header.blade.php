@@ -21,12 +21,12 @@
         <li>
             <input type="text" class="form-control search" placeholder="Search">
         </li>
-        <li class="center"><p><b> {{--{!! isset(Auth::user()->first_name) ?Auth::user()->first_name:'' !!}--}} </b></p></li>
+        <li class="center"><p><b> {!! isset(Auth::user()->first_name) ?Auth::user()->first_name:'' !!} </b></p></li>
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                {{--{!! Html::image('/etsb/img/avatar2.png', 'title', array()) !!}--}}
-                {{--<span class="username">Jhon Doue</span>--}}
+                {!! Html::image('/assets/img/avatar2.png', 'title', array()) !!}
+                <span class="username">{{Auth::user()->username}}</span>
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
@@ -35,14 +35,14 @@
                 <li><a href="#"><i class="icon-cog"></i> Setting</a></li>
                   <li><a href="#"><i class="icon-bell-alt"></i> Notification</a></li>--}}
 
-                {{--@if(isset(Auth::user()->id))
+                @if(isset(Auth::user()->id))
                     <li><a href="#"><i ></i></a></li>
-                    <li><a href="{{ URL::to('user/profile-info') }}"><i class="icon-cog"></i>Profile</a></li>
+                    <li><a href="{{Route('user-profile')}}"><i class="icon-cog"></i>Profile</a></li>
                     <li><a href="#"><i ></i> </a></li>
-                    <li><a href={{ route('user.logout') }}><i class="icon-key"></i> Log Out</a></li>
+                    <li><a href={{Route('user-logout')}}><i class="icon-key"></i> Log Out</a></li>
                 @else
                     <li><a href={{ route('user-login') }}><i class="icon-key"></i> Sign In</a></li>
-                @endif--}}
+                @endif
             </ul>
         </li>
         <!-- user login dropdown end -->

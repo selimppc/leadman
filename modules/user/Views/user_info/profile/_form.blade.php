@@ -140,5 +140,5 @@
     //}
 </script>
 
-@include('admin::user_info.profile._script')
+@include('user::user_info.profile._script')
 

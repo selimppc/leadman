@@ -117,7 +117,7 @@ class AuthController extends Controller
 
     public function getLogin()
     {
-        if(Session::has('email')) {echo 2324;exit;
+        if(Session::has('email')) {
             return view('admin::layouts.dashboard');
         }
         else{
@@ -134,6 +134,8 @@ class AuthController extends Controller
         }*/
         $data = Input::all();
         date_default_timezone_set("Asia/Dacca");
+
+        //print_r($data);exit;
 
         if(Auth::check()){
             Session::put('email', isset(Auth::user()->get()->id));
