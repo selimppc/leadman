@@ -1,12 +1,5 @@
-<script src="assets/bitd/js/jquery.min.js"></script>
-
-<script src="assets/bitd/js/bootstrap.min.js"></script>
-
-<script src="assets/bitd/js/validation.js"></script>
-{{--datepicker--}}
-<script src="assets/bitd/js/bootstrap-datepicker.min.js"></script>
-
-<link rel="stylesheet" href="assets/bitd/css/bootstrap-datepicker3.min.css">
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
 
 
 <div class="modal-header">
@@ -78,7 +71,8 @@
         {!! Form::close() !!}
 </div>
 
-
+    </div>
+</div>
 
 <script>
     $(function(){
