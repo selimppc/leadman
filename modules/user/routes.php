@@ -383,13 +383,13 @@ Route::group(array('modules'=>'User', 'namespace' => 'Modules\User\Controllers')
 
 //   Department...
         Route::any('department', [
-            //'middleware' => 'acl_access:department',
+            'middleware' => 'acl_access:department',
             'as' => 'department',
             'uses' => 'DepartmentController@index'
         ]);
 
         Route::any('add-department', [
-            //'middleware' => 'acl_access:add-department',
+            'middleware' => 'acl_access:add-department',
             'as' => 'add-department',
             'uses' => 'DepartmentController@store'
         ]);

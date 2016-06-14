@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\GoogleClientCall;
+use App\Helpers\ImapCall;
 use Illuminate\Console\Command;
 use Google_Service_Gmail;
 use Google_Service_Gmail_ModifyMessageRequest;
@@ -11,6 +13,7 @@ use Google_Auth_AssertionCredentials;
 use Google_Service_Datastore;
 use Google_Service_Urlshortener;
 use Google_Service_Urlshortener_Url;
+use Modules\Admin\Lead;
 use Modules\Admin\PoppingEmail;
 
 
@@ -48,7 +51,7 @@ class EmailFetch extends Command
     public function handle()
     {
         //Popping Email List
-        $popping_email = PoppingEmail::with('relImap')->where('status', 'active')->get();
+        $popping_email = PoppingEmail::with('relImap', 'relImap')->where('status', 'active')->get();
 
         while(true)
         {
@@ -60,18 +63,37 @@ class EmailFetch extends Command
                     if($imap->host =='imap.gmail.com')
                     {
                         //TODO:: call GoogleClientCall
-                        exit("Google Area");
-
+                        $result = GoogleClientCall::run($pop_email->email);
                     }
                     else
                     {
+                        $hostname = $pop_email->relImap->host;
+                        $username = $pop_email->relImap->server_username;
+                        $password = $pop_email->relImap->server_password;
 
                         //TODO:: call ImapCall
-                        exit("Imap Area ");
+                        $result = ImapCall::run($hostname, $username, $password);
 
                     }
+                    if($result){
+
+                        foreach($result as $val){
+                            $check_lead = Lead::where('email', $val['from_email'])->exists();
+                            if(!$check_lead){
+                                $model = new Lead();
+                                try{
+                                    $model->create($val);
+                                    $this->info('Stored Lead ! '.$model->email);
+                                }catch(\Exception $e){
+                                    $this->info('Failed : '.$e->getMessage());
+                                }
+                            }
+                        }
+                        $model->create($result);
+                    }else{
+                        $this->info('No Data Found ! ');
+                    }
                 }
-                $this->info('All Popping Email Fetched ! ');
                 break;
             }
             catch(Exception $e)

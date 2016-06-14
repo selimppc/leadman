@@ -1,8 +1,8 @@
-<script type="text/javascript" src="{{ URL::asset('assets/bitd/js/jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/bitd/js/custom.min.js') }}"></script>
 
 
 {!! Form::model($data, ['method' => 'PATCH', 'route'=> ['update-menu-panel', $data->id]]) !!}
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
 
 <div class="modal-header">
     <a href="{{ URL::previous() }}" class="close" type="button" title="click x button for close this entry form"> × </a>
@@ -72,10 +72,12 @@
     {!! Form::submit('Save changes', ['class' => 'btn btn-primary','data-placement'=>'top','data-content'=>'click save changes button for save menu information']) !!}&nbsp;
     <a href="{{route('menu-panel')}}" class=" btn btn-default" data-placement="top" data-content="click close button for close this entry form">Close</a>
 </div>
+    </div>
+</div>
 
 {!! Form::close() !!}
 
-@include('admin::menu_panel.update_script')
+@include('user::menu_panel.update_script')
 
 
 <script>
