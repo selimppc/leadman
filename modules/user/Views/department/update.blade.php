@@ -10,7 +10,7 @@
 <div class="modal-body">
     @section('content_update')
         {!! Form::model($data, ['method' => 'PATCH', 'route'=> ['update-department', $data->id]]) !!}
-        @include('admin::department._form')
+        @include('user::department._form')
         {!! Form::close() !!}
 </div>
     </div>

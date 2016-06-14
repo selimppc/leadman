@@ -395,31 +395,31 @@ Route::group(array('modules'=>'User', 'namespace' => 'Modules\User\Controllers')
         ]);
 
         Route::any('view-department/{id}', [
-            //'middleware' => 'acl_access:view-department/{id}',
+            'middleware' => 'acl_access:view-department/{id}',
             'as' => 'view-department',
             'uses' => 'DepartmentController@view'
         ]);
 
         Route::any('delete-department/{id}', [
-            //'middleware' => 'acl_access:delete-department/{id}',
+            'middleware' => 'acl_access:delete-department/{id}',
             'as' => 'delete-department',
             'uses' => 'DepartmentController@delete'
         ]);
 
         Route::any('edit-department/{id}', [
-            //'middleware' => 'acl_access:edit-department/{id}',
+            'middleware' => 'acl_access:edit-department/{id}',
             'as' => 'edit-department',
             'uses' => 'DepartmentController@edit'
         ]);
 
         Route::any('update-department/{id}', [
-            //'middleware' => 'acl_access:update-department/{id}',
+            'middleware' => 'acl_access:update-department/{id}',
             'as' => 'update-department',
             'uses' => 'DepartmentController@update'
         ]);
 
         Route::any('search-department', [
-            //'middleware' => 'acl_access:search-department',
+            'middleware' => 'acl_access:search-department',
             'as' => 'search-department',
             'uses' => 'DepartmentController@search_department'
         ]);

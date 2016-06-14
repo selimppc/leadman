@@ -43,7 +43,7 @@
                         <!-- form open for batch delete -->
                 {!!  Form::open(['route' => ['delete-permission-role'], 'id' => 'formCheckbox']) !!}
                 <div class="table-primary">
-                    <table id="jq-datatables-example" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" >
+                    <table id="data-table-example" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" >
                         <thead>
                         <tr>
                             <th><input type="checkbox" id="checkAll">&nbsp;&nbsp;<span style="color: #A54A7B" class="user-guideline" data-placement="top" data-content="check for select permission roles delete"></span></th>
@@ -89,7 +89,7 @@
             </div>
             <div class="modal-body">
                 {!! Form::open(['route' => 'store-permission-role','id' => 'form_2']) !!}
-                @include('admin::permission_role._form')
+                @include('user::permission_role._form')
                 {!! Form::close() !!}
             </div> <!-- / .modal-body -->
         </div> <!-- / .modal-content -->
