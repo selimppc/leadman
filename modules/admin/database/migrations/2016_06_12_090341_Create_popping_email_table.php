@@ -21,7 +21,7 @@ class CreatePoppingEmailTable extends Migration
             $table->unsignedInteger('imap_id',false)->nullable();
             $table->foreign('imap_id')->references('id')->on('imap');
             $table->unsignedInteger('country_origin',false)->nullable();
-            $table->foreign('country_origin')->references('id')->on('imap');
+            $table->foreign('country_origin')->references('id')->on('country');
             $table->float('price')->nullable();
             $table->unsignedInteger('schedule_id',false)->nullable();
             $table->foreign('schedule_id')->references('id')->on('schedule');

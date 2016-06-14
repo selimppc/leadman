@@ -5,13 +5,6 @@
         @endforeach
     </ul>
 @endif
-
-<div class="form-group">
-    {!! Form::label('name', 'Name:', ['class' => 'control-label']) !!}
-    {!! Form::text('name', null, ['id'=>'name', 'class' => 'form-control', 'minlength'=>'2', 'required'=>'required']) !!}
-
-</div>
-
     <div class="form-group">
         {!! Form::label('email', 'Email:', ['class' => 'control-label']) !!}
         {!! Form::email('email', null, ['id'=>'email', 'class' => 'form-control', 'required'=>'required']) !!}
@@ -29,8 +22,13 @@
     {!! Form::label('imap_id', 'Imap Name:', ['class' => 'control-label']) !!}
     {!! Form::select('imap_id', $imap_id,Input::old('imap_id'),['class' => 'form-control','required']) !!}
 </div>
+<div class="form-group">
+    {!! Form::label('country_id', 'Origin Country Name:', ['class' => 'control-label']) !!}
+    {!! Form::select('country_origin', $country_id,Input::old('country_origin'),['class' => 'form-control','required']) !!}
+</div>
+
 
 <p> &nbsp; </p>
 
-<a href="{{ URL::route('popping_email.index')}}" class="btn btn-default" type="button"> Close </a>
+<a href="{{ URL::to('admin/popping-email')}}" class="btn btn-default" type="button"> Close </a>
 {!! Form::submit('Submit', ['class' => 'btn btn-success']) !!}

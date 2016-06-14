@@ -12,7 +12,6 @@ class CountrySeeder extends Seeder
     public function run()
     {
 
-        \DB::table('country')->truncate();
         $c_list = array(
             "AF"=>"Afghanistan ",
             "AX"=>"Åland Islands ",

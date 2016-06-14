@@ -19,10 +19,14 @@
                 <div class="adv-table">
 
                     {{-------------- Filter :Starts -------------------------------------------}}
-{{--                    {!! Form::open(['route' => 'popping_email.index']) !!}--}}
+                    @if(isset($popmail_filter))
+                    {!! Form::model($popmail_filter,['url' => 'admin/popping-email/search']) !!}
+                    @else
+                        {!! Form::open(['url' => 'admin/popping-email/search']) !!}
+                    @endif
                     <div  class="col-lg-3 pull-left" >
                         <div class="input-group input-group-sm">
-                            {!! Form::text('popmail_filter', Input::old('popmail_filter'), ['id'=>'popmail_filter','placeholder'=>'Search by name','class' => 'form-control','required']) !!}
+                            {!! Form::text('popmail_filter', Input::old('popmail_filter'), ['id'=>'popmail_filter','placeholder'=>'Search by email','class' => 'form-control','required']) !!}
                             <span class="input-group-btn">
                                <button class="btn btn-info btn-flat" type="submit" >Search</button>
                             </span>
@@ -34,32 +38,28 @@
                     <table  class="display table table-bordered table-striped" id="data-table-example">
                         <thead>
                         <tr>
-                            <th>Name</th>
                             <th>Email</th>
                             <th>Smtp</th>
                             <th>Imap</th>
-                            <th>Campaign</th>
                             <th>Action </th>
                         </tr>
                         </thead>
                         <tbody>
-                        {{--@foreach($data as $values)
+                        @foreach($popping_emails as $values)
                             <tr class="gradeX">
-                                <td>{{ isset($values->name)?$values->name:'' }}</td>
                                 <td>{{ isset($values->email)?$values->email:''  }}</td>
                                 <td>{{ isset($values->relSmtp->name)?$values->relSmtp->name:'' }}</td>
                                 <td>{{ isset($values->relImap->name)?$values->relImap->name:'' }}</td>
-                                <td>{{ isset($values->relCampaign_name->name)?$values->relCampaign_name->name:'' }}</td>
                                 <td>
-                                    <a href="{{ route('popping_email.show.data', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>
-                                    <a href="{{ route('popping_email.edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>
-                                    <a href="{{ route('popping_email.destroy', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" title="Popping Email Delete"><i class="icon-trash"></i></a>
+                                    <a href="{{ url('admin/popping-email/show', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>
+                                    <a href="{{ url('admin/popping-email/edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>
+                                    <a href="{{ url('admin/popping-email/delete', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" title="Popping Email Delete"><i class="icon-trash"></i></a>
                                 </td>
                             </tr>
-                        @endforeach--}}
+                        @endforeach
                     </table>
 
-{{--                    <span class="pull-right">{!! str_replace('/?', '?', $data->render()) !!} </span>--}}
+                    <span class="pull-right">{!! str_replace('/?', '?', $popping_emails->render()) !!} </span>
 
                 </div>
             </div>
@@ -79,7 +79,7 @@
                 <h4 class="modal-title">Add Popping Email</h4>
             </div>
             <div class="modal-body">
-                {!! Form::open(['url' => 'admin/popping_email']) !!}
+                {!! Form::open(['url' => 'admin/popping-email']) !!}
                 @include('admin::popping_email._form')
                 {!! Form::close() !!}
 

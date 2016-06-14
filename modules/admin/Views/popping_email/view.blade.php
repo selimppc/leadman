@@ -7,20 +7,20 @@
         <div class="modal-body">
             <table class="table table-bordered table-hover table-striped">
                 <tr>
-                    <th>Name</th>
-                    <td>{{ isset($data->name)?$data->name:'' }}</td>
-                </tr>
-                <tr>
                     <th>Email</th>
-                    <td>{{ isset($data->email)?$data->email:'' }}</td>
+                    <td>{{ isset($popping_email->email)?$popping_email->email:'' }}</td>
                 </tr>
                 <tr>
                     <th>Smtp Name</th>
-                    <td>{{ isset($data->smtp_id)?$data->relSmtp->name:'' }}</td>
+                    <td>{{ isset($popping_email->smtp_id)?$popping_email->relSmtp->name:'' }}</td>
                 </tr>
                 <tr>
                     <th>Imap Name</th>
-                    <td>{{ isset($data->imap_id)?$data->relImap->name:'' }}</td>
+                    <td>{{ isset($popping_email->imap_id)?$popping_email->relImap->name:'' }}</td>
+                </tr>
+                <tr>
+                    <th>Country</th>
+                    <td>{{ isset($popping_email->country_origin)?$popping_email->relCountry->title:'' }}</td>
                 </tr>
             </table>
         </div>
