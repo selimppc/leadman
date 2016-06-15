@@ -166,14 +166,24 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers'],funct
                 'uses'=>'InvoiceController@index'
             ]);
             Route::get('view/{id}',[
-                #'middleware'=>'acl_access::invoice/edit',
+                #'middleware'=>'acl_access::invoice/view',
                 'as'=>'invoice.view',
                 'uses'=>'InvoiceController@show'
             ]);
-            Route::get('delete/{id}',[
+            Route::get('change_status/{id}',[
                 #'middleware'=>'acl_access::invoice/edit',
+                'as'=>'invoice.change_status',
+                'uses'=>'InvoiceController@edit'
+            ]);
+            Route::get('delete/{id}',[
+                #'middleware'=>'acl_access::invoice/delete',
                 'as'=>'invoice.delete',
                 'uses'=>'InvoiceController@destroy'
+            ]);
+            Route::patch('update_status/{id}',[
+                #'middleware'=>'acl_access::schedule/edit',
+                    'as'=>'update_status',
+                    'uses'=>'InvoiceController@update'
             ]);
         });
     });
