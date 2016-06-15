@@ -80,7 +80,7 @@
 </div>
 <!-- page end-->
 
-<div id="addData" class="modal fade" tabindex="" role="dialog" style="display: none;">
+{{--<div id="addData" class="modal fade" tabindex="" role="dialog" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -94,9 +94,23 @@
             </div> <!-- / .modal-body -->
         </div> <!-- / .modal-content -->
     </div> <!-- / .modal-dialog -->
-</div>
+</div>--}}
 <!-- modal -->
-
+<div id="addData" class="modal fade" tabindex="" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" title="click x button for close this entry form">×</button>
+                <h4 class="modal-title" id="myModalLabel">Add Role To Assign Permission <span style="color: #A54A7B" class="user-guideline" data-content="<em>Must Fill <b>Required</b> Field.    <b>*</b> Put cursor on input field for more informations</em>"><font size="2">(?)</font> </span></h4>
+            </div>
+            <div class="modal-body">
+                {!! Form::open(['route' => 'index-permission-role','id' => 'jq-validation-form']) !!}
+                @include('user::permission_role._form')
+                {!! Form::close() !!}
+            </div> <!-- / .modal-body -->
+        </div> <!-- / .modal-content -->
+    </div> <!-- / .modal-dialog -->
+</div>
 
 <!-- Modal  -->
 
@@ -106,6 +120,24 @@
 
         </div>
     </div>
+</div>
+
+{{--Second modal--}}
+
+<div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" title="click x button for close this entry form">×</button>
+                <h4 class="modal-title" id="myModalLabel">Assign Permission To : {{isset($role_name)?ucfirst($role_name):''}}<span style="color: #A54A7B" class="user-guideline" data-content="<em>Must Fill <b>Required</b> Field. <b>*</b> Put cursor on input field for more informations</em>"><font size="2"></font> </span></h4>
+            </div>
+            <div class="modal-body">
+                {!! Form::open(['route'=> ['store-permission-role']]) !!}
+                @include('user::permission_role._duallistbox_form')
+                {!! Form::close() !!}
+            </div> <!-- / .modal-body -->
+        </div> <!-- / .modal-content -->
+    </div> <!-- / .modal-dialog -->
 </div>
 
 <!-- modal -->
@@ -134,16 +166,31 @@
             return false;
         }
     }
+
+    $('#jq-validation-form').submit(function() {
+        $('#gif').css('visibility', 'visible');
+        //return true;
+    });
 </script>
 
+@if(isset($exists_permission))
+    @if(count($exists_permission)>0)
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#Modal2").modal('show');
+            });
+        </script>
+        @endif
+        @endif
+
 <!--script for this page only-->
-@if($errors->any())
+{{--@if($errors->any())
     <script type="text/javascript">
         $(function(){
             $("#addData").modal('show');
         });
     </script>
-@endif
+@endif--}}
         <!-- form close for bathc delete -->
     {{--{!! Form::close() !!}--}}
 @stop
