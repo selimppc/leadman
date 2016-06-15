@@ -1,13 +1,13 @@
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title text-center">View Of : {{ isset($data->title)?ucfirst($data->title):'' }}</h4>
+            <h4 class="modal-title text-center">View Of : {{ isset($data->title)?ucfirst(preg_replace('~[-_]~',' ',$data->title)):'' }}</h4>
         </div>
         <div class="modal-body">
             <table class="table table-bordered table-hover table-striped">
                 <tr>
                     <th>Title</th>
-                    <td>{{isset($data->title)?ucfirst($data->title):''}}</td>
+                    <td>{{isset($data->title)?ucfirst(preg_replace('~[-_]~',' ',$data->title)):''}}</td>
                 </tr>
                 <tr>
                     <th>Status</th>
