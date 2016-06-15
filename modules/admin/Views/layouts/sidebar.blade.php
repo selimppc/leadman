@@ -74,12 +74,12 @@
         <li><a href="{{route('index-permission-role')}}"><span class="mm-text">Permission Role</span></a></li>
         <li><a href="{{route('user-activity')}}"><span class="mm-text">User Activity </span></a></li>
         <li><a href="{{route('menu-panel')}}"><span class="mm-text">Menu Panel </span></a></li>
-        <li><a href="{{route('menu-panel')}}"><span class="mm-text">Department </span></a></li>
+        <li><a href="{{route('department')}}"><span class="mm-text">Department </span></a></li>
     </ul>
 </li>
 
 <li class="sub-menu">
-    <a href={{URL::to('central_settings/index')}}>
+    <a href={{URL::to('admin/central-settings')}}>
         <i class="icon-cog"></i>
         <span>Settings</span>
     </a>
