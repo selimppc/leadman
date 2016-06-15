@@ -6,6 +6,15 @@
  * Time: 10:10 AM
  */
 
-Route::Group(['namespace'=>'Modules\Www'],function(){
+Route::Group(['modules'=>'www', 'namespace'=>'Modules\Www\Controllers'],function(){
+
+    Route::Group(['prefix'=>'dashboard'],function(){
+        Route::get('user',[
+            #'middleware'=>'acl_access::schedule',
+            'route'=>'',
+            'uses'=>'UserDashboardController@index'
+        ]);
+
+    });
 
 });

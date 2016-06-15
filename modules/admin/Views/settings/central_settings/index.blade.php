@@ -7,11 +7,12 @@
 @section('content')
 
         <!-- page start-->
+
 <div class="row">
     <div class="col-lg-12">
         <section class="panel">
             <header class="panel-heading">
-                <strong>{{ $pageTitle }}</strong>
+                {{ $pageTitle }}
             </header>
             @if($errors->any())
                 <div class="alert alert-danger">
@@ -34,6 +35,7 @@
             <div class="panel-body">
 
                 <div class="adv-table">
+
                     <table  class="display table table-bordered table-striped" id="data-table-example">
                         <thead>
                         <tr>
@@ -44,16 +46,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if(isset($data))
-                            @foreach($data as $v)
+                        @if(isset($settings_data))
+                            @foreach($settings_data as $row)
                                 <tr class="gradeX">
-                                    <td>{{preg_replace('~[-_]~',' ',$v->title)}}</td>
-                                    <td>{{isset($v->status)?ucfirst($v->status):''}}</td>
-                                    <td>{{isset($v->user_type)? ucfirst($v->user_type):''}}</td>
+                                    <td>{{preg_replace('~[-_]~',' ',$row->title)}}</td>
+                                    <td>{{isset($row->status)?ucfirst($row->status):''}}</td>
+                                    <td>{{isset($row->user_type)? ucfirst($row->user_type):''}}</td>
                                     <td>
+                                        <a href="{{ route('central-settings-show', $row->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Settings View"><i class="icon-eye-open"></i></a>
+                                        {{--<a href="{{ route('central-settings-edit', $row->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Settings Edit"><i class="icon-edit"></i></a>--}}
+                                    </td>
+                                    {{--<td>
                                         <a href="{{ route('central-settings.show', $v->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Settings View"><i class="icon-eye-open"></i></a>
                                         <a href="{{ route('central-settings.edit', $v->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Settings Edit"><i class="icon-edit"></i></a>
-                                    </td>
+                                    </td>--}}
 
                                 </tr>
                         @endforeach
@@ -67,12 +73,22 @@
 </div>
 <!-- page end-->
 
+{{--<div>
+    user Role ID : {{ Auth::user()->role_id }}
+</div>
+<div>
+    User ID From Session : {{ $ses_user_id }}
+</div>--}}
+{{--<div>
+    User ID From Session : {{ Session::get('user_id') }}
+</div>--}}
 
 
 
 
 <!-- Modal  -->
 <div class="modal fade" id="etsbModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    slkdjflsdjf
 </div>
 <!-- modal -->
 
