@@ -78,7 +78,8 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['invoice'] = InvoiceHead::findOrFail($id);
+        return view('admin::invoice.change_status',$data);
     }
 
     /**
@@ -90,7 +91,14 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $model = InvoiceHead::findOrFail($id);
+
+        $input = $request->only('status');
+        $model->fill($input)->save(); // store / update / code here
+
+        Session::flash('message', 'Successfully updated!');
+
+        return redirect()->back();
     }
 
     /**

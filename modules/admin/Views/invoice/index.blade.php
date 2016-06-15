@@ -32,7 +32,7 @@
                             <?php
                             $status=Config::get('custom.invoice_status');
                             ?>
-                            {!! Form::select('status',['select'=>'Select']+$status,null,['class'=>'form-control','placeholder'=>'Invoice Number']) !!}
+                            {!! Form::select('status',['select'=>'Select status']+$status,null,['class'=>'form-control','placeholder'=>'Invoice Number']) !!}
                         </div>
                         <div class="col-md-1">
                             {!! Form::submit('Search',['class'=>'btn btn-warning']) !!}
@@ -64,6 +64,7 @@
                                     <td>
                                         <a href="{!! url('admin/invoice/view', $invoice->id) !!}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Invoice Details"><i class="icon-eye-open"></i> </a>
                                         <a href="{!!  url('admin/invoice/delete', $invoice->id) !!}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')" title="Filter Delete"><i class="icon-trash"></i> </a>
+                                        <a href="{!! url('admin/invoice/change_status', $invoice->id) !!}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Change Status"><i class="icon-adjust"></i> </a>
                                     </td>
                                 </tr>
                         @endforeach
