@@ -73,12 +73,12 @@
 </div>
 <!-- page end-->
 
-<div>
+{{--<div>
     user Role ID : {{ Auth::user()->role_id }}
 </div>
 <div>
     User ID From Session : {{ $ses_user_id }}
-</div>
+</div>--}}
 {{--<div>
     User ID From Session : {{ Session::get('user_id') }}
 </div>--}}
