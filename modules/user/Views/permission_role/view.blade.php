@@ -1,3 +1,5 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
 <div class="modal-header">
     <a href="{{ URL::previous() }}" class="close" type="button" title="click x button for close this entry form"> × </a>
     <h4 class="modal-title" id="myModalLabel">{{$pageTitle}}</h4>
@@ -24,6 +26,9 @@
 
 <div class="modal-footer">
     <a href="{{route('index-permission-role')}}" class="btn btn-default" type="button" data-placement="top" data-content="click close button for close this entry form"> Close </a>
+</div>
+
+</div>
 </div>
 
 
