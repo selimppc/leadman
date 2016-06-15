@@ -173,14 +173,14 @@
     });
 </script>
 
-@if(isset($exists_permission))
-    @if(count($exists_permission)>0)
+@if(isset($flag))
+    @if($flag>0)--}}
         <script type="text/javascript">
             $(document).ready(function(){
                 $("#Modal2").modal('show');
             });
         </script>
-        @endif
+       @endif
         @endif
 
 <!--script for this page only-->

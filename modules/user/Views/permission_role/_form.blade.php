@@ -1,8 +1,4 @@
-<script type="text/javascript" src="{{ URL::asset('assets/admin/js/jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/admin/js/jquery-ui.min.js') }}"></script>
-
-<img src="assets/admin/img/loading.gif" id="gif" style="display: block; margin: 0 auto; width: 100px; visibility: hidden;">
-
+{!! Form::hidden('flag',1) !!}
 <div class="form-group no-margin-hr panel-padding-h no-padding-t no-border-t">
     <div class="row">
         <div class="col-sm-12">
@@ -22,16 +18,16 @@
 
 <div class="form-margin-btn" style="margin-left: 74%">
     {!! Form::submit('Assign Permission', ['class' => 'btn btn-primary']) !!}
-    <a href="{{route('index-permission-role')}}" class=" btn btn-default" data-placement="top" data-content="click close button for close this entry form" onclick="close_modal();">Close</a>
+    <a href="{{route('index-permission-role')}}" class=" btn btn-default" data-placement="top" data-content="click close button for close this entry form">Close</a>
 
 </div>
 
-<script>
+{{--<script>
     function close_modal(){
         document.getElementById('addData').style.visibility="hidden";
         document.getElementById('etsbModal').style.visibility="hidden";
         document.getElementById('load').style.visibility="visible";
     }
-</script>
+</script>--}}
 
 
