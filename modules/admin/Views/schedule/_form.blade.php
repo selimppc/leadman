@@ -12,7 +12,8 @@
 </div>
 <div class="form-group">
     {!! Form::label('time', 'Time:', ['class' => 'control-label']) !!}
-    {!! Form::input('time', 'time', null, ['id'=>'time', 'class' => 'form-control', 'minlength'=>'2', 'required'=>'required']) !!}
+    {!! Form::input('time', 'timee', null, ['class' => 'form-control', 'minlength'=>'2', 'required'=>'required']) !!}
+{{--    <input type="time" name="time" value="{{ Input::old('time') }}" class="form-control">--}}
 
 </div>
 
