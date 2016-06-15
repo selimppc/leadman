@@ -56,11 +56,6 @@
                                         <a href="{{ route('central-settings-show', $row->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Settings View"><i class="icon-eye-open"></i></a>
                                         {{--<a href="{{ route('central-settings-edit', $row->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Settings Edit"><i class="icon-edit"></i></a>--}}
                                     </td>
-                                    {{--<td>
-                                        <a href="{{ route('central-settings.show', $v->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Settings View"><i class="icon-eye-open"></i></a>
-                                        <a href="{{ route('central-settings.edit', $v->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Settings Edit"><i class="icon-edit"></i></a>
-                                    </td>--}}
-
                                 </tr>
                         @endforeach
                         @endif
