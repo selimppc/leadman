@@ -48,8 +48,11 @@ class PermissionRoleController extends Controller
         return Input::server("REQUEST_METHOD") == "POST";
     }
 
-    public function index()
+    public function index(Requests\PermissionRoleRequest $request)
     {
+        $input = $request->all();
+        $flag = count($input);
+
         $pageTitle = "Permission Role List";
 
         $data = DB::table('permission_role')
@@ -97,7 +100,8 @@ class PermissionRoleController extends Controller
             $role_value = Null;
         }
 
-        return view('user::permission_role.index', ['data' => $data, 'pageTitle'=> $pageTitle, 'role_id'=>$role_id,'exists_permission' => $exists_permission,'not_exists_permission' => $not_exists_permission,'role_name'=>$role_name,'role_value'=>$role_value]);
+        return view('user::permission_role.index', ['data' => $data, 'pageTitle'=> $pageTitle, 'role_id'=>$role_id,'exists_permission' => $exists_permission,'not_exists_permission' => $not_exists_permission,'role_name'=>$role_name,'role_value'=>$role_value,'flag'=>$flag]);
+
     }
 
 

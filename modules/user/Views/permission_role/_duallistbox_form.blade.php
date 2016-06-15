@@ -7,6 +7,7 @@
 @endif
 {!! Form::hidden('status','active') !!}
 
+
 <div class="row">
     <div class="col-sm-5">
         <strong class="text-center">Unassigned Permission List</strong>
