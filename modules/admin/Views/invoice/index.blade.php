@@ -20,9 +20,9 @@
 
 
                     {{-------------- Filter :Start -------------------------------------------}}
-                    {!! Form::open() !!}
+                    {!! Form::model($_REQUEST,['url'=>'admin/invoice','method'=>'get']) !!}
                     <div class="form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             {!! Form::email('email',null,['class'=>'form-control','placeholder'=>'Email']) !!}
                         </div>
                         <div class="col-md-3">
@@ -32,7 +32,10 @@
                             <?php
                             $status=Config::get('custom.invoice_status');
                             ?>
-                            {!! Form::select('status',['select'=>'select']+$status,null,['class'=>'form-control','placeholder'=>'Invoice Number']) !!}
+                            {!! Form::select('status',['select'=>'Select']+$status,null,['class'=>'form-control','placeholder'=>'Invoice Number']) !!}
+                        </div>
+                        <div class="col-md-1">
+                            {!! Form::submit('Search',['class'=>'btn btn-warning']) !!}
                         </div>
                     </div>
                     {!! Form::close() !!}
@@ -50,21 +53,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($invoices as $invoice)
-                            <tr class="gradeX">
-                                <td>{!!  $invoice->id !!}</td>
-                                <td>{!!  $invoice->relPoppingEmail['email'] !!}</td>
-                                <td>{!!  $invoice->invoice_number !!}</td>
-                                <td>{!!  $invoice->status !!}</td>
-                                <td>{!!  $invoice->total_cost !!}</td>
-                                <td>
-                                    <a href="{!! url('admin/invoice/view', $invoice->id) !!}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Invoice Details"><i class="icon-eye-open"></i> </a>
-                                    <a href="{!!  url('admin/invoice/delete', $invoice->id) !!}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')" title="Filter Delete"><i class="icon-trash"></i> </a>
-                                </td>
-                            </tr>
+                        @if(is_object($invoices))
+                            @foreach($invoices as $invoice)
+                                <tr class="gradeX">
+                                    <td>{!!  $invoice->id !!}</td>
+                                    <td>{!!  $invoice->relPoppingEmail['email'] !!}</td>
+                                    <td>{!!  $invoice->invoice_number !!}</td>
+                                    <td>{!!  $invoice->total_cost !!}</td>
+                                    <td>{!!  $invoice->status !!}</td>
+                                    <td>
+                                        <a href="{!! url('admin/invoice/view', $invoice->id) !!}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Invoice Details"><i class="icon-eye-open"></i> </a>
+                                        <a href="{!!  url('admin/invoice/delete', $invoice->id) !!}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')" title="Filter Delete"><i class="icon-trash"></i> </a>
+                                    </td>
+                                </tr>
                         @endforeach
+                        @endif
                     </table>
-                    <span class="pull-right">{!! str_replace('/?', '?', $invoices->render()) !!} </span>
+                    @if(is_object($invoices))
+                    <span class="pull-right">{!! $invoices->appends( $_REQUEST ) !!} </span>
+                        @endif
                 </div>
             </div>
         </section>

@@ -17,162 +17,162 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers'],funct
         Route::Group(['prefix'=>'imap'],function(){
             Route::get('',[
                 #'middleware'=>'acl_access::imap',
-                'route'=>'imap',
+                'as'=>'imap',
                 'uses'=>'ImapController@index'
             ]);
             Route::post('',[
                 #'middleware'=>'acl_access::imap',
-                'route'=>'imap',
+                'as'=>'imap',
                 'uses'=>'ImapController@store'
             ]);
             Route::get('edit/{id}',[
                 #'middleware'=>'acl_access::imap/edit',
-                'route'=>'imap.edit',
+                'as'=>'imap.edit',
                 'uses'=>'ImapController@edit'
             ]);
             Route::patch('{id}',[
                 #'middleware'=>'acl_access::imap/edit',
-                'route'=>'imap',
+                'as'=>'imap',
                 'uses'=>'ImapController@update'
             ]);
             Route::get('delete/{id}',[
                 #'middleware'=>'acl_access::imap/edit',
-                'route'=>'imap.delete',
+                'as'=>'imap.delete',
                 'uses'=>'ImapController@destroy'
             ]);
         });
         Route::Group(['prefix'=>'smtp'],function(){
             Route::get('',[
                 #'middleware'=>'acl_access::smtp',
-                'route'=>'',
+                'as'=>'',
                 'uses'=>'SmtpController@index'
             ]);
             Route::post('',[
                 #'middleware'=>'acl_access::smtp',
-                'route'=>'',
+                'as'=>'',
                 'uses'=>'SmtpController@store'
             ]);
             Route::get('edit/{id}',[
                 #'middleware'=>'acl_access::smtp/edit',
-                'route'=>'smtp.edit',
+                'as'=>'smtp.edit',
                 'uses'=>'SmtpController@edit'
             ]);
             Route::patch('{id}',[
                 #'middleware'=>'acl_access::smtp/edit',
-                'route'=>'smtp',
+                'as'=>'smtp',
                 'uses'=>'SmtpController@update'
             ]);
             Route::get('delete/{id}',[
                 #'middleware'=>'acl_access::smtp/edit',
-                'route'=>'smtp.delete',
+                'as'=>'smtp.delete',
                 'uses'=>'SmtpController@destroy'
             ]);
         });
         Route::Group(['prefix'=>'popping-email'],function(){
             Route::get('',[
                 #'middleware'=>'acl_access::popping-email',
-                'route'=>'',
+                'as'=>'',
                 'uses'=>'PoppingEmailController@index'
             ]);
             Route::any('search',[
                 #'middleware'=>'acl_access::search',
-                'route'=>'search',
+                'as'=>'search',
                 'uses'=>'PoppingEmailController@search'
             ]);
             Route::post('',[
                 #'middleware'=>'acl_access::popping-email',
-                'route'=>'',
+                'as'=>'',
                 'uses'=>'PoppingEmailController@auth_process'
             ]);
             Route::get('show/{id}',[
                 #'middleware'=>'acl_access::popping-email/show',
-                'route'=>'popping-email.show',
+                'as'=>'popping-email.show',
                 'uses'=>'PoppingEmailController@show'
             ]);
             Route::get('edit/{id}',[
                 #'middleware'=>'acl_access::popping-email/edit',
-                'route'=>'popping-email.edit',
+                'as'=>'popping-email.edit',
                 'uses'=>'PoppingEmailController@edit'
             ]);
             Route::patch('{id}',[
                 #'middleware'=>'acl_access::popping-email/edit',
-                'route'=>'popping-email',
+                'as'=>'popping-email',
                 'uses'=>'PoppingEmailController@update'
             ]);
             Route::get('delete/{id}',[
                 #'middleware'=>'acl_access::popping-email/edit',
-                'route'=>'popping-email.delete',
+                'as'=>'popping-email.delete',
                 'uses'=>'PoppingEmailController@destroy'
             ]);
         });
         Route::Group(['prefix'=>'filter'],function(){
             Route::get('',[
                 #'middleware'=>'acl_access::filter',
-                'route'=>'',
+                'as'=>'',
                 'uses'=>'FilterController@index'
             ]);
             Route::post('',[
                 #'middleware'=>'acl_access::filter',
-                'route'=>'',
+                'as'=>'',
                 'uses'=>'FilterController@store'
             ]);
             Route::get('edit/{id}',[
                 #'middleware'=>'acl_access::filter/edit',
-                'route'=>'filter.edit',
+                'as'=>'filter.edit',
                 'uses'=>'FilterController@edit'
             ]);
             Route::patch('{id}',[
                 #'middleware'=>'acl_access::filter/edit',
-                'route'=>'filter',
+                'as'=>'filter',
                 'uses'=>'FilterController@update'
             ]);
             Route::get('delete/{id}',[
                 #'middleware'=>'acl_access::filter/edit',
-                'route'=>'filter.delete',
+                'as'=>'filter.delete',
                 'uses'=>'FilterController@destroy'
             ]);
         });
         Route::Group(['prefix'=>'schedule'],function(){
             Route::get('',[
                 #'middleware'=>'acl_access::schedule',
-                'route'=>'',
+                'as'=>'',
                 'uses'=>'ScheduleController@index'
             ]);
             Route::post('',[
                 #'middleware'=>'acl_access::schedule',
-                'route'=>'',
+                'as'=>'',
                 'uses'=>'ScheduleController@store'
             ]);
             Route::get('edit/{id}',[
                 #'middleware'=>'acl_access::schedule/edit',
-                'route'=>'schedule.edit',
+                'as'=>'schedule.edit',
                 'uses'=>'ScheduleController@edit'
             ]);
             Route::patch('{id}',[
                 #'middleware'=>'acl_access::schedule/edit',
-                'route'=>'schedule',
+                'as'=>'schedule',
                 'uses'=>'ScheduleController@update'
             ]);
             Route::get('delete/{id}',[
                 #'middleware'=>'acl_access::schedule/edit',
-                'route'=>'schedule.delete',
+                'as'=>'schedule.delete',
                 'uses'=>'ScheduleController@destroy'
             ]);
         });
         Route::Group(['prefix'=>'invoice'],function(){
             Route::get('',[
                 #'middleware'=>'acl_access::invoice',
-                'route'=>'',
+                'as'=>'',
                 'uses'=>'InvoiceController@index'
             ]);
             Route::get('view/{id}',[
                 #'middleware'=>'acl_access::invoice/edit',
-                'route'=>'invoice.view',
+                'as'=>'invoice.view',
                 'uses'=>'InvoiceController@show'
             ]);
             Route::get('delete/{id}',[
                 #'middleware'=>'acl_access::invoice/edit',
-                'route'=>'invoice.delete',
+                'as'=>'invoice.delete',
                 'uses'=>'InvoiceController@destroy'
             ]);
         });

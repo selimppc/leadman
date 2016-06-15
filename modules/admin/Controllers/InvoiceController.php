@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Modules\Admin\InvoiceDetail;
 use Modules\Admin\InvoiceHead;
+use Modules\Admin\PoppingEmail;
 
 class InvoiceController extends Controller
 {
@@ -23,10 +24,16 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data['pageTitle'] = "Invoice";
-        $data['invoices'] = InvoiceHead::orderBy('id', 'DESC')->with('relPoppingEmail')->paginate(10);
+        $request=$request->all();
+        if(isset($request['email']))
+        {
+            $data['invoices']= $this->search($request);
+        }else{
+            $data['invoices'] = InvoiceHead::orderBy('id', 'DESC')->with('relPoppingEmail')->paginate(10);
+        }
         return view('admin::invoice.index',$data);
     }
 
@@ -98,5 +105,48 @@ class InvoiceController extends Controller
         InvoiceHead::findOrFail($id)->delete();
         Session::flash('message', "Invoice has been Successfully Deleted.");
         return redirect()->back();
+    }
+    public function search($input)
+    {
+        $per_page=10;
+        if(!empty($input['email']) && empty($input['invoice_number']) && $input['status'] =='select')
+        {
+            $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
+            if(!empty($email)){
+                $result= InvoiceHead::where('popping_email_id',$email->id)->with('relPoppingEmail')->paginate($per_page);
+            }
+        }elseif(empty($input['email']) && !empty($input['invoice_number']) && $input['status'] =='select')
+        {
+            $result= InvoiceHead::where('invoice_number','like','%'.$input['invoice_number'].'%')->with('relPoppingEmail')->paginate($per_page);
+        }elseif(empty($input['email']) && empty($input['invoice_number']) && $input['status'] !='select')
+        {
+            $result= InvoiceHead::where('status',$input['status'])->with('relPoppingEmail')->paginate($per_page);
+        }elseif(!empty($input['email']) && !empty($input['invoice_number']) && $input['status'] =='select')
+        {
+            $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
+            if(!empty($email)) {
+                $result = InvoiceHead::where('popping_email_id', $email->id)->where('invoice_number', 'like', '%' . $input['invoice_number'] . '%')->with('relPoppingEmail')->paginate($per_page);
+            }
+        }elseif(!empty($input['email']) && empty($input['invoice_number']) && $input['status'] !='select')
+        {
+            $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
+            if(!empty($email)) {
+                $result = InvoiceHead::where('popping_email_id', $email->id)->where('status', $input['status'])->with('relPoppingEmail')->paginate($per_page);
+            }
+        }elseif(empty($input['email']) && !empty($input['invoice_number']) && $input['status'] !='select')
+        {
+            $result= InvoiceHead::where('invoice_number', 'like', '%' . $input['invoice_number'] . '%')->where('status',$input['status'])->with('relPoppingEmail')->paginate($per_page);
+        }elseif(!empty($input['email']) && !empty($input['invoice_number']) && $input['status'] !='select')
+        {
+            $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
+            if(!empty($email)) {
+                $result= InvoiceHead::where('popping_email_id', $email->id)->where('invoice_number', 'like', '%' . $input['invoice_number'] . '%')->where('status',$input['status'])->with('relPoppingEmail')->paginate($per_page);
+            }
+        }elseif(empty($input['email']) && empty($input['invoice_number']) && $input['status'] =='select')
+        {
+            $result= $data['invoices'] = InvoiceHead::orderBy('id', 'DESC')->with('relPoppingEmail')->paginate(10);
+        }
+
+        return (isset($result)?$result:false);
     }
 }
