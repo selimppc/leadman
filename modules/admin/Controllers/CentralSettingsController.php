@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Modules\Admin\CentralSettings;
+
+//use Illuminate\Session;
 
 class CentralSettingsController extends Controller
 {
@@ -22,7 +26,23 @@ class CentralSettingsController extends Controller
      */
     public function index()
     {
-        exit('OK...');
+        $data['pageTitle'] = 'Central Settings';
+
+        if(session()->has('user_id'))
+        {
+            $data['ses_user_id'] = session()->get('user_id');
+            $model = new CentralSettings();
+            if(Auth::user()->role_id=='1' && $data['ses_user_id']=='1'){
+                $data['settings_data'] = $model->all();
+            }
+            else{
+                $data['settings_data'] = $model->where('user_type','user')->get();
+            }
+            return view('admin::settings.central_settings.index',$data);
+        }
+        else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -54,7 +74,7 @@ class CentralSettingsController extends Controller
      */
     public function show($id)
     {
-        //
+        exit('show page');
     }
 
     /**
@@ -65,7 +85,7 @@ class CentralSettingsController extends Controller
      */
     public function edit($id)
     {
-        //
+        exit('Edit page');
     }
 
     /**
