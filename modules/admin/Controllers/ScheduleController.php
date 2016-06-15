@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use Modules\Admin\Schedule;
 
 class ScheduleController extends Controller
 {
@@ -22,7 +24,12 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        //
+        $data['pageTitle'] = "Schedule";
+
+
+        $data['schedules'] = Schedule::orderBy('id', 'DESC')->get();
+
+        return view('admin::schedule.index',$data);
     }
 
     /**
@@ -43,7 +50,10 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        Schedule::create($request->only('day','time')); // store / update / code here
+        Session::flash('message', 'Successfully added!');
+        return redirect()->back();
     }
 
     /**
@@ -65,7 +75,8 @@ class ScheduleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Schedule::findOrFail($id);
+        return view('admin::schedule.update', ['data'=>$data]);
     }
 
     /**
@@ -77,7 +88,14 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $model = Schedule::findOrFail($id);
+
+        $input = $request->only('day','time');
+        $model->fill($input)->save(); // store / update / code here
+
+        Session::flash('message', 'Successfully updated!');
+
+        return redirect()->back();
     }
 
     /**
@@ -88,6 +106,8 @@ class ScheduleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Schedule::findOrFail($id)->delete();
+        Session::flash('message', "Schedule Successfully Deleted.");
+        return redirect()->back();
     }
 }
