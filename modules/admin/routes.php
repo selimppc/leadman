@@ -159,6 +159,23 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers'],funct
                 'uses'=>'ScheduleController@destroy'
             ]);
         });
+        Route::Group(['prefix'=>'invoice'],function(){
+            Route::get('',[
+                #'middleware'=>'acl_access::invoice',
+                'route'=>'',
+                'uses'=>'InvoiceController@index'
+            ]);
+            Route::get('view/{id}',[
+                #'middleware'=>'acl_access::invoice/edit',
+                'route'=>'invoice.view',
+                'uses'=>'InvoiceController@show'
+            ]);
+            Route::get('delete/{id}',[
+                #'middleware'=>'acl_access::invoice/edit',
+                'route'=>'invoice.delete',
+                'uses'=>'InvoiceController@destroy'
+            ]);
+        });
     });
 
 });
