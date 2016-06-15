@@ -12,9 +12,11 @@
     <div class="col-sm-5">
         <strong class="text-center">Unassigned Permission List</strong>
         <select id="optgroup" class="form-control" size="20" multiple="multiple">
-            @foreach($not_exists_permission as $key=>$value)
-                   <option value="{{$key}}">{{$value}}</option>
-            @endforeach
+            @if(isset($not_exists_permission))
+                @foreach($not_exists_permission as $key=>$value)
+                       <option value="{{$key}}">{{$value}}</option>
+                @endforeach
+            @endif
         </select>
     </div>
 
@@ -28,9 +30,11 @@
     <div class="form-group col-sm-5">
         <strong class="text-center">Assigned Permission List</strong>
         <select name="permission_id[]" id="optgroup_to" class="check form-control" size="20" multiple="multiple">
-            @foreach($exists_permission as $keys=>$values)
-                <option value="{{$keys}}">{{$values}}</option>
-            @endforeach
+            @if(isset($not_exists_permission))
+                @foreach($exists_permission as $keys=>$values)
+                    <option value="{{$keys}}">{{$values}}</option>
+                @endforeach
+            @endif
         </select>
         <span id='check-message' class="required"></span>
     </div>
