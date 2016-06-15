@@ -22,7 +22,7 @@ class CentralSettingsController extends Controller
      */
     public function index()
     {
-        //
+        exit('OK...');
     }
 
     /**

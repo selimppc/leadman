@@ -79,7 +79,7 @@
 </li>
 
 <li class="sub-menu">
-    <a href={{URL::to('central_settings/index')}}>
+    <a href={{URL::to('admin/central-settings')}}>
         <i class="icon-cog"></i>
         <span>Settings</span>
     </a>

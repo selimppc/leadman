@@ -9,11 +9,11 @@
     return view('admin::layouts.master');
 });*/
 
-include 'rk_route.php';
 
 Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers'],function(){
     Route::get('callback','PoppingEmailController@callback');
     Route::Group(['prefix'=>'admin'],function(){
+        include 'rk_route.php';
         Route::Group(['prefix'=>'imap'],function(){
             Route::get('',[
                 #'middleware'=>'acl_access::imap',
