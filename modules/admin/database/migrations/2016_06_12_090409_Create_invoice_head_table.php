@@ -17,6 +17,7 @@ class CreateInvoiceHeadTable extends Migration
             $table->unsignedInteger('popping_email_id',false)->nullable();
             $table->string('invoice_number', 64)->nullable();
             $table->foreign('popping_email_id')->references('id')->on('popping_email');
+            $table->string('invoice_number',16)->nullable();
             $table->float('total_cost')->nullable();
             $table->enum('status',['open','approved','paid','cancel'])->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
