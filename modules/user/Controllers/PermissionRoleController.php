@@ -26,7 +26,7 @@ class PermissionRoleController extends Controller
      * @param
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    /*public function index()
     {
         $pageTitle = "Permission Role List";
 
@@ -41,6 +41,63 @@ class PermissionRoleController extends Controller
         #$role_id = [''=>'Select Role'] + Role::lists('title','id')->all();
         $role_id =  [''=>'Select Role'] +  Role::where('role.title', '!=', 'super-admin')->lists('title','id')->all();
         return view('user::permission_role.index', ['data' => $data, 'pageTitle'=> $pageTitle, 'permission_id'=>$permission_id,'role_id'=>$role_id]);
+    }*/
+
+    protected function isPostRequest()
+    {
+        return Input::server("REQUEST_METHOD") == "POST";
+    }
+
+    public function index()
+    {
+        $pageTitle = "Permission Role List";
+
+        $data = DB::table('permission_role')
+            ->join('permissions', 'permissions.id', '=', 'permission_role.permission_id')
+            ->join('role', 'role.id', '=', 'permission_role.role_id')
+            ->where('role.title', '!=', 'super-admin')
+            ->select('permission_role.id', 'permissions.title as p_title', 'role.title as r_title')
+            ->paginate(100);
+
+        $role_id =  [''=>'Select Role'] +  Role::where('role.title', '!=', 'super-admin')->lists('title','id')->all();
+
+        if($this->isPostRequest()){
+
+            $role_value = Input::get('role_id');
+            $role_name = Role::findOrFail($role_value)->title;
+            // whereExists()
+            $exists_permission = DB::table('permissions')
+                ->whereExists(function ($query) use($role_value){
+                    $query->select(DB::raw(1))
+                        ->from('permission_role')
+                        ->whereRaw('permission_role.permission_id = permissions.id')
+                        ->WhereRaw('permission_role.role_id = ?', [$role_value]);
+                })
+                ->lists('permissions.title', 'permissions.id');
+
+            #print_r($exists_permission);
+
+
+            //whereNotExists()
+            $not_exists_permission = DB::table('permissions')
+                ->whereNotExists(function ($query) use($role_value){
+                    $query->select(DB::raw(1))
+                        ->from('permission_role')
+                        ->whereRaw('permission_role.permission_id = permissions.id')
+                        ->WhereRaw('permission_role.role_id = ?', [$role_value]);
+                })
+                ->lists('permissions.title', 'permissions.id');
+
+            #print_r($not_exists_permission);exit;
+
+        }else{
+            $not_exists_permission = array();
+            $exists_permission = array();
+            $role_name = Null;
+            $role_value = Null;
+        }
+
+        return view('user::permission_role.index', ['data' => $data, 'pageTitle'=> $pageTitle, 'role_id'=>$role_id,'exists_permission' => $exists_permission,'not_exists_permission' => $not_exists_permission,'role_name'=>$role_name,'role_value'=>$role_value]);
     }
 
 
@@ -70,32 +127,39 @@ class PermissionRoleController extends Controller
         return view('user::permission_role.index', ['data' => $data, 'pageTitle'=> $pageTitle, 'permission_id'=>$permission_id,'role_id'=>$role_id]);
     }
 
+
     public function store(Requests\PermissionRoleRequest $request){
         $input = $request->all();
-        $permission_id = $input['permission_id'];
-        foreach ($permission_id as $p_id) {
-            $permission_exists = PermissionRole::where('permission_id','=',$p_id)->where('role_id','=',$input['role_id'])->exists();
-            if(!$permission_exists){
-                $model = new PermissionRole;
-                $model->role_id = $input['role_id'];
-                $model->permission_id = $p_id;
-                $model->status = $input['status'];
-                /* Transaction Start Here */
-                DB::beginTransaction();
-                try {
-                    $model->save();
-                    DB::commit();
-                    Session::flash('message', 'Successfully added!');
-                    LogFileHelper::log_info('store-permission-role', 'successfully added',  ['Permission role role_id'.$input['role_id']]);
-                } catch (\Exception $e) {
-                    //If there are any exceptions, rollback the transaction`
-                    DB::rollback();
-                    Session::flash('danger', $e->getMessage());
-                    LogFileHelper::log_error('store-permission-role', $e->getMessage(),  ['Permission role role_id'.$input['role_id']]);
+
+        if(isset($input['permission_id'])){
+            $permission_id = $input['permission_id'];
+
+            foreach ($permission_id as $p_id) {
+                $permission_exists = PermissionRole::where('permission_id','=',$p_id)->where('role_id','=',$input['role_id'])->exists();
+                if(!$permission_exists){
+                    $model = new PermissionRole;
+                    $model->role_id = $input['role_id'];
+                    $model->permission_id = $p_id;
+                    $model->status = $input['status'];
+                    /* Transaction Start Here */
+                    DB::beginTransaction();
+                    try {
+                        $model->save();
+                        DB::commit();
+                        Session::flash('message', 'Successfully added!');
+                        LogFileHelper::log_info('store-permission-role', 'successfully added',  ['Permission role role_id'.$input['role_id']]);
+                    } catch (\Exception $e) {
+                        //If there are any exceptions, rollback the transaction`
+                        DB::rollback();
+                        Session::flash('danger', $e->getMessage());
+                        LogFileHelper::log_error('store-permission-role', $e->getMessage(),  ['Permission role role_id'.$input['role_id']]);
+                    }
+                }else{
+                    Session::flash('message','Some of the permission role already exists');
                 }
-            }else{
-                Session::flash('message','Some of the permission role already exists');
             }
+        }else{
+            Session::flash('danger','Please Select Permission!!!');
         }
         return redirect()->route('index-permission-role');
     }
