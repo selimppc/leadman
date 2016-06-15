@@ -1,5 +1,5 @@
-<li class="sub-menu">
-    <a class="active" href="{{--{{ URL::route('user.dashboard') }}--}}">
+{{--<li class="sub-menu">
+    <a class="active" href="--}}{{--{{ URL::route('user.dashboard') }}--}}{{--">
         <i class="icon-dashboard"></i>
         <span>Dashboard</span>
     </a>
@@ -27,7 +27,7 @@
 </li>
 
 <li class="sub-menu">
-    <a href={{--{{URL::to('article/index')}}--}}>
+    <a href=--}}{{--{{URL::to('article/index')}}--}}{{-->
         <i class="icon-paste"></i>
         <span>Lead</span>
     </a>
@@ -42,7 +42,7 @@
 
 
 <li class="sub-menu">
-    <a href={{--{{URL::to('article/index')}}--}}>
+    <a href=--}}{{--{{URL::to('article/index')}}--}}{{-->
         <i class="icon-jpy"></i>
         <span>Invoice Head</span>
     </a>
@@ -56,7 +56,7 @@
 </li>
 
 <li class="sub-menu">
-    <a href={{--{{URL::to('article/index')}}--}}>
+    <a href=--}}{{--{{URL::to('article/index')}}--}}{{-->
         <i class="icon-comment-alt"></i>
         <span>Country</span>
     </a>
@@ -83,11 +83,11 @@
         <i class="icon-cog"></i>
         <span>Settings</span>
     </a>
-</li>
+</li>--}}
 
 
 
-@if(\Illuminate\Support\Facades\Session::has('sidebar_menu_user----'))
+@if(\Illuminate\Support\Facades\Session::has('sidebar_menu_user'))
     <?php $side_bar_menu = \Illuminate\Support\Facades\Session::get('sidebar_menu_user'); ?>
 
     @if($side_bar_menu) {{--Session['sidebar_menu_user']--}}
