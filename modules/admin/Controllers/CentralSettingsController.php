@@ -27,7 +27,6 @@ class CentralSettingsController extends Controller
     public function index()
     {
         $data['pageTitle'] = 'Central Settings';
-
         if(session()->has('user_id'))
         {
             $data['ses_user_id'] = session()->get('user_id');
@@ -40,7 +39,8 @@ class CentralSettingsController extends Controller
             }
             return view('admin::settings.central_settings.index',$data);
         }
-        else{
+        else
+        {
             return redirect()->back();
         }
     }
@@ -74,7 +74,8 @@ class CentralSettingsController extends Controller
      */
     public function show($id)
     {
-        exit('show page');
+        $data['data'] = CentralSettings::where('id',$id)->first();
+        return view('admin::settings.central_settings.show',$data);
     }
 
     /**
