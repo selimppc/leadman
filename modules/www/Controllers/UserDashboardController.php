@@ -20,13 +20,9 @@ class UserDashboardController extends Controller
         // set the default timezone to use. Available since PHP 5.1
         date_default_timezone_set('Asia/Dacca');
         $current_date = date('Y-m-d h:i:s');
-
+        
         $last_24 = date('Y-m-d h:i:s', strtotime("-1 day", time() ));
         $last_7_days = date('Y-m-d h:i:s', strtotime("-7 day", time() ));
-
-        print $current_date."<br>";
-        print $last_24."<br>";
-
 
         //last 24 data
 
@@ -40,8 +36,7 @@ class UserDashboardController extends Controller
     limit 3
     ');*/
 
-        $results = DB::table('popping_email')
-            #->distinct()
+        /*$result_24 = DB::table('popping_email')
             ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_lead, invoice_head.invoice_number, invoice_head.total_cost '))
             ->leftJoin('lead', function($join) use ($last_24) {
                 $join->on('popping_email.id', '=', 'lead.popping_email_id')
@@ -51,12 +46,21 @@ class UserDashboardController extends Controller
                 $join->on('popping_email.id', '=', 'invoice_head.popping_email_id')
                     ->where( 'lead.created_at','>', $last_24 );
             })
-            #->whereBetween('lead.created_at', array($current_date, $last_24))
-            #->where('bookings.room_type_id', '=', NULL)
-            #->groupBy('lead.popping_email_id')
             ->get();
 
-        print_r($results);
+
+        $result_7_days = DB::table('popping_email')
+            ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_lead, invoice_head.invoice_number, invoice_head.total_cost '))
+            ->leftJoin('lead', function($join) use ($last_7_days) {
+                $join->on('popping_email.id', '=', 'lead.popping_email_id')
+                    ->where( 'lead.created_at','>', $last_7_days );
+            })
+            ->leftJoin('invoice_head', function($join) use ($last_7_days) {
+                $join->on('popping_email.id', '=', 'invoice_head.popping_email_id')
+                    ->where( 'lead.created_at','>', $last_7_days );
+            })
+            ->get();*/
+
 
 
 
@@ -67,7 +71,8 @@ class UserDashboardController extends Controller
         //-- Show duplicate email stat -> link to list
         //-- Show filtered email stat -> link to list
 
-        print_r("OK");
+        #print_r("OK");
+        return view('www::user_dashboard.index');
 
     }
 
