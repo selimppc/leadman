@@ -34,7 +34,7 @@
 </li>
 
 <li class="sub-menu">
-    <a href={{--{{URL::to('article/index')}}--}}>
+    <a href='{{URL::to('admin/schedule')}}'>
         <i class="icon-external-link"></i>
         <span>Schedule</span>
     </a>
@@ -49,7 +49,7 @@
 </li>
 
 <li class="sub-menu">
-    <a href={{--{{URL::to('article/index')}}--}}>
+    <a href='{{URL::to('admin/filter')}}'>
         <i class="icon-filter"></i>
         <span>Filter</span>
     </a>

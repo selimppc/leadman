@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use Modules\Admin\Filter;
 
 class FilterController extends Controller
 {
@@ -22,7 +24,12 @@ class FilterController extends Controller
      */
     public function index()
     {
-        //
+        $data['pageTitle'] = "Filter";
+
+
+        $data['filters'] = Filter::orderBy('id', 'DESC')->get();
+
+        return view('admin::filter.index',$data);
     }
 
     /**
@@ -43,7 +50,10 @@ class FilterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        Filter::create($request->only('name','filtercol')); // store / update / code here
+        Session::flash('message', 'Successfully added!');
+        return redirect()->back();
     }
 
     /**
@@ -65,7 +75,8 @@ class FilterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Filter::findOrFail($id);
+        return view('admin::filter.update', ['data'=>$data]);
     }
 
     /**
@@ -77,7 +88,14 @@ class FilterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $model = Filter::findOrFail($id);
+
+        $input = $request->only('name','filtercol');
+        $model->fill($input)->save(); // store / update / code here
+
+        Session::flash('message', 'Successfully updated!');
+
+        return redirect()->back();
     }
 
     /**
@@ -88,6 +106,8 @@ class FilterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Filter::findOrFail($id)->delete();
+        Session::flash('message', "Filter Successfully Deleted.");
+        return redirect()->back();
     }
 }

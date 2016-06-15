@@ -178,7 +178,7 @@ class PoppingEmailController extends Controller
 
             $email_exists = PoppingEmail::where('email', $input_data['email'])->exists();
             if($email_exists){
-                Session::flash('error', "This Email Name already exists." );
+                Session::flash('error', "This Email already exists." );
             }else{
                 /* Transaction Start Here */
                 DB::beginTransaction();
