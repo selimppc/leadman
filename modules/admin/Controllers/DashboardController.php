@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,31 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $data['pageTitle'] = 'Dashboard';
-        return view('admin::layouts.dashboard',$data);
+        $data['last_day']= DashboardController::leadData(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
+        $data['last_7day']= DashboardController::leadData(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
+        return view('admin::dashboard.index',$data);
+    }
+    private static function leadData($date)
+    {
+        // set the default timezone to use. Available since PHP 5.1
+        date_default_timezone_set('Asia/Dacca');
+        return DB::table('popping_email')
+            ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_of_lead, no_of_invoice, total_cost'))
+            ->leftJoin('lead', function($join) use ($date) {
+                $join->on('popping_email.id', '=', 'lead.popping_email_id')
+                    ->where( 'lead.created_at','>', $date );
+            })
+            ->leftJoin(
+                DB::raw("
+                (select
+                COUNT(`inv_hd`.`id`) as `no_of_invoice`, SUM(`inv_hd`.`total_cost`) as `total_cost`
+                    from `invoice_head` as `inv_hd`
+                    where `inv_hd`.`created_at` > ?
+                    ) `invoice_head`
+                "), 'popping_email.id', '=', 'popping_email_id'
+            )
+            ->addBinding($date, 'select')
+            ->get();
     }
 
     public function all_routes_uri(){

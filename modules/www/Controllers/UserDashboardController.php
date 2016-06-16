@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Modules\Admin\Lead;
+use Modules\Admin\PoppingEmail;
 
 class UserDashboardController extends Controller
 {
@@ -97,7 +99,7 @@ class UserDashboardController extends Controller
             ->where('user_id', Auth::user()->id)
             ->get();
 
-        
+
         return view('www::user_dashboard.index', [
             'result_24' => $result_24,
             'result_7_days' => $result_7_days,
@@ -107,69 +109,23 @@ class UserDashboardController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function view_list_lead($popping_email_id){
+        // all lead email goes here according to popping_email_id
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $user_id = Auth::user()->id;
+        //check the popping_email_id exists or not for logged-in user
+        $check_popping_email_user_id = PoppingEmail::where('id', $popping_email_id)->where('user_id', $user_id)->exists();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        if($check_popping_email_user_id){
+            $lead_data = Lead::where('popping_email_id', $popping_email_id)->get();
+        }else{
+            $message = "You are not authorized to view this data(s) ! Please contact with support !";
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        return view('www::user_dashboard.lead_lists', [
+            'lead_data' => $lead_data,
+            'message' => $message,
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

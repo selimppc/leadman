@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Modules\Admin\Country;
@@ -182,7 +183,8 @@ class PoppingEmailController extends Controller
                 'country_origin'=>$input_data['country_origin'],
                 'auth_type'=>'google',
                 'code'=>$_GET['code'],
-                'token'=>$client->getRefreshToken()
+                'token'=>$client->getRefreshToken(),
+                'user_id'=> Auth::user()->id
             ];
 
             $email_exists = PoppingEmail::where('email', $input_data['email'])->exists();

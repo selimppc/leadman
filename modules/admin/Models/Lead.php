@@ -19,6 +19,7 @@ class Lead extends Model
         'email',
         'popping_email_id',
         'status',
+        'count',
     ];
 
     public function relPoppingEmail()
