@@ -3,7 +3,7 @@
 </div>
 <!--logo start-->
 <a href="{{--{{ URL::route('home-dashboard') }}--}}" class="logo">Lead<span>Man</span></a>
-<small> Time: <?php echo date('Y-m-d H:i:s'); ?> </small>
+
 <!--logo end-->
 <div class="nav notify-row" id="top_menu">
     <!--  notification start -->
@@ -17,6 +17,7 @@
 </div>
 <div class="top-nav ">
     <!--search & user info start-->
+    <small> Time: <?php echo date('Y-m-d H:i:s'); ?> </small>
     <ul class="nav pull-right top-menu">
         <li>
             <input type="text" class="form-control search" placeholder="Search">
