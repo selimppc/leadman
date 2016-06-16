@@ -26,7 +26,18 @@ class DashboardController extends Controller
         $data['pageTitle'] = 'Dashboard';
         $data['last_day']= DashboardController::leadData(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
         $data['last_7day']= DashboardController::leadData(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
+        $data['user_leads']= DashboardController::userLead();
+//        dd($data['user_leads']);
         return view('admin::dashboard.index',$data);
+    }
+
+    private static function userLead()
+    {
+        return DB::table('popping_email')
+            ->select('popping_email.email','user.username',DB::raw('count(lead.id) as total_lead'))
+            ->leftJoin('user','popping_email.user_id','=','user.id')
+            ->leftJoin('lead','popping_email.id','=','lead.popping_email_id')
+            ->get();
     }
     private static function leadData($date)
     {
