@@ -17,11 +17,10 @@ class GenerateNumber
     public static function run() {
         $settings = CentralSettings::where('title','=','invoice-number')->first();
         if($settings){
-            $number = $settings['last_number'] + $settings['increment'];
-            $settings_code = $settings['code'];
-            $settings_id = $settings['id'];
-            $generate_voucher_number = $settings_code.'-'.str_pad($number, 6, '0', STR_PAD_LEFT);
-            $array = array('generated_number'=>$generate_voucher_number, 'setting_id'=>$settings_id, 'number' => $number );
+            $number = $settings['status'] + 1;
+            $generate_voucher_number = 'INV-'.str_pad($number, 6, '0', STR_PAD_LEFT);
+            $array = array('generated_number'=>$generate_voucher_number);
+            GenerateNumber::update_row($settings->id,$number);
             return  $array;
         }else{
             return  false;
@@ -34,9 +33,9 @@ class GenerateNumber
      * @return bool
      */
     public static function update_row($row_id,$value) {
-        $settings = Setting::findOrFail($row_id);
+        $settings = CentralSettings::findOrFail($row_id);
         if($settings){
-            $settings->last_number=$value;
+            $settings->status=$value;
             $settings->save();
             return  true;
         }else{

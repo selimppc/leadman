@@ -6,4 +6,6 @@ Admin Module Migration Command :::::::::::: php artisan migrate --path=modules/a
 
 User Module Migration Command ::::::::::::: php artisan migrate --path=modules/user/database/migrations
 
+Country Seed Command :::::::::::::::::  php artisan db:seed --class=CountrySeeder
+
 

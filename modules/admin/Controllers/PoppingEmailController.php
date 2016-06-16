@@ -112,16 +112,9 @@ class PoppingEmailController extends Controller
             return redirect()->to($authUrl);
         } else {
             $imap = Imap::findOrNew($input['imap_id']);
-            // Identify the status
-            $status = SenderEmail::EmailTypeIdentification($input['email'], 'status');
-            // do the validation
-            if ($status == 'domain')
-                $pre_text = 'mail.';
-            else
-                $pre_text = '';
 
             try {
-                $hostname = '{' . $pre_text . $imap->host . ':993/imap/ssl/novalidate-cert}INBOX';
+                $hostname = '{' . $imap->host . ':993/imap/ssl/novalidate-cert}INBOX';
                 $username = $input['email'];
                 $password = $input['password'];
                 $inbox = imap_open($hostname, $username, $password);
@@ -136,14 +129,14 @@ class PoppingEmailController extends Controller
                     }
 
                     DB::commit();
-                    Session::flash('flash_message', 'Successfully added!');
+                    Session::flash('message', 'Successfully added!');
                 } catch (Exception $e) {
                     //If there are any exceptions, rollback the transaction`
                     DB::rollback();
-                    Session::flash('flash_message_error', "Invalid Request");
+                    Session::flash('error', "Invalid Request");
                 }
             } catch (\Exception $e) {
-                Session::flash('flash_message_error', $e->getMessage());
+                Session::flash('error', $e->getMessage());
             }
         }
         return redirect()->back();
