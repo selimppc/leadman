@@ -20,7 +20,7 @@ class UserDashboardController extends Controller
         // set the default timezone to use. Available since PHP 5.1
         date_default_timezone_set('Asia/Dacca');
         $current_date = date('Y-m-d h:i:s');
-        
+
         $last_24 = date('Y-m-d h:i:s', strtotime("-1 day", time() ));
         $last_7_days = date('Y-m-d h:i:s', strtotime("-7 day", time() ));
 
@@ -36,7 +36,7 @@ class UserDashboardController extends Controller
     limit 3
     ');*/
 
-        /*$result_24 = DB::table('popping_email')
+        $result_24 = DB::table('popping_email')
             ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_lead, invoice_head.invoice_number, invoice_head.total_cost '))
             ->leftJoin('lead', function($join) use ($last_24) {
                 $join->on('popping_email.id', '=', 'lead.popping_email_id')
@@ -59,7 +59,7 @@ class UserDashboardController extends Controller
                 $join->on('popping_email.id', '=', 'invoice_head.popping_email_id')
                     ->where( 'lead.created_at','>', $last_7_days );
             })
-            ->get();*/
+            ->get();
 
 
 
@@ -72,7 +72,10 @@ class UserDashboardController extends Controller
         //-- Show filtered email stat -> link to list
 
         #print_r("OK");
-        return view('www::user_dashboard.index');
+        return view('www::user_dashboard.index', [
+            'result_24' => $result_24,
+            'result_7_days' => $result_7_days
+        ]);
 
     }
 

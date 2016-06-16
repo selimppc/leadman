@@ -48,8 +48,11 @@ class User extends Model implements AuthenticatableContract,
 
     //check if the permission matches with any permission user has
     protected function checkPermission($perm){
+        $perm = str_replace(":","", $perm );
+
         $permissions = $this->getAllPermissionFromAllRoles();
-        $permissionArray = is_array($perm) ? $perm : [$perm];
+        $permissionArray = is_array($perm) ? $perm : array($perm);
+
 
         return array_intersect($permissions, $permissionArray);
     }
