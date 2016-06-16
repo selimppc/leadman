@@ -32,6 +32,7 @@ class CreatePoppingEmailTable extends Migration
             $table->enum('auth_type',['google','yahoo','outlook'])->nullable();
             $table->enum('status',['new','active','inactive','cancel'])->nullable();
             $table->unsignedInteger('user_id',false)->nullable();
+            $table->foreign('user_id')->references('id')->on('user');
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
             $table->timestamps();
