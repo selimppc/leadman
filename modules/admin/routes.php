@@ -12,6 +12,21 @@
 
 Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middleware'=>'auth'],function(){
     include 'rk_route.php';
+    Route::any('/', [
+        'as' => 'dashboard',
+        'uses' => 'DashboardController@dashboard'
+    ]);
+
+    Route::any('dashboard', [
+        'as' => 'dashboard',
+        'uses' => 'DashboardController@dashboard'
+    ]);
+
+    Route::any('all_routes_uri', [
+        'as' => 'all_routes_uri',
+        'uses' => 'DashboardController@all_routes_uri'
+    ]);
+
     Route::get('callback','PoppingEmailController@callback');
     Route::get('admin/imap',[
         'middleware'=>'acl_access::admin/imap',
