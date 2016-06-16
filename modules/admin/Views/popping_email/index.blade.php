@@ -19,14 +19,10 @@
                 <div class="adv-table">
 
                     {{-------------- Filter :Starts -------------------------------------------}}
-                    @if(isset($popmail_filter))
-                    {!! Form::model($popmail_filter,['url' => 'admin/popping-email/search']) !!}
-                    @else
-                        {!! Form::open(['url' => 'admin/popping-email/search']) !!}
-                    @endif
+                    {!! Form::model($_REQUEST,['url' => 'admin/popping-email','method'=>'get']) !!}
                     <div  class="col-lg-3 pull-left" >
                         <div class="input-group input-group-sm">
-                            {!! Form::text('popmail_filter', Input::old('popmail_filter'), ['id'=>'popmail_filter','placeholder'=>'Search by email','class' => 'form-control','required']) !!}
+                            {!! Form::text('popmail_filter', null, ['id'=>'popmail_filter','placeholder'=>'Search by email','class' => 'form-control','required']) !!}
                             <span class="input-group-btn">
                                <button class="btn btn-info btn-flat" type="submit" >Search</button>
                             </span>
@@ -59,7 +55,7 @@
                         @endforeach
                     </table>
 
-                    <span class="pull-right">{!! str_replace('/?', '?', $popping_emails->render()) !!} </span>
+                    <span class="pull-right">{!! $popping_emails->appends($_REQUEST) !!} </span>
 
                 </div>
             </div>

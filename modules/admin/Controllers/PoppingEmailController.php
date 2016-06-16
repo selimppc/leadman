@@ -34,15 +34,31 @@ class PoppingEmailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data['pageTitle'] = " Popping Email ";
         $data['country_id'] = Country::lists('title','id');
         $data['smtp_id'] = Smtp::lists('name','id');
         $data['imap_id'] = Imap::lists('name','id');
 
+        if(isset($request->popmail_filter))
+        {
+            $data['popping_emails']= PoppingEmail::with(['relSmtp'=>function($query){
+                $query->addSelect('id','name');
+            },'relimap'=>function($query){
+                $query->addSelect('id','name');
+            }])->select('id','email')
+                ->where('email','LIKE','%'.$request->popmail_filter.'%')
+                ->orderBy('id', 'DESC')
+                ->paginate(10);
 
-        $data['popping_emails']=PoppingEmail::with(['relSmtp','relimap'])->paginate(10);
+        }else{
+            $data['popping_emails']=PoppingEmail::with(['relSmtp'=>function($query){
+                $query->addSelect('id','name');
+            },'relimap'=>function($query){
+                $query->addSelect('id','name');
+            }])->paginate(10);
+        }
         return view('admin::popping_email.index', $data);
     }
     public function search(Request $request)
