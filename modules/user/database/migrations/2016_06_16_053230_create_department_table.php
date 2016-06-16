@@ -13,7 +13,7 @@ class CreateDepartmentTable extends Migration
     public function up()
     {
         Schema::table('user', function ($table) {
-            $table->dropIndex('department_id'); // Drops index 'geo_state_index'
+            $table->dropForeign('user_department_id_foreign'); // Drops index 'geo_state_index'
         });
     }
 
