@@ -307,10 +307,12 @@ class UserController extends Controller
                 'csrf_token'=> str_random(30),
                 'ip_address'=> getHostByName(getHostName()),
                 'last_visit'=> $now,
-                'department_id'=> $input['department_id'],
+                'department_id'=> isset($input['department_id']) ? $input['department_id'] : '',
                 'role_id'=> $input['role_id'],
                 'expire_date'=> $input['expire_date'],
                 'status'=> $input['status'],
+
+
             ];
             #print_r($input_data);exit;
 

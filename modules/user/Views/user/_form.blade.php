@@ -55,10 +55,10 @@
             {!! Form::label('department_id', 'Department:', ['class' => 'control-label']) !!}
             <small class="required">(Required)</small>
             @if(isset($data->department_id))
-                {!! Form::text('department_title',isset($data->relDepartment->title)?$data->relDepartment->title:'' ,['class' => 'form-control','required','title'=>'select department name','readonly']) !!}
+                {!! Form::text('department_title',isset($data->relDepartment->title)?$data->relDepartment->title:'' ,['class' => 'form-control','title'=>'select department name','readonly']) !!}
                 {!! Form::hidden('department_id', $data->relDepartment->id) !!}
             @else
-                {!! Form::Select('department_id', $department_data, Input::old('department_id'),['class' => 'form-control','required','title'=>'select department name']) !!}
+                {!! Form::Select('department_id', $department_data, Input::old('department_id'),['class' => 'form-control','title'=>'select department name']) !!}
             @endif
         </div>
     </div>
