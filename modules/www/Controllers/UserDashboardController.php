@@ -27,50 +27,31 @@ class UserDashboardController extends Controller
         $last_24 = date('Y-m-d h:i:s', strtotime("-1 day", time() ));
         $last_7_days = date('Y-m-d h:i:s', strtotime("-7 day", time() ));
 
-        //last 24 data
-        $result_24 = DB::table('popping_email')
-            ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_of_lead, no_of_invoice, total_cost'))
-            ->leftJoin('lead', function($join) use ($last_24) {
-                $join->on('popping_email.id', '=', 'lead.popping_email_id')
-                    ->where( 'lead.created_at','>', $last_24 );
-            })
-            ->leftJoin(
-                DB::raw("
-                (select
-                COUNT(`inv_hd`.`id`) as `no_of_invoice`, SUM(`inv_hd`.`total_cost`) as `total_cost`
-                    from `invoice_head` as `inv_hd`
-                    where `inv_hd`.`created_at` > ?
-                    ) `invoice_head`
-                "), 'popping_email.id', '=', 'popping_email_id'
-            )
-            ->addBinding($last_24, 'select')
-            ->where('user_id', Auth::user()->id)
-            ->get();
+        $user_id = Auth::id();
+
+        //24 data
+        $sql_24 = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
+    from popping_email
+    left JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$last_24'
+    LEFT JOIN invoice_head on invoice_head.popping_email_id = popping_email.id and invoice_head.created_at > '$last_24'
+    WHERE popping_email.user_id = '$user_id'
+    GROUP BY popping_email.id ";
+        $result_24 = DB::select(DB::raw($sql_24));
+
 
         // In Last 7 days
-        $result_7_days = DB::table('popping_email')
-            ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_of_lead, no_of_invoice, total_cost'))
-            ->leftJoin('lead', function($join) use ($last_7_days) {
-                $join->on('popping_email.id', '=', 'lead.popping_email_id')
-                    ->where( 'lead.created_at','>', $last_7_days );
-            })
-            ->leftJoin(
-                DB::raw("
-                (select
-                COUNT(`inv_hd`.`id`) as `no_of_invoice`, SUM(`inv_hd`.`total_cost`) as `total_cost`
-                    from `invoice_head` as `inv_hd`
-                    where `inv_hd`.`created_at` > ?
-                    ) `invoice_head`
-                "), 'popping_email.id', '=', 'popping_email_id'
-            )
-            ->addBinding($last_7_days, 'select')
-            ->where('user_id', Auth::user()->id)
-            ->get();
+        $result_7_days = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
+    from popping_email
+    left JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$last_7_days'
+    LEFT JOIN invoice_head on invoice_head.popping_email_id = popping_email.id and invoice_head.created_at > '$last_7_days'
+    WHERE popping_email.user_id = '$user_id'
+    GROUP BY popping_email.id ";
+        $result_7_days = DB::select(DB::raw($result_7_days));
 
 
         //-- Numbers of email -> link to list of email.
         $no_of_email = DB::table('popping_email')
-            ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_of_lead'))
+            ->select(DB::raw('popping_email.email as email, COUNT( DISTINCT lead.id)  no_of_lead'))
             ->leftJoin('lead', function($join) {
                 $join->on('popping_email.id', '=', 'lead.popping_email_id');
             })

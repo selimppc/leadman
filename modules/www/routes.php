@@ -8,13 +8,11 @@
 
 Route::Group(['modules'=>'www', 'namespace'=>'Modules\Www\Controllers'],function(){
 
-    Route::Group(['prefix'=>'dashboard'],function(){
-        Route::get('user',[
-            #'middleware'=>'acl_access::schedule',
-            'route'=>'',
-            'uses'=>'UserDashboardController@index'
-        ]);
+    Route::get('dashboard/user',[
+        #'middleware'=>'acl_access::schedule',
+        'route'=>'dashboard.user',
+        'uses'=>'UserDashboardController@index'
+    ]);
 
-    });
 
 });

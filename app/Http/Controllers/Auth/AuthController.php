@@ -196,8 +196,12 @@ class AuthController extends Controller
                                     }
                                 }
 
+                                //print_r($user_data);exit;
+
                                 Session::put('email', $user_data->email);
                                 Session::put('user_id', $user_data->id);
+                                Session::put('role_id', $user_data->role_id);
+
                                 Session::flash('message', "Successfully  Logged In.");
 
                                 $this->menu_permission();
@@ -236,7 +240,7 @@ class AuthController extends Controller
                     ->select('role_user.role_id')
                     ->get()->toArray();
 
-                //print_r($role_list); exit;
+                #print_r($role_list); exit;
 
 
                 //routes per role(s)
