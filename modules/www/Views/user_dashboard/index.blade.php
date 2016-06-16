@@ -67,48 +67,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
+                        @if(isset($result_24))
+                            @foreach($result_24 as $result_24)
+                                <tr>
+                                    <td>{{ $result_24->email }}</td>
+                                    <td>{{ $result_24->no_of_lead }}</td>
+                                    <td>{{ $result_24->no_of_invoice }}</td>
+                                    <td>{{ $result_24->total_cost }}</td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
 
