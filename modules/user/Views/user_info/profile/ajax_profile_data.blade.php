@@ -12,29 +12,17 @@
             <div class="panel-body">
                 <div class="table-primary">
                     @if(isset($data))
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-example">
-                        <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name </th>
-                            <th>Telephone Number </th>
-                            <th>Data Of Birth</th>
-                            <th>Address</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if(isset($data))
-                                <tr class="gradeX">
-                                    <td>{{$data->first_name}}</td>
-                                    <td>{{$data->last_name}}</td>
-                                    <td>{{$data->telephone_number}}</td>
-                                    <td>{{$data->date_of_birth}}</td>
-                                    <td>{{$data->address}}</td>
-                                </tr>
-                            @else
-                            @endif
-                        </tbody>
-                    </table>
+                        <section class="col-lg-12">
+                            <div class="col-lg-6">
+                                <p><strong>First Name : </strong>{{isset($data->first_name)?ucfirst($data->first_name):''}}</p>
+                                <p><strong>Last Name :</strong> {{isset($data->last_name)?ucfirst($data->last_name):''}}</p>
+                                <p><strong>Telephone Number :</strong> {{isset($data->telephone_number)?ucfirst($data->telephone_number):''}}</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <p><strong>Data Of Birth : </strong>{{isset($data->date_of_birth)?ucfirst($data->date_of_birth):''}}</p>
+                                <p><strong>Address : </strong>{{isset($data->address)?ucfirst($data->address):''}}</p>
+                            </div>
+                        </section>
                     @else
                         {{'No data Found'}}
                     @endif

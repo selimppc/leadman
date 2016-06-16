@@ -1,4 +1,5 @@
-
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
 
 <div class="modal-header">
     <a href="{{ URL::previous() }}" class="close" type="button" title="click x button for close this entry form"> × </a>
@@ -8,7 +9,10 @@
 
 <div class="modal-body">
     {!! Form::model($model, ['method' => 'PATCH', 'route'=> ['update-profile-image',$user_image_id],'files'=>'true']) !!}
-    @include('admin::user_info.profile_image.add_image')
+    @include('user::user_info.profile_image.add_image')
     {!! Form::close() !!}
+</div>
+
+    </div>
 </div>
 
