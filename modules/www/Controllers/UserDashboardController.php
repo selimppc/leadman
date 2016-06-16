@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserDashboardController extends Controller
@@ -41,6 +42,7 @@ class UserDashboardController extends Controller
                 "), 'popping_email.id', '=', 'popping_email_id'
             )
             ->addBinding($last_24, 'select')
+            ->where('user_id', Auth::user()->id)
             ->get();
 
         // In Last 7 days
@@ -60,22 +62,47 @@ class UserDashboardController extends Controller
                 "), 'popping_email.id', '=', 'popping_email_id'
             )
             ->addBinding($last_7_days, 'select')
+            ->where('user_id', Auth::user()->id)
             ->get();
 
 
-
-
-
-        //-- 24 hours
-        //-- Last 1 Week
         //-- Numbers of email -> link to list of email.
-        //-- Show duplicate email stat -> link to list
-        //-- Show filtered email stat -> link to list
+        $no_of_email = DB::table('popping_email')
+            ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_of_lead'))
+            ->leftJoin('lead', function($join) {
+                $join->on('popping_email.id', '=', 'lead.popping_email_id');
+            })
+            ->where('user_id', Auth::user()->id)
+            ->get();
 
-        #print_r("OK");
+
+        //-- Show duplicate email stat -> link to list
+        $no_duplicate_email = DB::table('popping_email')
+            ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_of_lead'))
+            ->leftJoin('lead', function($join) {
+                $join->on('popping_email.id', '=', 'lead.popping_email_id')
+                    ->where( 'lead.count','>', 1 );
+            })
+            ->where('user_id', Auth::user()->id)
+            ->get();
+
+
+        //-- Show duplicate email stat -> link to list
+        $no_filtered_email = DB::table('popping_email')
+            ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_of_lead'))
+            ->leftJoin('lead', function($join) {
+                $join->on('popping_email.id', '=', 'lead.popping_email_id')
+                    ->where( 'lead.status','=', 'filtered' );
+            })
+            ->where('user_id', Auth::user()->id)
+            ->get();
+
+        
         return view('www::user_dashboard.index', [
             'result_24' => $result_24,
-            'result_7_days' => $result_7_days
+            'result_7_days' => $result_7_days,
+            'no_of_email' => $no_of_email,
+            'no_duplicate_email' => $no_duplicate_email,
         ]);
 
     }
