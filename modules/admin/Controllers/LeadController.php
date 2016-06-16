@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Modules\Admin\Lead;
+use Modules\Admin\PoppingEmail;
 
 class LeadController extends Controller
 {
@@ -20,9 +22,35 @@ class LeadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $input)
     {
-        //
+        $per_page=10;
+        $data['pageTitle'] = " Lead ";
+        if(isset($input->email)){
+            $per_page=10;
+            if(!empty($input['email']) && $input['status'] =='select')
+            {
+                $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
+                if(!empty($email)){
+                    $result= Lead::where('popping_email_id',$email->id)->with('relPoppingEmail')->paginate($per_page);
+                }
+            }elseif(empty($input['email']) && $input['status'] !='select')
+            {
+                $result= Lead::where('status',$input['status'])->with('relPoppingEmail')->paginate($per_page);
+            }elseif(!empty($input['email']) && $input['status'] !='select')
+            {
+                $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
+                if(!empty($email)){
+                    $result= Lead::where('popping_email_id',$email->id)->where('status',$input['status'])->with('relPoppingEmail')->paginate($per_page);
+                }
+            }else{
+                $result= Lead::with('relPoppingEmail')->paginate($per_page);
+            }
+            $data['leads']=$result;
+        }else{
+            $data['leads']= Lead::with('relPoppingEmail')->paginate($per_page);
+        }
+        return view('admin::lead.index', $data);
     }
 
     /**

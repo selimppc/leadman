@@ -51,7 +51,9 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
 
-        Schedule::create($request->only('day','time')); // store / update / code here
+        $values=$request->only('day');
+        $values['time']=$request['timee'];
+        Schedule::create($values); // store / update / code here
         Session::flash('message', 'Successfully added!');
         return redirect()->back();
     }
@@ -76,6 +78,7 @@ class ScheduleController extends Controller
     public function edit($id)
     {
         $data = Schedule::findOrFail($id);
+        $data->timee=$data->time;
         return view('admin::schedule.update', ['data'=>$data]);
     }
 
@@ -90,7 +93,8 @@ class ScheduleController extends Controller
     {
         $model = Schedule::findOrFail($id);
 
-        $input = $request->only('day','time');
+        $input = $request->only('day');
+        $input['time']=$request['timee'];
         $model->fill($input)->save(); // store / update / code here
 
         Session::flash('message', 'Successfully updated!');

@@ -12,5 +12,10 @@ return [
         'approved'=>'approved',
         'paid'=>'paid',
         'cancel'=>'cancel'
+    ],
+    'lead_status'=>[
+        'open'=>'open',
+        'close'=>'close',
+        'invoiced'=>'invoiced'
     ]
 ];
