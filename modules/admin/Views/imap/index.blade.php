@@ -101,7 +101,7 @@
                 <h4 class="modal-title">Add IMAP</h4>
             </div>
             <div class="modal-body">
-                {!! Form::open(['url' => 'admin/imap']) !!}
+                {!! Form::open(['url' => 'admin/imap_store']) !!}
                     @include('admin::imap._form')
                 {!! Form::close() !!}
 

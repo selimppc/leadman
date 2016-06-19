@@ -64,7 +64,7 @@
                 <h4 class="modal-title">Add Schedule</h4>
             </div>
             <div class="modal-body">
-                {!! Form::open(['url' => 'admin/schedule']) !!}
+                {!! Form::open(['url' => 'admin/schedule_store']) !!}
                 @include('admin::schedule._form')
                 {!! Form::close() !!}
 

@@ -87,7 +87,7 @@
                 <h4 class="modal-title">Add Popping Email</h4>
             </div>
             <div class="modal-body">
-                {!! Form::open(['url' => 'admin/popping-email']) !!}
+                {!! Form::open(['url' => 'admin/popping-email-store']) !!}
                 @include('admin::popping_email._form')
                 {!! Form::close() !!}
 
