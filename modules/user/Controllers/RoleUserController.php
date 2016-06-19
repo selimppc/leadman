@@ -36,12 +36,7 @@ class RoleUserController extends Controller
     {
         $pageTitle = "Role User Informations";
 
-        $data = DB::table('role_user')
-            ->join('user', 'user.id', '=', 'role_user.user_id')
-            ->join('role', 'role.id', '=', 'role_user.role_id')
-            ->where('role.title', '!=', 'super-admin')
-            ->select('role_user.id', 'user.username','user.email', 'role.title')
-            ->paginate(30);
+
         /*$data = new RoleUser();
         $data = $data->join('role','role.id','=','role_id');
         $data = $data->join('user','user.id','=','user_id');
@@ -52,9 +47,34 @@ class RoleUserController extends Controller
             $data = $data->where('user.username', 'LIKE', '%'.$username.'%');
         }
         $data = $data->paginate(30);*/
-        $user_id = [''=>'Select User'] + User::lists('username','id')->all();
+        $role_user = Session::get('role_title');
+        //print_r($role_user);exit;
+        if($role_user == 'super-admin'){
+            $data = DB::table('role_user')
+                ->join('user', 'user.id', '=', 'role_user.user_id')
+                ->join('role', 'role.id', '=', 'role_user.role_id')
+                ->select('role_user.id', 'user.username','user.email', 'role.title')
+                ->paginate(30);
 
-        $role_id =  [''=>'Select Role'] +  Role::where('role.title', '!=', 'super-admin')->lists('title','id')->all();
+            //print_r($data);exit;
+
+            $user_id = [''=>'Select User'] + User::lists('username','id')->all();
+            $role_id =  [''=>'Select Role'] +  Role::lists('title','id')->all();
+        }else{
+            $data = DB::table('role_user')
+                ->join('user', 'user.id', '=', 'role_user.user_id')
+                ->join('role', 'role.id', '=', 'role_user.role_id')
+                ->where('role.title', '!=', 'super-admin')
+                ->where('role.title', '!=', 'user')
+                ->select('role_user.id', 'user.username','user.email', 'role.title')
+                ->paginate(30);
+            //print_r($data);exit;
+            $user_id = [''=>'Select User'] + User::where('user.id', '!=', 3)->lists('username','id')->all();
+            $role_id =  [''=>'Select Role'] +  Role::where('role.title', '!=', 'super-admin')->lists('title','id')->all();
+        }
+
+
+
 
         return view('user::role_user.index', ['data' => $data, 'pageTitle'=> $pageTitle, 'user_id'=>$user_id,'role_id'=>$role_id]);
     }
