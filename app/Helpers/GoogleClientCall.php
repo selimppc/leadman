@@ -67,20 +67,17 @@ class GoogleClientCall
                         $to_email = $msg['messageTo'];
                     }
 
-
+                    //
                     $lead_email_data []= [
                         'from_email'=>$user_email,
                         'to_email'=>$to_email,
                     ];
-
-
                 }
             }
             return $lead_email_data;
         }else{
             return null;
         }
-
 
     }
 
