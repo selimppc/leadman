@@ -14,9 +14,15 @@
                 <a class="btn btn-primary btn-xs pull-right pop" data-toggle="modal" href="#addData" data-placement="top" data-content="click add user role button for select user and give new role">
                     <strong>Add New Role User</strong>
                 </a>
+
+
+                @if(Session::get('role_title') == 'super-admin')
+
                 <a class="btn btn-info btn-xs pull-right pop" href="{{route('role')}}" data-placement="left" data-content="Click to redirect in role page" style="margin-right: 10px;">
                     <strong>Go to Role Page</strong>
                 </a>
+
+                @endif
             </div>
 
             <div class="panel-body">

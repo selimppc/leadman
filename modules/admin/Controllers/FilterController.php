@@ -52,15 +52,24 @@ class FilterController extends Controller
      */
     public function store(Request $request)
     {
-        DB::begintransaction();
-        try {
-            Filter::create($request->only('name', 'filtercol')); // store / update / code here
-            DB::commit();
-            Session::flash('message', 'Successfully added!');
-        }catch (Exception $e)
-        {
-            DB::rollback();
-            Session::flash('error',$e->getMessage());
+        $input=$request->all();
+        #print_r($input);exit();
+        $name=Filter::where('name',$input['name'])->first();
+
+        if(!isset($name)) {
+            DB::begintransaction();
+            try {
+
+                Filter::create($request->only('name', 'filtercol')); // store / update / code here
+                DB::commit();
+                Session::flash('message', 'Successfully added!');
+            }catch (Exception $e)
+            {
+                DB::rollback();
+                Session::flash('error',$e->getMessage());
+            }
+        }else{
+            Session::flash('error', 'Sorry,Filter is already exist !');
         }
         return redirect()->back();
     }
@@ -97,18 +106,27 @@ class FilterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::begintransaction();
-        try {
-            $model = Filter::findOrFail($id);
 
-            $input = $request->only('name', 'filtercol');
-            $model->fill($input)->save(); // store / update / code here
+        $input=$request->all();
+        #print_r($input);exit();
+        $name=Filter::where('name',$input['name'])->first();
 
-            DB::commit();
-            Session::flash('message', 'Successfully updated!');
-        }catch (Exception $e){
-            DB::rollback();
-            Session::flash('error',$e->getMessage());
+        if(!isset($name)) {
+            DB::begintransaction();
+            try {
+                $model = Filter::findOrFail($id);
+
+                $input = $request->only('name', 'filtercol');
+                $model->fill($input)->save(); // store / update / code here
+
+                DB::commit();
+                Session::flash('message', 'Successfully updated!');
+            }catch (Exception $e){
+                DB::rollback();
+                Session::flash('error',$e->getMessage());
+            }
+        }else{
+            Session::flash('error', 'Sorry,Filter is already exist !');
         }
 
         return redirect()->back();

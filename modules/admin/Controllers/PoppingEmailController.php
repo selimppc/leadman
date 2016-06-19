@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Session;
 use Modules\Admin\Country;
 use Modules\Admin\Imap;
 use Modules\Admin\PoppingEmail;
+use Modules\Admin\Schedule;
 use Modules\Admin\Smtp;
 use Google_Service_Gmail;
 use Google_Service_Gmail_ModifyMessageRequest;
@@ -42,6 +43,7 @@ class PoppingEmailController extends Controller
         $data['country_id'] = Country::lists('title','id');
         $data['smtp_id'] = Smtp::lists('name','id');
         $data['imap_id'] = Imap::lists('name','id');
+        $data['schedule_id'] = Schedule::lists('day','id');
 
         if(isset($request->popmail_filter))
         {
@@ -244,6 +246,7 @@ class PoppingEmailController extends Controller
         $data['country_id'] = Country::lists('title','id');
         $data['smtp_id'] = Smtp::lists('name','id');
         $data['imap_id'] = Imap::lists('name','id');
+        $data['schedule_id'] = Schedule::lists('day','id');
         $data['popping_email'] = PoppingEmail::with('relSmtp','relImap','relCountry')->findOrFail($id);
         return view('admin::popping_email.update', $data);
     }

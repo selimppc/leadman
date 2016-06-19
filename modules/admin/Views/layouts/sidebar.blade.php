@@ -104,14 +104,31 @@
             </a>
             @if(count($sub_module['sub-menu'])>0)
                 <ul class="nav nav-second-level collapse">
-                    @foreach($sub_module['sub-menu'] as $sub_sub_module)
-                        <li>
-                            <a tabindex="-1" href="{{URL::to($sub_sub_module['route'])}}">
-                                <i class="{{@$sub_sub_module['icon_code']}}"> </i>
-                                <span class="mm-text">{{$sub_sub_module['menu_name']}}</span>
+                    @if(Session::get('role_title') == 'super-admin')
+
+                        @foreach($sub_module['sub-menu'] as $sub_sub_module)
+                            <li>
+                                <a tabindex="-1" href="{{URL::to($sub_sub_module['route'])}}">
+                                    <i class="{{@$sub_sub_module['icon_code']}}"> </i>
+                                    <span class="mm-text">{{$sub_sub_module['menu_name']}}</span>
+                                </a>
+                            </li>
+                        @endforeach
+
+                    @else
+                        <li class="sub-menu">
+                            <a href='{{URL::to('user-list')}}'>
+                                <i class="icon-laptop"></i>
+                                <span>User List</span>
                             </a>
                         </li>
-                    @endforeach
+                        <li class="sub-menu">
+                            <a href='{{URL::to('index-role-user')}}'>
+                                <i class="icon-dashboard"></i>
+                                <span>Role User</span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             @endif
         </li>
