@@ -7,12 +7,14 @@
 @endif
 <div class="form-group">
     {!! Form::label('day', 'Day:', ['class' => 'control-label']) !!}
+    <small class="required">(Required)</small>
     {!! Form::input('number', 'day', null, ['id'=>'day', 'class' => 'form-control', 'required'=>'required','min'=>1]) !!}
 
 </div>
 <div class="form-group">
     {!! Form::label('time', 'Time:', ['class' => 'control-label']) !!}
-    {!! Form::input('time', 'timee', null, ['class' => 'form-control', 'minlength'=>'2', 'required'=>'required']) !!}
+    <small class="required">(Required)</small>
+    {!! Form::input('text', 'timee', null, ['class' => 'form-control', 'pattern'=>'([01]?[0-9]|2[0-3]):[0-5][0-9]', 'required'=>'required', 'placeholder'=>'23:12']) !!}
 {{--    <input type="time" name="time" value="{{ Input::old('time') }}" class="form-control">--}}
 
 </div>

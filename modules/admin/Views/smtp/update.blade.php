@@ -6,7 +6,7 @@
         </div>
         <div class="modal-body">
 
-            {!! Form::model($smtp, ['method' => 'PATCH', 'url'=> ['admin/smtp', $smtp->id]]) !!}
+            {!! Form::model($smtp_data, ['method' => 'PATCH', 'url'=> ['admin/smtp', $smtp_data->id]]) !!}
             @include('admin::smtp._form')
             {!! Form::close() !!}
 

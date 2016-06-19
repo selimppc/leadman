@@ -28,7 +28,7 @@
 <div class="form-group">
     {!! Form::label('port', 'Port:', ['class' => 'control-label']) !!}
     <small class="required">(Required)</small>
-    {!! Form::input('number','port', 993,  ['class' => 'form-control','required']) !!}
+    {!! Form::input('number','port', null,  ['class' => 'form-control','required']) !!}
 </div>
 
 <p> &nbsp; </p>

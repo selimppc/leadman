@@ -211,7 +211,13 @@ class AuthController extends Controller
 
                                 $this->menu_permission();
 
-                                return redirect()->intended('dashboard');
+                                if($role_name->slug == 'user'){
+                                    return redirect()->intended('dashboard/user');
+                                }else{
+                                    return redirect()->intended('dashboard');
+                                }
+
+
                             }else{
                                 Session::flash('danger', "Password Incorrect.Please Try Again");
                             }

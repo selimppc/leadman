@@ -18,27 +18,23 @@ use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Modules\Admin\PoppingEmail;
 
 class DashboardController extends Controller
 {
     public function dashboard()
     {
         $data['pageTitle'] = 'Dashboard';
-        $data['last_day']= DashboardController::leadData(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
-        $data['last_7day']= DashboardController::leadData(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
-        $data['user_leads']= DashboardController::userLead();
-//        dd($data['user_leads']);
+        $data['last_day']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
+
+        $data['last_7day']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
+        $data['user_leads']= PoppingEmail::userLead();
+        $data['user_invoices_approved']= PoppingEmail::userInvoice('approved');
+        $data['user_invoices_paid']= PoppingEmail::userInvoice('paid');
+//        dd($data['user_invoices_approved']);
         return view('admin::dashboard.index',$data);
     }
 
-    private static function userLead()
-    {
-        return DB::table('popping_email')
-            ->select('popping_email.email','user.username',DB::raw('count(lead.id) as total_lead'))
-            ->leftJoin('user','popping_email.user_id','=','user.id')
-            ->leftJoin('lead','popping_email.id','=','lead.popping_email_id')
-            ->get();
-    }
     private static function leadData($date)
     {
         // set the default timezone to use. Available since PHP 5.1

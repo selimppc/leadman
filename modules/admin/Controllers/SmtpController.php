@@ -71,7 +71,7 @@ class SmtpController extends Controller
      */
     public function edit($id)
     {
-        $data['smtp'] = Smtp::findOrFail($id);
+        $data['smtp_data'] = Smtp::findOrFail($id);
         return view('admin::smtp.update', $data);
     }
 
