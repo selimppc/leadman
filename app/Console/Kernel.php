@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\Inspire::class,
         Commands\EmailFetch::class,
         Commands\Invoice::class,
+        Commands\ExecuationTime::class,
     ];
 
     /**

@@ -48,7 +48,7 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.imap',
         'uses'=>'ImapController@update'
     ]);
-    Route::get('delete/{id}',[
+    Route::get('admin/imap/delete/{id}',[
         'middleware'=>'acl_access::admin/imap/delete/{id}',
         'as'=>'admin.imap.delete',
         'uses'=>'ImapController@destroy'
