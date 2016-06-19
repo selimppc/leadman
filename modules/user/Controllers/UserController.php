@@ -239,7 +239,17 @@ class UserController extends Controller
         $model = User::with('relDepartment')->where('status','!=','cancel')->orderBy('id', 'DESC')->paginate(30);
 
         $department_data =  [''=>'Select Department'] + Department::lists('title','id')->all();
-        $role =  [''=>'Select Role'] +  Role::lists('title','id')->all();
+
+        $role_user = Session::get('role_title');
+        //print_r($role_user);exit;
+        if($role_user == 'super-admin'){
+            $role =  [''=>'Select Role'] +  Role::lists('title','id')->all();
+        }else{
+            $role =  [''=>'Select Role'] +  Role::where('role.title', '!=', 'super-admin')->lists('title','id')->all();
+        }
+
+
+
         /*set 30days for expire-date to user*/
         $i=30;
         $add_days = +$i.' days';
@@ -307,7 +317,7 @@ class UserController extends Controller
                 'csrf_token'=> str_random(30),
                 'ip_address'=> getHostByName(getHostName()),
                 'last_visit'=> $now,
-                'department_id'=> isset($input['department_id']) ? $input['department_id'] : '',
+                /*'department_id'=> isset($input['department_id']) ? $input['department_id'] : '',*/
                 'role_id'=> $input['role_id'],
                 'expire_date'=> $input['expire_date'],
                 'status'=> $input['status'],
@@ -395,7 +405,7 @@ class UserController extends Controller
                 'csrf_token'=> str_random(30),
                 'ip_address'=> getHostByName(getHostName()),
                 'last_visit'=> $now,
-                'department_id'=> $input['department_id'],
+                /*'department_id'=> $input['department_id'],*/
                 'role_id'=> $input['role_id'],
                 'expire_date'=> $input['expire_date'],
                 'status'=> $input['status'],

@@ -64,7 +64,7 @@
                 <h4 class="modal-title">Add Filter</h4>
             </div>
             <div class="modal-body">
-                {!! Form::open(['url' => 'admin/filter']) !!}
+                {!! Form::open(['url' => 'admin/filter_store']) !!}
                 @include('admin::filter._form')
                 {!! Form::close() !!}
 

@@ -33,9 +33,9 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.imap',
         'uses'=>'ImapController@index'
     ]);
-    Route::post('admin/imap',[
-        'middleware'=>'acl_access::admin/imap',
-        'as'=>'admin.imap',
+    Route::post('admin/imap_store',[
+        'middleware'=>'acl_access::admin/imap_store',
+        'as'=>'admin.imap_store',
         'uses'=>'ImapController@store'
     ]);
     Route::get('admin/imap/edit/{id}',[
@@ -58,9 +58,9 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.smtp',
         'uses'=>'SmtpController@index'
     ]);
-    Route::post('admin/smtp',[
-        'middleware'=>'acl_access::admin/smtp',
-        'as'=>'admin.smtp',
+    Route::post('admin/smtp_store',[
+        'middleware'=>'acl_access::admin/smtp_store',
+        'as'=>'admin.smtp_store',
         'uses'=>'SmtpController@store'
     ]);
     Route::get('admin/smtp/edit/{id}',[
@@ -88,9 +88,9 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.popping-email.search',
         'uses'=>'PoppingEmailController@search'
     ]);
-    Route::post('admin/popping-email',[
-        'middleware'=>'acl_access::admin/popping-email',
-        'as'=>'admin.popping-email',
+    Route::post('admin/popping-email-store',[
+        'middleware'=>'acl_access::admin/popping-email-store',
+        'as'=>'admin.popping-email-store',
         'uses'=>'PoppingEmailController@auth_process'
     ]);
     Route::get('admin/popping-email/show/{id}',[
@@ -118,9 +118,9 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.filter',
         'uses'=>'FilterController@index'
     ]);
-    Route::post('admin/filter',[
-        'middleware'=>'acl_access::admin/filter',
-        'as'=>'admin.filter',
+    Route::post('admin/filter_store',[
+        'middleware'=>'acl_access::admin/filter_store',
+        'as'=>'admin.filter_store',
         'uses'=>'FilterController@store'
     ]);
     Route::get('admin/filter/edit/{id}',[
@@ -143,9 +143,9 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.schedule',
         'uses'=>'ScheduleController@index'
     ]);
-    Route::post('admin/schedule',[
-        'middleware'=>'acl_access::schedule',
-        'as'=>'admin.schedule',
+    Route::post('admin/schedule_store',[
+        'middleware'=>'acl_access::admin/schedule_store',
+        'as'=>'admin.schedule_store',
         'uses'=>'ScheduleController@store'
     ]);
     Route::get('admin/schedule/edit/{id}',[

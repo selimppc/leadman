@@ -68,7 +68,7 @@
                 <h4 class="modal-title">Add SMTP</h4>
             </div>
             <div class="modal-body">
-                {!! Form::open(['url' => 'admin/smtp']) !!}
+                {!! Form::open(['url' => 'admin/smtp_store']) !!}
                 @include('admin::smtp._form')
                 {!! Form::close() !!}
 
