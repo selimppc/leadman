@@ -12,7 +12,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Mockery\CountValidator\Exception;
 use Modules\Admin\Filter;
 
 class FilterController extends Controller
@@ -50,9 +52,16 @@ class FilterController extends Controller
      */
     public function store(Request $request)
     {
-
-        Filter::create($request->only('name','filtercol')); // store / update / code here
-        Session::flash('message', 'Successfully added!');
+        DB::begintransaction();
+        try {
+            Filter::create($request->only('name', 'filtercol')); // store / update / code here
+            DB::commit();
+            Session::flash('message', 'Successfully added!');
+        }catch (Exception $e)
+        {
+            DB::rollback();
+            Session::flash('error',$e->getMessage());
+        }
         return redirect()->back();
     }
 
@@ -88,12 +97,19 @@ class FilterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $model = Filter::findOrFail($id);
+        DB::begintransaction();
+        try {
+            $model = Filter::findOrFail($id);
 
-        $input = $request->only('name','filtercol');
-        $model->fill($input)->save(); // store / update / code here
+            $input = $request->only('name', 'filtercol');
+            $model->fill($input)->save(); // store / update / code here
 
-        Session::flash('message', 'Successfully updated!');
+            DB::commit();
+            Session::flash('message', 'Successfully updated!');
+        }catch (Exception $e){
+            DB::rollback();
+            Session::flash('error',$e->getMessage());
+        }
 
         return redirect()->back();
     }

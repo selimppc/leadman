@@ -12,7 +12,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Mockery\CountValidator\Exception;
 use Modules\Admin\Schedule;
 
 class ScheduleController extends Controller
@@ -50,15 +52,22 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
+        DB::begintransaction();
+        try {
+            $values = $request->only('day');
+            $values['time'] = $request['timee'];
+            $unique_check = Schedule::where('day', $values['day'])->where('time', $values['time'])->first();
+            if (!isset($unique_check)) {
+                Schedule::create($values); // store / update / code here
+                DB::commit();
+                Session::flash('message', 'Successfully added!');
+            } else {
+                Session::flash('error', 'Sorry,This schedule is already exist.Please enter unique schedule.');
+            }
+        }catch (Exception $e){
+            DB::rollback();
+            Session::flash('error',$e->getMessage());
 
-        $values=$request->only('day');
-        $values['time']=$request['timee'];
-        $unique_check= Schedule::where('day',$values['day'])->where('time',$values['time'])->first();
-        if(!isset($unique_check)) {
-            Schedule::create($values); // store / update / code here
-            Session::flash('message', 'Successfully added!');
-        }else{
-            Session::flash('error', 'Sorry,This schedule is already exist.Please enter unique schedule.');
         }
         return redirect()->back();
     }
