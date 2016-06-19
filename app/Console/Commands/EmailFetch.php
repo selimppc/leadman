@@ -51,7 +51,7 @@ class EmailFetch extends Command
     public function handle()
     {
         //Popping Email List
-        $popping_email = PoppingEmail::with('relImap', 'relImap')->where('status', 'active')->get();
+        $popping_email = PoppingEmail::with('relSmtp', 'relImap')->where('status', 'active')->get();
 
         while(true)
         {
@@ -63,10 +63,13 @@ class EmailFetch extends Command
                     if($imap->host =='imap.gmail.com')
                     {
                         //TODO:: call GoogleClientCall
-                        $result = GoogleClientCall::run($pop_email->email);
+                        $result = GoogleClientCall::run($pop_email->email, $pop_email->token);
+
+                        #print_r($result);exit();
                     }
                     else
                     {
+                        #print_r("cpanel");exit();
                         $hostname = $pop_email->relImap->host;
                         $username = $pop_email->relImap->server_username;
                         $password = $pop_email->relImap->server_password;
@@ -82,8 +85,12 @@ class EmailFetch extends Command
                             if(!$check_lead){
                                 $model = new Lead();
                                 try{
-                                    $model->create($val);
-                                    $this->info('Stored Lead ! '.$model->email);
+                                    $model->email = $val['from_email'];
+                                    $model->popping_email_id = $pop_email->id;
+                                    $model->status = 'open';
+                                    $model->count = 1;
+                                    $model->save();
+                                    $this->info('Stored Lead : '.$model->email);
                                 }catch(\Exception $e){
                                     $this->info('Failed : '.$e->getMessage());
                                 }
@@ -92,13 +99,13 @@ class EmailFetch extends Command
                                 try{
                                     $model->count = $model->count + 1;
                                     $model->save();
-                                    $this->info('Stored Lead ! '.$model->email);
+                                    $this->info('Updated Count for the Lead : '.$model->email);
                                 }catch(\Exception $e){
                                     $this->info('Failed : '.$e->getMessage());
                                 }
                             }
                         }
-                        $model->create($result);
+
                     }else{
                         $this->info('No Data Found ! ');
                     }
