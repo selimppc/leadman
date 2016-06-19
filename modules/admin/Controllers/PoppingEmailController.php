@@ -28,6 +28,7 @@ use Google_Service_Datastore;
 use Google_Service_Urlshortener;
 use Google_Service_Urlshortener_Url;
 
+
 class PoppingEmailController extends Controller
 {
     /**
@@ -58,7 +59,8 @@ class PoppingEmailController extends Controller
                 $query->addSelect('id','name');
             },'relimap'=>function($query){
                 $query->addSelect('id','name');
-            }])->paginate(10);
+            }
+            ])->paginate(10);
         }
         return view('admin::popping_email.index', $data);
     }

@@ -37,6 +37,12 @@
                             <th>Email</th>
                             <th>Smtp</th>
                             <th>Imap</th>
+                            <th>Country</th>
+                            <th>Price</th>
+                            <th>Schedule</th>
+                            <th>Execution Time</th>
+                            <th>Status</th>
+                            <th>User</th>
                             <th>Action </th>
                         </tr>
                         </thead>
@@ -46,6 +52,12 @@
                                 <td>{{ isset($values->email)?$values->email:''  }}</td>
                                 <td>{{ isset($values->relSmtp->name)?$values->relSmtp->name:'' }}</td>
                                 <td>{{ isset($values->relImap->name)?$values->relImap->name:'' }}</td>
+                                <td>{{ isset($values->relCountry->country_origin)?$values->relCountry->country_origin:'' }}</td>
+                                <td>{{ isset($values->price)?$values->price:'' }}</td>
+                                <td>{{ isset($values->relSchedule->schedule_id)?$values->relSchedule->schedule_id:'' }}</td>
+                                <td>{{ isset($values->execution_time)?$values->execution_time:'' }}</td>
+                                <td>{{ isset($values->status)?$values->status:'' }}</td>
+                                <td>{{ isset($values->relUser->user_id)?$values->relUser->user_id:'' }}</td>
                                 <td>
                                     <a href="{{ url('admin/popping-email/show', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>
                                     <a href="{{ url('admin/popping-email/edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>
