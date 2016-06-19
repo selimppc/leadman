@@ -143,7 +143,7 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.schedule',
         'uses'=>'ScheduleController@index'
     ]);
-    Route::post('admin.schedule',[
+    Route::post('admin/schedule',[
         'middleware'=>'acl_access::schedule',
         'as'=>'admin.schedule',
         'uses'=>'ScheduleController@store'
