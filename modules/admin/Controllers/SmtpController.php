@@ -66,7 +66,6 @@ class SmtpController extends Controller
                 DB::beginTransaction();
 
                 $host=Smtp::where('host',$input['host'])->first();
-//                dd($host);
                 if(!isset($host)) {
                     try {
                         Smtp::create($input); // store / update / code here
@@ -127,32 +126,38 @@ class SmtpController extends Controller
         // Get input data
         $input = $request->all();
 
-        // TODO actually not todo as type has been identified by $input['domain']
-        //$type = SenderEmail::EmailTypeIdentification($input['host'], 'type');
+        $host=Smtp::where('host',$input['host'])->where('id','!=',$id)->first();
+        if(!isset($host)) {
 
-        // Prepare data
-        try{
-            $f = fsockopen($input['host'], $input['port'], $errno, $errstr, 30);
-            //Smtp Validation only Cpanel Based :End
+            // TODO actually not todo as type has been identified by $input['domain']
+            //$type = SenderEmail::EmailTypeIdentification($input['host'], 'type');
 
-            if($f) {
+            // Prepare data
+            try {
+                $f = fsockopen($input['host'], $input['port'], $errno, $errstr, 30);
+                //Smtp Validation only Cpanel Based :End
 
-                //Transaction Start Here
-                DB::beginTransaction();
-                try {
-                    $model->fill($input); // store / update / code here
-                    $model->save();
-                    DB::commit();
-                    Session::flash('message', 'Successfully Updated!');
+                if ($f) {
 
-                } catch (\Exception $e) {
-                    DB::rollback();
-                    Session::flash('error', $e->getMessage());
+                    //Transaction Start Here
+                    DB::beginTransaction();
+                    try {
+                        $model->fill($input); // store / update / code here
+                        $model->save();
+                        DB::commit();
+                        Session::flash('message', 'Successfully Updated!');
+
+                    } catch (\Exception $e) {
+                        DB::rollback();
+                        Session::flash('error', $e->getMessage());
+                    }
                 }
+                fclose($f);
+            } catch (\Exception $e) {
+                Session::flash('error', $e->getMessage());
             }
-            fclose($f) ;
-        }catch (\Exception $e){
-            Session::flash('error', $e->getMessage() );
+        }else{
+            Session::flash('error', 'Sorry,Host is already exist !');
         }
 
         return redirect()->back();

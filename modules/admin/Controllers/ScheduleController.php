@@ -53,8 +53,13 @@ class ScheduleController extends Controller
 
         $values=$request->only('day');
         $values['time']=$request['timee'];
-        Schedule::create($values); // store / update / code here
-        Session::flash('message', 'Successfully added!');
+        $unique_check= Schedule::where('day',$values['day'])->where('time',$values['time'])->first();
+        if(!isset($unique_check)) {
+            Schedule::create($values); // store / update / code here
+            Session::flash('message', 'Successfully added!');
+        }else{
+            Session::flash('error', 'Sorry,This schedule is already exist.Please enter unique schedule.');
+        }
         return redirect()->back();
     }
 
@@ -92,12 +97,16 @@ class ScheduleController extends Controller
     public function update(Request $request, $id)
     {
         $model = Schedule::findOrFail($id);
-
         $input = $request->only('day');
         $input['time']=$request['timee'];
-        $model->fill($input)->save(); // store / update / code here
+        $unique_check= Schedule::where('day',$input['day'])->where('time',$input['time'])->where('id','!=',$id)->first();
+        if(!isset($unique_check)) {
+            $model->fill($input)->save(); // store / update / code here
 
-        Session::flash('message', 'Successfully updated!');
+            Session::flash('message', 'Successfully updated!');
+        }else{
+            Session::flash('error', 'Sorry,This schedule is already exist.Please enter unique schedule.');
+        }
 
         return redirect()->back();
     }

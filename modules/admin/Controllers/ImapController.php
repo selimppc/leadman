@@ -117,26 +117,31 @@ class ImapController extends Controller
         $mail_server = $input['host'];
         $mail_port = $input['port'];
 
-        try{
-            $i = @fsockopen($mail_server, $mail_port, $errno, $errstr, 30);
-            if($i){
-                /* Transaction Start Here */
-                DB::beginTransaction();
-                try {
-                    $model->fill($input)->save(); // store / update / code here
+        $host=Imap::where('host',$input['host'])->where('id','!=',$id)->first();
+        if(!isset($host)) {
+            try {
+                $i = @fsockopen($mail_server, $mail_port, $errno, $errstr, 30);
+                if ($i) {
+                    /* Transaction Start Here */
+                    DB::beginTransaction();
+                    try {
+                        $model->fill($input)->save(); // store / update / code here
 
-                    DB::commit();
-                    Session::flash('message', 'IMAP has been successfully updated.');
-                }catch (\Exception $e) {
-                    //If there are any exceptions, rollback the transaction`
-                    DB::rollback();
-                    Session::flash('error', "Invalid To insert" );
+                        DB::commit();
+                        Session::flash('message', 'IMAP has been successfully updated.');
+                    } catch (\Exception $e) {
+                        //If there are any exceptions, rollback the transaction`
+                        DB::rollback();
+                        Session::flash('error', "Invalid To insert");
+                    }
+                } else {
+                    Session::flash('error', "Host or port might be worng.");
                 }
-            }else{
-                Session::flash('error', "Host or port might be worng." );
+            } catch (Exception $e) {
+                Session::flash('error', $e->getMessage());
             }
-        }catch(Exception $e){
-            Session::flash('error', $e->getMessage());
+        }else{
+            Session::flash('error', 'Sorry,Host is already exist !');
         }
 
         return redirect()->back();
