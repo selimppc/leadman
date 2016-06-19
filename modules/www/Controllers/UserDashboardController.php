@@ -30,55 +30,50 @@ class UserDashboardController extends Controller
         $user_id = Auth::id();
 
         //24 data
-        $sql_24 = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
+        $sql_24_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
     from popping_email
     left JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$last_24'
     LEFT JOIN invoice_head on invoice_head.popping_email_id = popping_email.id and invoice_head.created_at > '$last_24'
     WHERE popping_email.user_id = '$user_id'
     GROUP BY popping_email.id ";
-        $result_24 = DB::select(DB::raw($sql_24));
+        $result_24 = DB::select(DB::raw($sql_24_sql));
 
 
         // In Last 7 days
-        $result_7_days = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
+        $result_7_days_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
     from popping_email
     left JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$last_7_days'
     LEFT JOIN invoice_head on invoice_head.popping_email_id = popping_email.id and invoice_head.created_at > '$last_7_days'
     WHERE popping_email.user_id = '$user_id'
     GROUP BY popping_email.id ";
-        $result_7_days = DB::select(DB::raw($result_7_days));
+        $result_7_days = DB::select(DB::raw($result_7_days_sql));
 
 
         //-- Numbers of email -> link to list of email.
-        $no_of_email = DB::table('popping_email')
-            ->select(DB::raw('popping_email.email as email, COUNT( DISTINCT lead.id)  no_of_lead'))
-            ->leftJoin('lead', function($join) {
-                $join->on('popping_email.id', '=', 'lead.popping_email_id');
-            })
-            ->where('user_id', Auth::user()->id)
-            ->get();
+        $no_of_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
+    from popping_email
+    left JOIN lead on lead.popping_email_id = popping_email.id
+    WHERE popping_email.user_id = '$user_id'
+    GROUP BY popping_email.id ";
+        $no_of_email = DB::select(DB::raw($no_of_email_sql));
 
 
-        //-- Show duplicate email stat -> link to list
-        $no_duplicate_email = DB::table('popping_email')
-            ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_of_lead'))
-            ->leftJoin('lead', function($join) {
-                $join->on('popping_email.id', '=', 'lead.popping_email_id')
-                    ->where( 'lead.count','>', 1 );
-            })
-            ->where('user_id', Auth::user()->id)
-            ->get();
+        //-- Show no of duplicate email stat
+        $no_duplicate_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
+    from popping_email
+    left JOIN lead on lead.popping_email_id = popping_email.id
+    WHERE lead.count > 1 and popping_email.user_id = '$user_id'
+    GROUP BY popping_email.id ";
+        $no_duplicate_email = DB::select(DB::raw($no_duplicate_email_sql));
 
 
-        //-- Show duplicate email stat -> link to list
-        $no_filtered_email = DB::table('popping_email')
-            ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_of_lead'))
-            ->leftJoin('lead', function($join) {
-                $join->on('popping_email.id', '=', 'lead.popping_email_id')
-                    ->where( 'lead.status','=', 'filtered' );
-            })
-            ->where('user_id', Auth::user()->id)
-            ->get();
+        //-- Show filtered  email stat
+        $no_filtered_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
+    from popping_email
+    left JOIN lead on lead.popping_email_id = popping_email.id
+    WHERE lead.status='filtered' and popping_email.user_id = '$user_id'
+    GROUP BY popping_email.id ";
+        $no_filtered_email = DB::select(DB::raw($no_filtered_email_sql));
 
 
         return view('www::user_dashboard.index', [
@@ -86,6 +81,7 @@ class UserDashboardController extends Controller
             'result_7_days' => $result_7_days,
             'no_of_email' => $no_of_email,
             'no_duplicate_email' => $no_duplicate_email,
+            'no_filtered_email' => $no_filtered_email,
         ]);
 
     }

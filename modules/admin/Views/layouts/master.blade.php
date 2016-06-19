@@ -69,14 +69,14 @@
         <aside>
             <div id="sidebar"  class="nav-collapse ">
                 <!-- sidebar menu start-->
-                <ul class="sidebar-menu" id="nav-accordion">
+                {{--<ul class="sidebar-menu" id="nav-accordion">--}}
 
                     {{--@section('sidebar')
                     @show--}}
                     @include('admin::layouts.sidebar')
 
 
-                </ul>
+                {{--</ul>--}}
                 <!-- sidebar menu end-->
             </div>
         </aside>

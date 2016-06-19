@@ -76,13 +76,22 @@ class EmailFetch extends Command
 
                     }
                     if($result){
-
+                        // loop
                         foreach($result as $val){
                             $check_lead = Lead::where('email', $val['from_email'])->exists();
                             if(!$check_lead){
                                 $model = new Lead();
                                 try{
                                     $model->create($val);
+                                    $this->info('Stored Lead ! '.$model->email);
+                                }catch(\Exception $e){
+                                    $this->info('Failed : '.$e->getMessage());
+                                }
+                            }else{
+                                $model = Lead::where('email', $val['from_email'])->first();
+                                try{
+                                    $model->count = $model->count + 1;
+                                    $model->save();
                                     $this->info('Stored Lead ! '.$model->email);
                                 }catch(\Exception $e){
                                     $this->info('Failed : '.$e->getMessage());

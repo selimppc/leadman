@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+use App\Role;
 use App\User;
 use App\UserActivity;
 use App\UserImage;
@@ -196,17 +197,27 @@ class AuthController extends Controller
                                     }
                                 }
 
-                                //print_r($user_data);exit;
+                                $role_name = Role::where('id', $user_data->role_id)->first();
+
+                                #print_r($role_name->slug);exit;
 
                                 Session::put('email', $user_data->email);
                                 Session::put('user_id', $user_data->id);
-                                Session::put('role_id', $user_data->role_id);
+                                Session::put('role_title', $role_name->slug);
+
+                                #print_r(Auth::user()->email);exit;
 
                                 Session::flash('message', "Successfully  Logged In.");
 
                                 $this->menu_permission();
 
-                                return redirect()->intended('dashboard');
+                                if($role_name->slug == 'user'){
+                                    return redirect()->intended('dashboard/user');
+                                }else{
+                                    return redirect()->intended('dashboard');
+                                }
+
+
                             }else{
                                 Session::flash('danger', "Password Incorrect.Please Try Again");
                             }

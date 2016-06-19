@@ -84,40 +84,87 @@
         <span>Settings</span>
     </a>
 </li>--}}
-
-
+{{--Session::get('role_title')--}}
+<ul class="sidebar-menu" id="nav-accordion">
 
 @if(\Illuminate\Support\Facades\Session::has('sidebar_menu_user'))
     <?php $side_bar_menu = \Illuminate\Support\Facades\Session::get('sidebar_menu_user'); ?>
 
-    @if($side_bar_menu) {{--Session['sidebar_menu_user']--}}
-    @foreach($side_bar_menu as $module) {{--Every module on sidebar menu--}}
-    @if(count($module['sub-menu'])>0) {{--Session['sidebar_menu_user']--}}
-    @foreach($module['sub-menu'] as $sub_module) {{--Sub menu on every module--}}
-    <li>
-        <a tabindex="-1" href="{{URL::to($sub_module['route'])}}">
-            <i class="{{@$sub_module['icon_code']}}"> </i>
-            <span class="mm-text">{{$sub_module['menu_name']}}</span>
-        </a>
-        @if(count($sub_module['sub-menu'])>0)
-            <ul class="nav nav-second-level collapse">
-                @foreach($sub_module['sub-menu'] as $sub_sub_module)
-                    <li>
-                        <a tabindex="-1" href="{{URL::to($sub_sub_module['route'])}}">
-                            <i class="{{@$sub_sub_module['icon_code']}}"> </i>
-                            <span class="mm-text">{{$sub_sub_module['menu_name']}}</span>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-    </li>
+    @if(Session::get('role_title') != 'user')
 
-    @endforeach
+        @if($side_bar_menu) {{--Session['sidebar_menu_user']--}}
+        @foreach($side_bar_menu as $module) {{--Every module on sidebar menu--}}
+        @if(count($module['sub-menu'])>0) {{--Session['sidebar_menu_user']--}}
+        @foreach($module['sub-menu'] as $sub_module) {{--Sub menu on every module--}}
+
+        <li>
+            <a tabindex="-1" href="{{URL::to($sub_module['route'])}}">
+                <i class="{{@$sub_module['icon_code']}}"> </i>
+                <span class="mm-text">{{$sub_module['menu_name']}}</span>
+            </a>
+            @if(count($sub_module['sub-menu'])>0)
+                <ul class="nav nav-second-level collapse">
+                    @foreach($sub_module['sub-menu'] as $sub_sub_module)
+                        <li>
+                            <a tabindex="-1" href="{{URL::to($sub_sub_module['route'])}}">
+                                <i class="{{@$sub_sub_module['icon_code']}}"> </i>
+                                <span class="mm-text">{{$sub_sub_module['menu_name']}}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        </li>
+        @endforeach
+        @endif
+        @endforeach
+        @endif
+
+        <li class="sub-menu">
+            <a href='{{URL::to('user-profile')}}'>
+                <i class="icon-laptop"></i>
+                <span>Profile</span>
+            </a>
+        </li>
+        <li class="sub-menu">
+            <a href='{{URL::to('user-logout')}}'>
+                <i class="icon-dashboard"></i>
+                <span>Log Out</span>
+            </a>
+        </li>
+
+    @else
+            <li class="sub-menu">
+                <a href='{{URL::to('dashboard/user')}}'>
+                    <i class="icon-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+        <li class="sub-menu">
+            <a href='{{URL::to('admin/popping-email')}}'>
+                <i class="icon-envelope"></i>
+                <span>Popping Email</span>
+            </a>
+        </li>
+        <li class="sub-menu">
+            <a href='{{URL::to('user-profile')}}'>
+                <i class="icon-laptop"></i>
+                <span>Profile</span>
+            </a>
+        </li>
+        <li class="sub-menu">
+            <a href='{{URL::to('user-logout')}}'>
+                <i class="icon-dashboard"></i>
+                <span>Log Out</span>
+            </a>
+        </li>
     @endif
-    @endforeach
-    @endif
+
 @endif
+
+
+
+</ul>
 
 
 
