@@ -15,6 +15,7 @@ use Google_Service_Urlshortener;
 use Google_Service_Urlshortener_Url;
 use Modules\Admin\Lead;
 use Modules\Admin\PoppingEmail;
+use Illuminate\Support\Facades\DB;
 
 
 class EmailFetch extends Command
@@ -124,6 +125,32 @@ class EmailFetch extends Command
 
 
 
+
+    /**
+     * @param $email
+     * @return int
+     */
+    protected static function filtering($email){
+        $filter_list= DB::table('filter')->select('name')->get();
+
+        foreach($filter_list as $filter){
+            $list[] = ['name' => $filter->name,];
+        }
+
+        $match = 0;
+        if(isset($list)) {
+            foreach ($list as $word) {
+                // This pattern takes care of word boundaries, and is case insensitive
+
+                $name = $word['name'];
+
+                $pattern = "/\b$name\b/i";
+                $match += preg_match($pattern, $email);
+            }
+        }
+
+        return $match;
+    }
 
 
 
