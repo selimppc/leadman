@@ -8,6 +8,7 @@
 
 namespace Modules\Admin\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -47,8 +48,44 @@ class SmtpController extends Controller
      */
     public function store(Request $request)
     {
-        Smtp::create($request->except('_token'));
-        Session::flash('message', 'SMTP has been successfully stored.');
+
+        // Get input data
+        $input = $request->all();
+
+        // TODO actually not todo as type has been identified by $input['domain']
+        //$type = SenderEmail::EmailTypeIdentification($input['host'], 'type');
+
+        // Prepare data
+        try{
+            $f = fsockopen($input['host'], $input['port'], $errno, $errstr, 30);
+                //Smtp Validation only Cpanel Based :End
+
+            if($f) {
+
+                //Transaction Start Here
+                DB::beginTransaction();
+
+                $host=Smtp::where('host',$input['host'])->first();
+                if(!isset($host)) {
+                    try {
+                        Smtp::create($input); // store / update / code here
+                        DB::commit();
+                        Session::flash('message', 'Successfully Added!');
+
+                    } catch (\Exception $e) {
+                        DB::rollback();
+                        Session::flash('error', $e->getMessage());
+                    }
+                }else{
+                    Session::flash('error', 'Sorry,Host is already exist !');
+
+                }
+            }
+            fclose($f) ;
+        }catch (\Exception $e){
+            Session::flash('error', $e->getMessage() );
+        }
+
         return redirect()->back();
     }
 
@@ -84,17 +121,45 @@ class SmtpController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data=$request->all();
-        $smtp=Smtp::findOrFail($id);
-        $smtp->name= $data['name'];
-        $smtp->server_username= $data['server_username'];
-        $smtp->server_password= $data['server_password'];
-        $smtp->host= $data['host'];
-        $smtp->port= $data['port'];
-        $smtp->smtp= $data['smtp'];
-        $smtp->c_port= $data['c_port'];
-        $smtp->save();
-        Session::flash('message', 'SMTP has been successfully updated.');
+
+        $model = Smtp::findOrFail($id);
+        // Get input data
+        $input = $request->all();
+
+        $host=Smtp::where('host',$input['host'])->where('id','!=',$id)->first();
+        if(!isset($host)) {
+
+            // TODO actually not todo as type has been identified by $input['domain']
+            //$type = SenderEmail::EmailTypeIdentification($input['host'], 'type');
+
+            // Prepare data
+            try {
+                $f = fsockopen($input['host'], $input['port'], $errno, $errstr, 30);
+                //Smtp Validation only Cpanel Based :End
+
+                if ($f) {
+
+                    //Transaction Start Here
+                    DB::beginTransaction();
+                    try {
+                        $model->fill($input); // store / update / code here
+                        $model->save();
+                        DB::commit();
+                        Session::flash('message', 'Successfully Updated!');
+
+                    } catch (\Exception $e) {
+                        DB::rollback();
+                        Session::flash('error', $e->getMessage());
+                    }
+                }
+                fclose($f);
+            } catch (\Exception $e) {
+                Session::flash('error', $e->getMessage());
+            }
+        }else{
+            Session::flash('error', 'Sorry,Host is already exist !');
+        }
+
         return redirect()->back();
     }
 

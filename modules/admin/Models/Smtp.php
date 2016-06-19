@@ -15,12 +15,8 @@ class Smtp extends Model
     protected $table='smtp';
     protected $fillable=[
         'name',
-        'server_username',
-        'server_password',
         'host',
         'port',
-        'smtp',
-        'c_port',
     ];
     public function relPoppingEmail()
     {
