@@ -65,9 +65,9 @@ class PoppingEmail extends Model
         $sql= "select user.username,count( DISTINCT popping_email.id ) no_of_popping_email,count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
     from user
     RIGHT JOIN popping_email on popping_email.user_id = user.id
-    RIGHT JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$time'
-    RIGHT JOIN invoice_head on invoice_head.popping_email_id = popping_email.id and invoice_head.created_at > '$time'
-    GROUP BY popping_email.id ";
+    LEFT JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$time'
+    LEFT JOIN invoice_head on invoice_head.popping_email_id = popping_email.id and invoice_head.created_at > '$time'
+    GROUP BY user.id";
         return DB::select(DB::raw($sql));
     }
     public static function userLead()

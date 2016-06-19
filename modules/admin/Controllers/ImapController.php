@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Modules\Admin\Imap;
 
@@ -47,8 +48,34 @@ class ImapController extends Controller
      */
     public function store(Request $request)
     {
-        Imap::create($request->except('_token'));
-        Session::flash('message', 'IMAP has been successfully stored.');
+        $input=$request->all();
+        $mail_server = $input['host'];
+        $mail_port = $input['port'];
+
+        $host=Imap::where('host',$input['host'])->first();
+        if(isset($host) && empty($host)) {
+            try {
+                $i = @fsockopen($mail_server, $mail_port, $errno, $errstr, 30);
+                if ($i) {
+                    DB::beginTransaction();
+                    try {
+                        Imap::create($input); // store / update / code here
+                        DB::commit();
+                        Session::flash('message', 'IMAP has been successfully stored.');
+                    } catch (\Exception $e) {
+                        //If there are any exceptions, rollback the transaction`
+                        DB::rollback();
+                        Session::flash('error', "Invalid Request. Please Try Again");
+                    }
+                } else {
+                    Session::flash('error', "Imap and/or port may be incorrect.");
+                }
+            } catch (\Exception $e) {
+                Session::flash('error', $e->getMessage());
+            }
+        }else{
+            Session::flash('error', 'Sorry,Host is already exist !');
+        }
         return redirect()->back();
     }
 
@@ -84,13 +111,34 @@ class ImapController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data=$request->all();
-        $imap=Imap::findOrFail($id);
-        $imap->name= $data['name'];
-        $imap->host= $data['host'];
-        $imap->port= $data['port'];
-        $imap->save();
-        Session::flash('message', 'IMAP has been successfully updated.');
+
+        $model = Imap::findOrFail($id);
+        $input = $request->all();
+        $mail_server = $input['host'];
+        $mail_port = $input['port'];
+
+        try{
+            $i = @fsockopen($mail_server, $mail_port, $errno, $errstr, 30);
+            if($i){
+                /* Transaction Start Here */
+                DB::beginTransaction();
+                try {
+                    $model->fill($input)->save(); // store / update / code here
+
+                    DB::commit();
+                    Session::flash('message', 'IMAP has been successfully updated.');
+                }catch (\Exception $e) {
+                    //If there are any exceptions, rollback the transaction`
+                    DB::rollback();
+                    Session::flash('error', "Invalid To insert" );
+                }
+            }else{
+                Session::flash('error', "Host or port might be worng." );
+            }
+        }catch(Exception $e){
+            Session::flash('error', $e->getMessage());
+        }
+
         return redirect()->back();
     }
 

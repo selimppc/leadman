@@ -15,7 +15,7 @@ class CreateImapTable extends Migration
         Schema::create('imap', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',64)->nullable();
-            $table->string('host',128)->nullable();
+            $table->string('host',128)->unique()->nullable();
             $table->unsignedInteger('port',false)->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
