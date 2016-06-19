@@ -172,7 +172,7 @@ class PoppingEmailController extends Controller
         {
             $client->authenticate($_GET['code']);
             $data['code']=$_GET['code'];
-            $data['token']=$client->getRefreshToken();
+            $data['token']=$client->getAccessToken();
             $input_data = Session::get('popping_input');
             $data = [
                 'email'=>$input_data['email'],
@@ -183,7 +183,7 @@ class PoppingEmailController extends Controller
                 'country_origin'=>$input_data['country_origin'],
                 'auth_type'=>'google',
                 'code'=>$_GET['code'],
-                'token'=>$client->getRefreshToken(),
+                'token'=>$client->getAccessToken(),
                 'user_id'=> Auth::user()->id
             ];
 
