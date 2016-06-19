@@ -152,9 +152,9 @@
 
     @else
             <li class="sub-menu">
-                <a href='{{URL::to('admin/popping-email')}}'>
+                <a href='{{URL::to('dashboard/user')}}'>
                     <i class="icon-dashboard"></i>
-                    <span>Popping Email</span>
+                    <span>Dashboard</span>
                 </a>
             </li>
         <li class="sub-menu">
