@@ -8,6 +8,14 @@
 
 namespace App\Helpers;
 
+use Google_Service_Gmail;
+use Google_Service_Gmail_ModifyMessageRequest;
+use Google_Client;
+use Google_Service_Books;
+use Google_Auth_AssertionCredentials;
+use Google_Service_Datastore;
+use Google_Service_Urlshortener;
+use Google_Service_Urlshortener_Url;
 
 class GmailListMessages
 {

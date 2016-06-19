@@ -13,14 +13,20 @@ use Modules\Admin\CentralSettings;
 
 class GenerateNumber
 {
-
+    /**
+     * @return array|bool
+     */
     public static function run() {
         $settings = CentralSettings::where('title','=','invoice-number')->first();
+
         if($settings){
             $number = $settings['status'] + 1;
             $generate_voucher_number = 'INV-'.str_pad($number, 6, '0', STR_PAD_LEFT);
             $array = array('generated_number'=>$generate_voucher_number);
+
+            //Update central setting for invoice number
             GenerateNumber::update_row($settings->id,$number);
+
             return  $array;
         }else{
             return  false;
@@ -32,7 +38,7 @@ class GenerateNumber
      * @param $value
      * @return bool
      */
-    public static function update_row($row_id,$value) {
+    private static function update_row($row_id,$value) {
         $settings = CentralSettings::findOrFail($row_id);
         if($settings){
             $settings->status=$value;

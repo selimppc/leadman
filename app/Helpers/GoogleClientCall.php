@@ -8,6 +8,14 @@
 
 namespace App\Helpers;
 
+use Google_Service_Gmail;
+use Google_Service_Gmail_ModifyMessageRequest;
+use Google_Client;
+use Google_Service_Books;
+use Google_Auth_AssertionCredentials;
+use Google_Service_Datastore;
+use Google_Service_Urlshortener;
+use Google_Service_Urlshortener_Url;
 
 class GoogleClientCall
 {
@@ -15,9 +23,17 @@ class GoogleClientCall
     /**
      * @param $pop_email
      */
-    public static function run($pop_email){
+    public static function run($pop_email, $token){
 
         session_start();
+        define('SCOPES', implode(' ', array(
+                Google_Service_Gmail::MAIL_GOOGLE_COM,
+                Google_Service_Gmail::GMAIL_COMPOSE,
+                Google_Service_Gmail::GMAIL_READONLY,
+                Google_Service_Gmail::GMAIL_MODIFY,
+                "https://www.googleapis.com/auth/urlshortener"
+            )
+        ));
 
         //client
         $client = new Google_Client();
@@ -26,8 +42,8 @@ class GoogleClientCall
         $client->setLoginHint($pop_email);
         $client->setAccessType('offline');
         $client->setApprovalPrompt("force");
+        $json_token = $token;
 
-        $json_token = $pop_email->token;
         if ($json_token) {
             $client->setAccessToken($json_token);
             // If access token is not valid use refresh token
@@ -40,7 +56,7 @@ class GoogleClientCall
             // Gmail Service
             $gmail_service = new \Google_Service_Gmail($client);
             // Get List of messages
-            $message_data = GmailListMessages::lists($gmail_service, $pop_email->email);
+            $message_data = GmailListMessages::lists($gmail_service, $pop_email);
 
             $lead_email_data = [];
             if ($message_data) {
