@@ -66,7 +66,8 @@ class SmtpController extends Controller
                 DB::beginTransaction();
 
                 $host=Smtp::where('host',$input['host'])->first();
-                if(isset($host) && empty($host)) {
+//                dd($host);
+                if(!isset($host)) {
                     try {
                         Smtp::create($input); // store / update / code here
                         DB::commit();

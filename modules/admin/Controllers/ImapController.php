@@ -53,7 +53,7 @@ class ImapController extends Controller
         $mail_port = $input['port'];
 
         $host=Imap::where('host',$input['host'])->first();
-        if(isset($host) && empty($host)) {
+        if(!isset($host)) {
             try {
                 $i = @fsockopen($mail_server, $mail_port, $errno, $errstr, 30);
                 if ($i) {

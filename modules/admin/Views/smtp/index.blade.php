@@ -26,11 +26,8 @@
                         <tr>
                             <th> ID </th>
                             <th> Name </th>
-                            <th> User Name </th>
                             <th> Host </th>
                             <th> Port </th>
-                            <th> Smtp </th>
-                            <th> Cpanel Port </th>
                             <th> Action </th>
                         </tr>
                         </thead>
@@ -39,11 +36,8 @@
                             <tr class="gradeX">
                                 <td>{{$values->id}}</td>
                                 <td>{{$values->name}}</td>
-                                <td>{{$values->server_username}}</td>
                                 <td>{{$values->host}}</td>
                                 <td>{{$values->port}}</td>
-                                <td>{{$values->smtp}}</td>
-                                <td>{{$values->c_port}}</td>
                                 <td>
                                 <a href="{{ url('admin/smtp/edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Smtp Edit"><i class="icon-edit"></i></a>
                                 <a href="{{ url('admin/smtp/delete', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')" title="Smtp Delete"><i class="icon-trash"></i></a>
