@@ -120,7 +120,26 @@
         @endforeach
         @endif
 
+        <li class="sub-menu">
+            <a href='{{URL::to('user-profile')}}'>
+                <i class="icon-laptop"></i>
+                <span>Profile</span>
+            </a>
+        </li>
+        <li class="sub-menu">
+            <a href='{{URL::to('user-logout')}}'>
+                <i class="icon-dashboard"></i>
+                <span>Log Out</span>
+            </a>
+        </li>
+
     @else
+            <li class="sub-menu">
+                <a href='{{URL::to('dashboard/user')}}'>
+                    <i class="icon-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
         <li class="sub-menu">
             <a href='{{URL::to('admin/popping-email')}}'>
                 <i class="icon-envelope"></i>

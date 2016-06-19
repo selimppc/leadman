@@ -9,11 +9,11 @@
             <div class="hpanel hgreen">
                 <div class="panel-body">
                     <div class="pull-right text-right">
-                        <div class="btn-group">
+                        {{--<div class="btn-group">
                             <i class="fa fa-facebook btn btn-default btn-xs"></i>
                             <i class="fa fa-twitter btn btn-default btn-xs"></i>
                             <i class="fa fa-linkedin btn btn-default btn-xs"></i>
-                        </div>
+                        </div>--}}
                     </div>
                     @if(isset($user_image))
                     <img alt="" class="img-circle" src="{{ URL::to($user_image->thumbnail) }}" width="100px" height="100px">
