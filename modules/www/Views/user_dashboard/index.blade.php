@@ -83,9 +83,9 @@
             </div>
 
 
-            <div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
+            {{--<div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
                 <div id="hero-graph" class="graph" style="height: 230px;"></div>
-            </div>
+            </div>--}}
         </div>
     </div>
 
@@ -163,9 +163,9 @@
             </div>
 
 
-            <div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
+            {{--<div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
                 <div id="result-7-days" class="graph" style="height: 230px;"></div>
-            </div>
+            </div>--}}
         </div>
     </div>
 
@@ -239,9 +239,9 @@
             </div>
 
 
-            <div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
+            {{--<div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
                 <div id="no-of-email" class="graph" style="height: 230px;"></div>
-            </div>
+            </div>--}}
         </div>
     </div>
 
@@ -317,9 +317,9 @@
             </div>
 
 
-            <div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
+            {{--<div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
                 <div id="duplicate-email-lists" class="graph" style="height: 230px;"></div>
-            </div>
+            </div>--}}
         </div>
     </div>
 
@@ -394,9 +394,9 @@
             </div>
 
 
-            <div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
+            {{--<div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
                 <div id="filtered-email-lists" class="graph" style="height: 230px;"></div>
-            </div>
+            </div>--}}
         </div>
     </div>
 

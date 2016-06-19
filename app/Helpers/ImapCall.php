@@ -89,15 +89,16 @@ class ImapCall
                 }
 
                 $subject = isset($overview[0]->subject)?($overview[0]->subject):''; // user subject
+
                 /** Filter Email and Subject :: eg-> ignore if no-reply **/
-                $email_filter = ImapCall::check_keyword_exists_in_email_subject($user_email);
-                $subject_filter = ImapCall::check_keyword_exists_in_email_subject($subject);
+                #$email_filter = ImapCall::check_keyword_exists_in_email_subject($user_email);
+                #$subject_filter = ImapCall::check_keyword_exists_in_email_subject($subject);
 
                 // if not exists in filter then continue
-                if($email_filter==0 && $subject_filter==0)
-                {
+                #if($email_filter==0 && $subject_filter==0)
+                #{
                     //TODO:: store to
-                }
+                #}
 
                 $lead_email_data []= [
                     'from_email'=>$user_email,
