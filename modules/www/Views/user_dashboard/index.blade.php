@@ -20,13 +20,13 @@
         <script>
             init.push(function () {
                 var uploads_data = [
-                    { day: '2014-03-10', v: 20 },
-                    { day: '2014-03-11', v: 10 },
-                    { day: '2014-03-12', v: 15 },
-                    { day: '2014-03-13', v: 12 },
-                    { day: '2014-03-14', v: 5  },
-                    { day: '2014-03-15', v: 5  },
-                    { day: '2014-03-16', v: 20 }
+                    { day: '2014-03-10', v: 1 },
+                    { day: '2014-03-11', v: 2 },
+                    { day: '2014-03-12', v: 3 },
+                    { day: '2014-03-13', v: 4 },
+                    { day: '2014-03-14', v: 5 },
+                    { day: '2014-03-15', v: 6 },
+                    { day: '2014-03-16', v: 7 }
                 ];
                 Morris.Line({
                     element: 'hero-graph',
@@ -100,13 +100,13 @@
         <script>
             init.push(function () {
                 var uploads_data = [
-                    { day: '2014-03-10', v: 20 },
-                    { day: '2014-03-11', v: 10 },
-                    { day: '2014-03-12', v: 15 },
-                    { day: '2014-03-13', v: 12 },
-                    { day: '2014-03-14', v: 5  },
-                    { day: '2014-03-15', v: 5  },
-                    { day: '2014-03-16', v: 20 }
+                    { day: '2014-03-10', v: 1 },
+                    { day: '2014-03-11', v: 2 },
+                    { day: '2014-03-12', v: 3 },
+                    { day: '2014-03-13', v: 4 },
+                    { day: '2014-03-14', v: 5 },
+                    { day: '2014-03-15', v: 6 },
+                    { day: '2014-03-16', v: 7 }
                 ];
                 Morris.Line({
                     element: 'result-7-days',
@@ -180,16 +180,16 @@
         <script>
             init.push(function () {
                 var uploads_data = [
-                    { day: '2014-03-10', v: 20 },
-                    { day: '2014-03-11', v: 10 },
-                    { day: '2014-03-12', v: 15 },
-                    { day: '2014-03-13', v: 12 },
-                    { day: '2014-03-14', v: 5  },
-                    { day: '2014-03-15', v: 5  },
-                    { day: '2014-03-16', v: 20 }
+                    { day: '2014-03-10', v: 1 },
+                    { day: '2014-03-11', v: 2 },
+                    { day: '2014-03-12', v: 3 },
+                    { day: '2014-03-13', v: 4 },
+                    { day: '2014-03-14', v: 5 },
+                    { day: '2014-03-15', v: 6 },
+                    { day: '2014-03-16', v: 7 }
                 ];
                 Morris.Line({
-                    element: 'result-7-days',
+                    element: 'no-of-email',
                     data: uploads_data,
                     xkey: 'day',
                     ykeys: ['v'],
@@ -241,6 +241,161 @@
 
             <div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
                 <div id="no-of-email" class="graph" style="height: 230px;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+{{--Duplicate Email Lists --}}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- Javascript -->
+        <script>
+            init.push(function () {
+                var uploads_data = [
+                    { day: '2014-03-10', v: 1 },
+                    { day: '2014-03-11', v: 2 },
+                    { day: '2014-03-12', v: 3 },
+                    { day: '2014-03-13', v: 4 },
+                    { day: '2014-03-14', v: 5 },
+                    { day: '2014-03-15', v: 6 },
+                    { day: '2014-03-16', v: 7 }
+                ];
+                Morris.Line({
+                    element: 'duplicate-email-lists',
+                    data: uploads_data,
+                    xkey: 'day',
+                    ykeys: ['v'],
+                    labels: ['Value'],
+                    lineColors: ['#fff'],
+                    lineWidth: 2,
+                    pointSize: 4,
+                    gridLineColor: 'rgba(255,255,255,.5)',
+                    resize: true,
+                    gridTextColor: '#fff',
+                    xLabels: "day",
+                    xLabelFormat: function(d) {
+                        return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov', 'Dec'][d.getMonth()] + ' ' + d.getDate();
+                    },
+                });
+            });
+        </script>
+        <!-- / Javascript -->
+
+
+        <div class="stat-panel">
+
+            <div class="stat-cell col-sm-7 padding-sm-hr bordered no-border-r valign-top">
+                <!-- Small padding, without top padding, extra small horizontal padding -->
+                <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> Duplicate Email Lists  </h4>
+                <!-- Without margin -->
+
+                <table class="display table table-bordered table-striped" >
+                    <thead>
+                    <tr>
+                        <th>Popping Email</th>
+                        <th>No of Lead</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(isset($no_duplicate_email))
+                        @foreach($no_duplicate_email as $no_duplicate_email)
+                            <tr>
+                                <td>{{ $no_duplicate_email->email }}</td>
+                                <td>{{ $no_duplicate_email->no_of_lead }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
+                <div id="duplicate-email-lists" class="graph" style="height: 230px;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{{--Filtered Email Lists --}}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- Javascript -->
+        <script>
+            init.push(function () {
+                var uploads_data = [
+                    { day: '2014-03-10', v: 1 },
+                    { day: '2014-03-11', v: 2 },
+                    { day: '2014-03-12', v: 3 },
+                    { day: '2014-03-13', v: 4 },
+                    { day: '2014-03-14', v: 5 },
+                    { day: '2014-03-15', v: 6 },
+                    { day: '2014-03-16', v: 7 }
+                ];
+                Morris.Line({
+                    element: 'filtered-email-lists',
+                    data: uploads_data,
+                    xkey: 'day',
+                    ykeys: ['v'],
+                    labels: ['Value'],
+                    lineColors: ['#fff'],
+                    lineWidth: 2,
+                    pointSize: 4,
+                    gridLineColor: 'rgba(255,255,255,.5)',
+                    resize: true,
+                    gridTextColor: '#fff',
+                    xLabels: "day",
+                    xLabelFormat: function(d) {
+                        return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov', 'Dec'][d.getMonth()] + ' ' + d.getDate();
+                    },
+                });
+            });
+        </script>
+        <!-- / Javascript -->
+
+
+        <div class="stat-panel">
+
+            <div class="stat-cell col-sm-7 padding-sm-hr bordered no-border-r valign-top">
+                <!-- Small padding, without top padding, extra small horizontal padding -->
+                <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> Filtered Email Lists  </h4>
+                <!-- Without margin -->
+
+                <table class="display table table-bordered table-striped" >
+                    <thead>
+                    <tr>
+                        <th>Popping Email</th>
+                        <th>No of Lead</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(isset($no_filtered_email))
+                        @foreach($no_filtered_email as $no_filtered_email)
+                            <tr>
+                                <td>{{ $no_filtered_email->email }}</td>
+                                <td>{{ $no_filtered_email->no_of_lead }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
+                <div id="filtered-email-lists" class="graph" style="height: 230px;"></div>
             </div>
         </div>
     </div>
