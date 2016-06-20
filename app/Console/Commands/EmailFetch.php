@@ -51,6 +51,7 @@ class EmailFetch extends Command
      */
     public function handle()
     {
+
         //Popping Email List
         $popping_email = PoppingEmail::with('relSmtp', 'relImap')->where('status', 'active')->get();
 
@@ -82,13 +83,30 @@ class EmailFetch extends Command
                     if($result){
                         // loop
                         foreach($result as $val){
+
+                            //from Email
+                            $from_email = $val['from_email'];
+                            //Check email exists
                             $check_lead = Lead::where('email', $val['from_email'])->exists();
-                            if(!$check_lead){
+
+                            //Filter Email
+                            $filtered = EmailFetch::filtering($val['from_email']);
+                            $lead_status = $filtered==0?'open':'filtered';
+
+                            $sql = "INSERT INTO lead (email,popping_email_id,status,count)
+                                        VALUES ('$from_email','$pop_email->id','$lead_status', 1)
+                                        ON DUPLICATE KEY UPDATE count=count+1
+                                        ";
+                            DB::statement($sql);
+
+                            $this->info('Stored or updated the Lead : '.$from_email);
+
+                            /*if(!$check_lead){
                                 $model = new Lead();
                                 try{
                                     $model->email = $val['from_email'];
                                     $model->popping_email_id = $pop_email->id;
-                                    $model->status = 'open';
+                                    $model->status = $lead_status;
                                     $model->count = 1;
                                     $model->save();
                                     $this->info('Stored Lead : '.$model->email);
@@ -104,7 +122,7 @@ class EmailFetch extends Command
                                 }catch(\Exception $e){
                                     $this->info('Failed : '.$e->getMessage());
                                 }
-                            }
+                            }*/
                         }
 
                     }else{
@@ -141,11 +159,14 @@ class EmailFetch extends Command
         if(isset($list)) {
             foreach ($list as $word) {
                 // This pattern takes care of word boundaries, and is case insensitive
-
                 $name = $word['name'];
 
                 $pattern = "/\b$name\b/i";
                 $match += preg_match($pattern, $email);
+
+                /*if (strpos($email, $name) !== false) {
+                    echo 'true';
+                }*/
             }
         }
 
