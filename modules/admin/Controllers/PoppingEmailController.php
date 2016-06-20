@@ -40,10 +40,10 @@ class PoppingEmailController extends Controller
     public function index(Request $request)
     {
         $data['pageTitle'] = " Popping Email ";
-        $data['country_id'] = Country::lists('title','id');
-        $data['smtp_id'] = Smtp::lists('name','id');
-        $data['imap_id'] = Imap::lists('name','id');
-        $data['schedule_id'] = Schedule::lists('day','id');
+        $data['country_id'] = [''=>'Select Country'] + Country::lists('code','id')->all();
+        $data['smtp_id'] = [''=>'Select Smtp'] + Smtp::lists('name','id')->all();
+        $data['imap_id'] = [''=>'Select Imap'] + Imap::lists('name','id')->all();
+        $data['schedule_id'] = [''=>'Select Schedule'] + Schedule::lists('day','id')->all();
 
         if(isset($request->popmail_filter))
         {
@@ -282,10 +282,10 @@ class PoppingEmailController extends Controller
     public function edit($id)
     {
         $data['pageTitle'] = 'Show the detail';
-        $data['country_id'] = Country::lists('title','id');
-        $data['smtp_id'] = Smtp::lists('name','id');
-        $data['imap_id'] = Imap::lists('name','id');
-        $data['schedule_id'] = Schedule::lists('day','id');
+        $data['country_id'] = [''=>'Select Country'] + Country::lists('code','id')->all();
+        $data['smtp_id'] = [''=>'Select Smtp'] + Smtp::lists('name','id')->all();
+        $data['imap_id'] = [''=>'Select Imap'] + Imap::lists('name','id')->all();
+        $data['schedule_id'] = [''=>'Select Schedule'] + Schedule::lists('day','id')->all();
         $data['popping_email'] = PoppingEmail::with('relSmtp','relImap','relCountry')->findOrFail($id);
         return view('admin::popping_email.update', $data);
     }
