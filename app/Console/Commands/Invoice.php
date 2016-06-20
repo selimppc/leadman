@@ -45,13 +45,13 @@ class Invoice extends Command
     {
 
         // set the default timezone to use. Available since PHP 5.1
-        date_default_timezone_set('Asia/Dacca');
+        #date_default_timezone_set('Asia/Dacca');
         $current_date = date('Y-m-d h:i:s');
 
         $data = PoppingEmail::with(['relLead' => function($query) {
             $query->where('lead.status', 'open');
         }])
-            #->where('execution_time', '<=', $current_date)
+            ->where('execution_time', '<=', $current_date)
             ->where('popping_email.status', '=', 'active')
             ->get();
 
