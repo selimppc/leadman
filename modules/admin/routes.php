@@ -98,6 +98,13 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.popping-email.show',
         'uses'=>'PoppingEmailController@show'
     ]);
+
+    Route::get('admin/popping-email/active-inactive/{id}',[
+        'middleware'=>'acl_access::admin/popping-email/active-inactive/{id}',
+        'as'=>'admin.popping-email.active-inactive',
+        'uses'=>'PoppingEmailController@active_inactive'
+    ]);
+
     Route::get('admin/popping-email/edit/{id}',[
         'middleware'=>'acl_access::admin/popping-email/edit/{id}',
         'as'=>'admin.popping-email.edit',
