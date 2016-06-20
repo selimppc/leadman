@@ -41,10 +41,15 @@ class PoppingEmailController extends Controller
     public function index(Request $request)
     {
         $data['pageTitle'] = " Popping Email ";
-        $data['country_id'] = [''=>'Select Country'] + Country::lists('code','id')->all();
+        $data['country_id'] = [''=>'Select Country'] + Country::lists('title','id')->all();
         $data['smtp_id'] = [''=>'Select Smtp'] + Smtp::lists('name','id')->all();
         $data['imap_id'] = [''=>'Select Imap'] + Imap::lists('name','id')->all();
-        $data['schedule_id'] = [''=>'Select Schedule'] + Schedule::lists('day','id')->all();
+        #$data['schedule_id'] = [''=>'Select Schedule'] + Schedule::lists(concat ('day','time'),'id')->all();
+        $data['schedule_id'] = [''=>'Select Schedule'] + Schedule::select(
+            DB::raw("CONCAT('Day ',day,',Time  ', time,'') AS full_name, id")
+        )->lists('full_name', 'id')->all();
+
+
 
         if(isset($request->popmail_filter))
         {
@@ -140,6 +145,11 @@ class PoppingEmailController extends Controller
     public function auth_process(Request $request)
     {
         $input = $request->all();
+
+        $input['status'] = 'new';
+
+        #print_r($input);exit;
+
         $smtp_h = Smtp::findOrNew($input['smtp_id']);
         $smtp_host = $smtp_h['host'];
         $email = $input['email'];
@@ -220,7 +230,8 @@ class PoppingEmailController extends Controller
                 'auth_type'=>'google',
                 'code'=>$_GET['code'],
                 'token'=>$client->getAccessToken(),
-                'user_id'=> Auth::user()->id
+                'user_id'=> Auth::user()->id,
+                'statu'=> 'new',
             ];
 
             $email_exists = PoppingEmail::where('email', $input_data['email'])->exists();
@@ -283,10 +294,16 @@ class PoppingEmailController extends Controller
     public function edit($id)
     {
         $data['pageTitle'] = 'Show the detail';
-        $data['country_id'] = [''=>'Select Country'] + Country::lists('code','id')->all();
+        $data['country_id'] = [''=>'Select Country'] + Country::lists('title','id')->all();
         $data['smtp_id'] = [''=>'Select Smtp'] + Smtp::lists('name','id')->all();
         $data['imap_id'] = [''=>'Select Imap'] + Imap::lists('name','id')->all();
-        $data['schedule_id'] = [''=>'Select Schedule'] + Schedule::lists('day','id')->all();
+        /*$data['schedule_id'] = [''=>'Select Schedule'] + Schedule::lists('day','id')->all();*/
+
+        $data['schedule_id'] = [''=>'Select Schedule'] + Schedule::select(
+            DB::raw("CONCAT('Day ',day,',Time  ', time,'') AS full_name, id")
+        )->lists('full_name', 'id')->all();
+
+
         $data['popping_email'] = PoppingEmail::with('relSmtp','relImap','relCountry')->findOrFail($id);
         return view('admin::popping_email.update', $data);
     }
@@ -332,5 +349,41 @@ class PoppingEmailController extends Controller
         $popping_email->delete();
         Session::flash('message', 'Popping Email has been successfully deleted.');
         return redirect()->back();
+    }
+
+
+    /**
+     * @param $popping_email_id
+     */
+    public function active_inactive($popping_email_id){
+
+        if($popping_email_id){
+            $popping_email_data = PoppingEmail::findOrFail($popping_email_id);
+            $status = $popping_email_data->status;
+            if($status=='new'){
+                $role = Session::get('role_title');
+                if($role == 'admin' || $role == 'super-admin'){
+                    $popping_email_data->status='active';
+                    $popping_email_data->save();
+                }else{
+                    Session::flash('message', 'Contact with Administrator for this Action ! ');
+                    return redirect()->back();
+                }
+            }elseif($status=='active'){
+                $popping_email_data->status='inactive';
+                $popping_email_data->save();
+            }elseif($status=='inactive'){
+                $popping_email_data->status='active';
+                $popping_email_data->save();
+            }
+
+            Session::flash('message', 'Successfully Changed the status ! ');
+            return redirect()->back();
+
+        }else{
+            Session::flash('message', 'Popping Email is missing ! ');
+            return redirect()->back();
+        }
+
     }
 }
