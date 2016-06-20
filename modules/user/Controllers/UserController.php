@@ -236,7 +236,14 @@ class UserController extends Controller
     public function index()
     {
         $pageTitle = "User List";
-        $model = User::with('relDepartment')->where('status','!=','cancel')->orderBy('id', 'DESC')->paginate(30);
+
+        if(Session::get('role_title') == 'super-admin'){
+            $model = User::with('relDepartment')->where('status','!=','cancel')->orderBy('id', 'DESC')->paginate(30);
+        }else{
+            $model = User::with('relDepartment')->where('status','!=','cancel')->where('role_id',2)->orderBy('id', 'DESC')->paginate(30);
+        }
+
+
 
         $department_data =  [''=>'Select Department'] + Department::lists('title','id')->all();
 
@@ -269,7 +276,7 @@ class UserController extends Controller
         $model = new User();
 
         if($this->isGetRequest()){
-            $department_id = Input::get('department_id');
+            /*$department_id = Input::get('department_id');*/
             $username = Input::get('username');
             $status = Input::get('status');
 
@@ -278,9 +285,9 @@ class UserController extends Controller
             if(isset($username) && !empty($username)){
                 $model = $model->where('user.username', 'LIKE', '%'.$username.'%');
             }
-            if(isset($department_id) && !empty($department_id)){
+            /*if(isset($department_id) && !empty($department_id)){
                 $model = $model->where('user.department_id', '=', $department_id);
-            }
+            }*/
             if(isset($status) && !empty($status)){
                 $model = $model->where('user.status', '=', $status);
             }

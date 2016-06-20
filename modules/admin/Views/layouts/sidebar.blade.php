@@ -122,12 +122,12 @@
                                 <span>User List</span>
                             </a>
                         </li>
-                        <li class="sub-menu">
+                        {{--<li class="sub-menu">
                             <a href='{{URL::to('index-role-user')}}'>
                                 <i class="icon-dashboard"></i>
                                 <span>Role User</span>
                             </a>
-                        </li>
+                        </li>--}}
                     @endif
                 </ul>
             @endif

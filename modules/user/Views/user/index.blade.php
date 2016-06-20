@@ -29,9 +29,9 @@
                         {!! Form::text('username', @Input::get('username')? Input::get('username') : null, ['class' => 'form-control','placeholder'=>'select username','title'=>'type your require "username" then click "search" button']) !!}
 
                     </div>
-                    <div class="col-sm-3">
+                    {{--<div class="col-sm-3">
                         {!! Form::Select('department_id',$department_data, @Input::get('department_id')? Input::get('department_id') : null,['class' => 'form-control', 'title'=>'select your require "department",then click "search" button']) !!}
-                    </div>
+                    </div>--}}
 
                     <div class="col-sm-2">
                         {!! Form::Select('status',array(''=>'Status','inactive'=>'Inactive','active'=>'Active','cancel'=>'Cancel'),@Input::get('status')? Input::get('status') : null,['class'=>'form-control', 'title'=>'select your require "status", example :: open, then click "search" button']) !!}

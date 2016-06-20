@@ -63,14 +63,10 @@
                 {!! Form::label('role_id', 'User Role:', ['class' => 'control-label']) !!}
                 {!! Form::Select('role_id',$role, Input::old('role_id'),['style'=>'text-transform:capitalize','class' => 'form-control','required','title'=>'select role name']) !!}
             </div>
-            <div class="col-sm-6">
+            {{--<div class="col-sm-6">
                 {!! Form::label('department_id', 'Department:', ['class' => 'control-label']) !!}
                     {!! Form::Select('department_id', $department_data, Input::old('department_id'),['class' => 'form-control','required','title'=>'select department name']) !!}
-            </div>
-        </div>
-    </div>
-    <div class="form-group form-group no-margin-hr panel-padding-h no-padding-t no-border-t">
-        <div class="row">
+            </div>--}}
             <div class="col-sm-6">
                 {!! Form::label('expire_date', 'Expire Date:', ['class' => 'control-label']) !!}
                 <div class="input-group date">
@@ -83,6 +79,10 @@
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="form-group form-group no-margin-hr panel-padding-h no-padding-t no-border-t">
+        <div class="row">
             <div class="col-sm-6">
                 {!! Form::label('status', 'Status:', ['class' => 'control-label']) !!}
                 <small class="narration">(Inactive status Selected)</small>
