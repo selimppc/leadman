@@ -35,7 +35,7 @@ class CreatePoppingEmailTable extends Migration
             $table->foreign('user_id')->references('id')->on('user');
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
-            $table->timestamps();
+            $table->timestamps()->nullable();
         });
     }
 

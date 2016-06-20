@@ -20,7 +20,7 @@ class CreateInvoiceDetailTable extends Migration
             $table->float('unit_price')->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
-            $table->timestamps();
+            $table->timestamps()->nullable();
         });
     }
 

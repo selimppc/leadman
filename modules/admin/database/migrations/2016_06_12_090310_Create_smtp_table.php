@@ -19,7 +19,7 @@ class CreateSmtpTable extends Migration
             $table->string('port',128)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
-            $table->timestamps();
+            $table->timestamps()->nullable();
         });
     }
 

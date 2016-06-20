@@ -18,7 +18,7 @@ class CreateScheduleTable extends Migration
             $table->string('time',6)->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
-            $table->timestamps();
+            $table->timestamps()->nullable();
         });
     }
 

@@ -18,7 +18,7 @@ class CreateFilterTable extends Migration
             $table->string('filtercol',45)->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
-            $table->timestamps();
+            $table->timestamps()->nullable();
         });
     }
 

@@ -21,7 +21,7 @@ class CreateInvoiceHeadTable extends Migration
             $table->enum('status',['open','approved','paid','cancel'])->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
-            $table->timestamps();
+            $table->timestamps()->nullable();
         });
     }
 

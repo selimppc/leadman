@@ -18,7 +18,7 @@ class CreateCountryTable extends Migration
             $table->string('title',128)->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
-            $table->timestamps();
+            $table->timestamps()->nullable();
         });
     }
 
