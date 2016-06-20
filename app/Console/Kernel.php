@@ -27,7 +27,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
+        /*$schedule->command('inspire')
+                 ->hourly();*/
+        $schedule->command('leadman:email-fetch')->everyMinute();
+        $schedule->command('leadman:create-invoice')->everyMinute();
+        $schedule->command('leadman:execute-time')->everyMinute();
     }
 }
