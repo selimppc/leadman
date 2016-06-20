@@ -21,9 +21,10 @@
     {!! Form::label('host', 'Host:', ['class' => 'control-label']) !!}
     <small class="required">(Required)</small>
     <i>(ex: imap.example.com)</i>
-    {!! Form::text('host', null, ['onkeyup'=>"javascript:this.value=this.value.replace(/[:,'//']/g,'');",'class' => 'form-control','id'=>'host','required']) !!}
+    {!! Form::input('url','host', null, ['class' => 'form-control','id'=>'host','data-fv-uri'=>'true','required']) !!}
     <p id="delay-error"></p>
 </div>
+
 
 <div class="form-group">
     {!! Form::label('port', 'Port:', ['class' => 'control-label']) !!}
@@ -37,4 +38,6 @@
     <a href="" class="btn btn-default" type="button"> Close </a>
     {!! Form::submit('Submit', ['class' => 'btn btn-success']) !!}
 </div>
+
+@include('admin::imap._script')
 
