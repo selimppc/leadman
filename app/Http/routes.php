@@ -11,6 +11,12 @@
 |
 */
 
+
+Route::any('home-test', [
+    'as' => 'home-test',
+    'uses' => 'HomeController@home_test'
+]);
+
 Route::get('/', function () {
     return view('welcome');
 });
