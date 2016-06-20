@@ -43,10 +43,10 @@
     {!! Form::select('country_origin', $country_id,Input::old('country_origin'),['class' => 'form-control','required']) !!}
 </div>
 
-<div class="form-group">
+{{--<div class="form-group">
     {!! Form::label('status', 'Status:', ['class' => 'control-label']) !!}
     {!! Form::Select('status',array('active'=>'Active','inactive'=>'Inactive','cancel'=>'Cancel'),Input::old('status'),['class'=>'form-control ','required']) !!}
-</div>
+</div>--}}
 
 
 <p> &nbsp; </p>

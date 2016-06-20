@@ -10,9 +10,12 @@
         <section class="panel">
             <header class="panel-heading">
                 {{ $pageTitle }}
-                <a class="btn-sm btn-success pull-right paste-blue-button-bg" data-toggle="modal" href="#addData">
-                    <b>Add Popping Email</b>
-                </a>
+
+                @if(Session::get('role_title') != 'admin')
+                    <a class="btn-sm btn-success pull-right paste-blue-button-bg" data-toggle="modal" href="#addData">
+                        <b>Add Popping Email</b>
+                    </a>
+                @endif
             </header>
 
             <div class="panel-body">
@@ -67,7 +70,8 @@
                             <th>Schedule</th>
                             <th>Execution Time</th>
                             <th>Status</th>
-                            <th>Relations</th>
+                            <th>Lead</th>
+                            <th>Invoice</th>
                             <th>Action </th>
                         </tr>
                         </thead>
@@ -88,13 +92,16 @@
                                 <td>{{ isset($values->execution_time)?$values->execution_time:'' }}</td>
                                 <td>{{ isset($values->status)?$values->status:'' }}</td>
                                 <td>
-                                    <a href="{{ URL::to('admin/lead/'.$values->id) }}">Leads</a>
-                                    <a href="{{ URL::to('admin/invoice/'.$values->id) }}">Invoice</a>
+                                    <a href="{{ URL::to('admin/lead/'.$values->id) }}" class="btn btn-primary btn-xs">Lead</a>
+
+                                </td>
+                                <td>
+                                    <a href="{{ URL::to('admin/invoice/'.$values->id) }}" class="btn btn-primary btn-xs">Invoice</a>
                                 </td>
                                 <td>
                                     <a href="{{ url('admin/popping-email/show', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>
                                     <a href="{{ url('admin/popping-email/edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>
-                                    <a href="{{ url('admin/popping-email/delete', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" title="Popping Email Delete"><i class="icon-trash"></i></a>
+                                    {{--<a href="{{ url('admin/popping-email/delete', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" title="Popping Email Delete"><i class="icon-trash"></i></a>--}}
                                 </td>
                             </tr>
                         @endforeach
