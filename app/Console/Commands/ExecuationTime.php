@@ -38,7 +38,7 @@ class ExecuationTime extends Command
      */
     public function handle()
     {
-        $popping_emails=PoppingEmail::with(['relSchedule'])->get();
+        $popping_emails = PoppingEmail::with(['relSchedule'])->where('status', 'active')->get();
 
         while(true)
         {
