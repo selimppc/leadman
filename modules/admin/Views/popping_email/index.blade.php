@@ -20,13 +20,38 @@
 
                     {{-------------- Filter :Starts -------------------------------------------}}
                     {!! Form::model($_REQUEST,['url' => 'admin/popping-email','method'=>'get']) !!}
-                    <div  class="col-lg-3 pull-left" >
-                        <div class="input-group input-group-sm">
+                    <div  class="col-md-2" >
+                        <div class="form-group">
                             {!! Form::text('popmail_filter', null, ['id'=>'popmail_filter','placeholder'=>'Search by email','class' => 'form-control','required']) !!}
-                            <span class="input-group-btn">
-                               <button class="btn btn-info btn-flat" type="submit" >Search</button>
-                            </span>
                         </div>
+                    </div>
+                    <div  class="col-md-2" >
+                        <div class="form-group">
+                            {!! Form::select('smtp',$smtp_id,null,['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                    <div  class="col-md-2" >
+                        <div class="input-group">
+                            {!! Form::select('imap',$imap_id,null,['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                    <div  class="col-md-2" >
+                        <div class="input-group">
+                            {!! Form::select('country', $country_id,Input::old('country_origin'),['class' => 'form-control','required']) !!}
+                        </div>
+                    </div>
+                    <div  class="col-md-2" >
+                        <div class="input-group">
+                            {!! Form::Select('status',array('active'=>'Active','inactive'=>'Inactive','cancel'=>'Cancel'),Input::old('status'),['class'=>'form-control ','required']) !!}
+                        </div>
+                    </div>
+                    <div  class="col-md-1" >
+                        <div class="input-group">
+                            {!! Form::select('schedule', $schedule_id,Input::old('schedule'),['class' => 'form-control','required']) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                       <button class="btn btn-info btn-flat" type="submit" >Search</button>
                     </div>
                     {!! Form::close() !!}
 
