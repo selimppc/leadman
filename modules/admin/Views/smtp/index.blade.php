@@ -24,7 +24,6 @@
                     <table  class="display table table-bordered table-striped" id="data-table-example">
                         <thead>
                         <tr>
-                            <th> ID </th>
                             <th> Name </th>
                             <th> Host </th>
                             <th> Port </th>
@@ -34,7 +33,6 @@
                         <tbody>
                         @foreach($smtp as $values)
                             <tr class="gradeX">
-                                <td>{{$values->id}}</td>
                                 <td>{{$values->name}}</td>
                                 <td>{{$values->host}}</td>
                                 <td>{{$values->port}}</td>

@@ -51,7 +51,6 @@
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table-example">
                         <thead>
                         <tr>
-                            <th> ID </th>
                             <th> Action Name </th>
                             <th> Action URL </th>
                             <th> Action Details </th>
@@ -64,7 +63,6 @@
                         @if(isset($data))
                             @foreach($data as $values)
                                 <tr class="gradeX">
-                                    <td>{{ $values->id }}</td>
                                     <td>{{ucfirst($values->action_name)}}</td>
                                     <td>{{ucfirst($values->action_url)}}</td>
                                     <td>{{ $values->action_details }}</td>
