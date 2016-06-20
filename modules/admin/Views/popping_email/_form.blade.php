@@ -22,16 +22,21 @@
     {!! Form::label('imap_id', 'Imap Name:', ['class' => 'control-label']) !!}
     {!! Form::select('imap_id', $imap_id,Input::old('imap_id'),['class' => 'form-control','required']) !!}
 </div>
+
+
+@if(Session::get('role_title') != 'user')
+
 <div class="form-group">
     {!! Form::label('schedule_id', 'Schedule Name:', ['class' => 'control-label']) !!}
-    {!! Form::select('schedule_id', $schedule_id,Input::old('schedule_id'),['class' => 'form-control','required']) !!}
+    {!! Form::select('schedule_id', $schedule_id,Input::old('schedule_id'),['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group">
     {!! Form::label('price', 'Price:', ['class' => 'control-label']) !!}
-    <small class="required">(Required)</small>
-    {!! Form::text('price', null, ['class' => 'form-control' ,'required']) !!}
+    {!! Form::text('price', null, ['class' => 'form-control']) !!}
 </div>
+
+@endif
 
 <div class="form-group">
     {!! Form::label('country_id', 'Origin Country Name:', ['class' => 'control-label']) !!}

@@ -19,7 +19,7 @@ class CreateCentralSettingsTable extends Migration
             $table->enum('user_type',['admin','user']);
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
-            $table->timestamps()->nullable();
+            $table->timestamps();
         });
     }
 

@@ -27,7 +27,6 @@
                     <table  class="display table table-bordered table-striped" id="data-table-example">
                         <thead>
                         <tr>
-                            <th> Id </th>
                             <th> Name </th>
                             <th> Filter Column </th>
                             <th> Action </th>
@@ -36,7 +35,6 @@
                         <tbody>
                         @foreach($filters as $filter)
                             <tr class="gradeX">
-                                <td>{!!  $filter->id !!}</td>
                                 <td>{!!  $filter->name !!}</td>
                                 <td>{!!  $filter->filtercol !!}</td>
                                 <td>

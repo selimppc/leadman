@@ -27,7 +27,6 @@
                     <table  class="display table table-bordered table-striped" id="data-table-example">
                         <thead>
                         <tr>
-                            <th> Id </th>
                             <th> Day </th>
                             <th> Time </th>
                             <th> Action </th>
@@ -36,7 +35,6 @@
                         <tbody>
                         @foreach($schedules as $schedule)
                             <tr class="gradeX">
-                                <td>{!!  $schedule->id !!}</td>
                                 <td>{!!  $schedule->day !!}</td>
                                 <td>{!!  $schedule->time !!}</td>
                                 <td>

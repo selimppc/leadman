@@ -77,24 +77,31 @@ class LeadController extends Controller
                 {
                     $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
                     if(!empty($email)){
-                        $result= Lead::where('popping_email_id',$email->id)->with('relPoppingEmail')->paginate($per_page);
+                        $result= Lead::where('popping_email_id',$email->id)->with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
+                    }else{
+                        $result= Lead::with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
+
                     }
                 }elseif(empty($input['email']) && $input['status'] !='select')
                 {
-                    $result= Lead::where('status',$input['status'])->with('relPoppingEmail')->paginate($per_page);
+                    $result= Lead::where('status',$input['status'])->with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
                 }elseif(!empty($input['email']) && $input['status'] !='select')
                 {
                     $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
                     if(!empty($email)){
-                        $result= Lead::where('popping_email_id',$email->id)->where('status',$input['status'])->with('relPoppingEmail')->paginate($per_page);
+                        $result= Lead::where('popping_email_id',$email->id)->where('status',$input['status'])->with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
+                    }else{
+                        $result= Lead::with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
+
                     }
                 }else{
-                    $result= Lead::with('relPoppingEmail')->paginate($per_page);
+                    $result= Lead::with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
                 }
                 $data['leads']=$result;
             }else{
                 $data['leads']= Lead::with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
             }
+            $data['popping_email_id']=2;
             return view('admin::lead.index', $data);
         }else{
             Session::flash('error','Sorry,you don\'t have permission.');

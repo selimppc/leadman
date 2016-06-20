@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GenerateExecutionTime;
 use Illuminate\Http\Request;
 use Auth;
 use App\Http\Requests;
@@ -22,6 +23,7 @@ class HomeController extends Controller
     public function dashboard()
     {
 
+
         $pageTitle = 'Dashboard';
 
           return view('admin::layouts.dashboard',['pageTitle'=>$pageTitle]);
@@ -36,5 +38,11 @@ class HomeController extends Controller
         }
         echo '<pre>';
         print_r($routes_list);exit;
+    }
+
+
+    public function home_test(){
+        $data = GenerateExecutionTime::run(1, 1);
+        print_r($data);exit();
     }
 }

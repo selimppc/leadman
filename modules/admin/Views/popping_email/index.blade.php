@@ -22,7 +22,7 @@
                     {!! Form::model($_REQUEST,['url' => 'admin/popping-email','method'=>'get']) !!}
                     <div  class="col-md-2" >
                         <div class="form-group">
-                            {!! Form::text('popmail_filter', null, ['id'=>'popmail_filter','placeholder'=>'Search by email','class' => 'form-control','required']) !!}
+                            {!! Form::text('popmail_filter', null, ['id'=>'popmail_filter','placeholder'=>'Search by email','class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div  class="col-md-2" >
@@ -37,19 +37,19 @@
                     </div>
                     <div  class="col-md-2" >
                         <div class="input-group">
-                            {!! Form::select('country', $country_id,Input::old('country_origin'),['class' => 'form-control','required']) !!}
+                            {!! Form::select('country', $country_id,Input::old('country_origin'),['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div  class="col-md-2" >
                         <div class="input-group">
-                            {!! Form::Select('status',array('active'=>'Active','inactive'=>'Inactive','cancel'=>'Cancel'),Input::old('status'),['class'=>'form-control ','required']) !!}
+                            {!! Form::Select('status',array(''=>'Select Status','active'=>'Active','inactive'=>'Inactive','cancel'=>'Cancel'),Input::old('status'),['class'=>'form-control ']) !!}
                         </div>
                     </div>
-                    <div  class="col-md-1" >
+                    {{--<div  class="col-md-1" >
                         <div class="input-group">
                             {!! Form::select('schedule', $schedule_id,Input::old('schedule'),['class' => 'form-control','required']) !!}
                         </div>
-                    </div>
+                    </div>--}}
                     <div class="col-md-1">
                        <button class="btn btn-info btn-flat" type="submit" >Search</button>
                     </div>
@@ -67,7 +67,7 @@
                             <th>Schedule</th>
                             <th>Execution Time</th>
                             <th>Status</th>
-                            <th>Leads</th>
+                            <th>Relations</th>
                             <th>Action </th>
                         </tr>
                         </thead>
@@ -87,7 +87,10 @@
                                 </td>
                                 <td>{{ isset($values->execution_time)?$values->execution_time:'' }}</td>
                                 <td>{{ isset($values->status)?$values->status:'' }}</td>
-                                <td><a href="{{ URL::to('admin/lead/'.$values->id) }}">Leads</a></td>
+                                <td>
+                                    <a href="{{ URL::to('admin/lead/'.$values->id) }}">Leads</a>
+                                    <a href="{{ URL::to('admin/invoice/'.$values->id) }}">Invoice</a>
+                                </td>
                                 <td>
                                     <a href="{{ url('admin/popping-email/show', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>
                                     <a href="{{ url('admin/popping-email/edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>
