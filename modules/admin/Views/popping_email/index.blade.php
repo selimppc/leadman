@@ -42,7 +42,7 @@
                             <th>Schedule</th>
                             <th>Execution Time</th>
                             <th>Status</th>
-                            <th>User</th>
+                            <th>Leads</th>
                             <th>Action </th>
                         </tr>
                         </thead>
@@ -52,12 +52,17 @@
                                 <td>{{ isset($values->email)?$values->email:''  }}</td>
                                 <td>{{ isset($values->relSmtp->name)?$values->relSmtp->name:'' }}</td>
                                 <td>{{ isset($values->relImap->name)?$values->relImap->name:'' }}</td>
-                                <td>{{ isset($values->relCountry->country_origin)?$values->relCountry->country_origin:'' }}</td>
+                                <td>{{ isset($values->country_origin)?$values->relCountry->title:'' }}</td>
                                 <td>{{ isset($values->price)?$values->price:'' }}</td>
-                                <td>{{ isset($values->relSchedule->schedule_id)?$values->relSchedule->schedule_id:'' }}</td>
+                                <td>
+                                    @if(isset($values->relSchedule->day))
+                                        Day-{{ $values->relSchedule->day }}
+                                        Time-{{ $values->relSchedule->time }}
+                                    @endif
+                                </td>
                                 <td>{{ isset($values->execution_time)?$values->execution_time:'' }}</td>
                                 <td>{{ isset($values->status)?$values->status:'' }}</td>
-                                <td>{{ isset($values->relUser->user_id)?$values->relUser->user_id:'' }}</td>
+                                <td><a href="{{ URL::to('admin/lead/'.$values->id) }}">Leads</a></td>
                                 <td>
                                     <a href="{{ url('admin/popping-email/show', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>
                                     <a href="{{ url('admin/popping-email/edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>
