@@ -350,4 +350,40 @@ class PoppingEmailController extends Controller
         Session::flash('message', 'Popping Email has been successfully deleted.');
         return redirect()->back();
     }
+
+
+    /**
+     * @param $popping_email_id
+     */
+    public function active_inactive($popping_email_id){
+
+        if($popping_email_id){
+            $popping_email_data = PoppingEmail::findOrFail($popping_email_id);
+            $status = $popping_email_data->status;
+            if($status=='new'){
+                $role = Session::get('role_title');
+                if($role == 'admin' || $role == 'super-admin'){
+                    $popping_email_data->status='active';
+                    $popping_email_data->save();
+                }else{
+                    Session::flash('message', 'Contact with Administrator for this Action ! ');
+                    return redirect()->back();
+                }
+            }elseif($status=='active'){
+                $popping_email_data->status='inactive';
+                $popping_email_data->save();
+            }elseif($status=='inactive'){
+                $popping_email_data->status='active';
+                $popping_email_data->save();
+            }
+
+            Session::flash('message', 'Successfully Changed the status ! ');
+            return redirect()->back();
+
+        }else{
+            Session::flash('message', 'Popping Email is missing ! ');
+            return redirect()->back();
+        }
+
+    }
 }
