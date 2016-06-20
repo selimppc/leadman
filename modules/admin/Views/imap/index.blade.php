@@ -89,9 +89,6 @@
 </div>
 <!-- page end-->
 
-
-
-
 <!-- addIMAP -->
 <div class="modal fade" id="addData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">

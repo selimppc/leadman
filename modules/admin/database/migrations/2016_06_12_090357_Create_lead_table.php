@@ -14,7 +14,7 @@ class CreateLeadTable extends Migration
     {
         Schema::create('lead', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email',256)->nullable();
+            $table->string('email',256)->unique();
             $table->unsignedInteger('popping_email_id',false)->nullable();
             $table->foreign('popping_email_id')->references('id')->on('popping_email');
             $table->enum('status',['open', 'close', 'invoiced','filtered'])->nullable();
