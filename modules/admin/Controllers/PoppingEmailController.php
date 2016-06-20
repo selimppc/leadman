@@ -146,8 +146,6 @@ class PoppingEmailController extends Controller
     {
         $input = $request->all();
 
-        $input['status'] = 'new';
-
         #print_r($input);exit;
 
         $smtp_h = Smtp::findOrNew($input['smtp_id']);
@@ -185,6 +183,7 @@ class PoppingEmailController extends Controller
                 /* Transaction Start Here */
                 DB::beginTransaction();
                 try {
+                    $input['status'] = 'new';
                     // store / update / code here
                     PoppingEmail::create($input);
                     if(Session::has('popping_input')) {
@@ -231,7 +230,7 @@ class PoppingEmailController extends Controller
                 'code'=>$_GET['code'],
                 'token'=>$client->getAccessToken(),
                 'user_id'=> Auth::user()->id,
-                'statu'=> 'new',
+                'status'=> 'new',
             ];
 
             $email_exists = PoppingEmail::where('email', $input_data['email'])->exists();
