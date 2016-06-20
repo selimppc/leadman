@@ -19,10 +19,14 @@
                 <div class="adv-table">
 
                     {{-------------- Filter :Start -------------------------------------------}}
-                    {!! Form::model($_REQUEST,['url'=>'admin/lead','method'=>'get']) !!}
+                    @if(isset($popping_email_id))
+                        {!! Form::model($_REQUEST,['url'=>'admin/lead/'.$popping_email_id,'method'=>'get']) !!}
+                    @else
+                        {!! Form::model($_REQUEST,['url'=>'admin/lead','method'=>'get']) !!}
+                    @endif
                     <div class="form-group">
                         <div class="col-md-5">
-                            {!! Form::email('email',null,['class'=>'form-control','placeholder'=>'Popping Email']) !!}
+                            {!! Form::text('email',null,['class'=>'form-control','placeholder'=>'Popping Email']) !!}
                         </div>
                         <div class="col-md-3">
                             <?php

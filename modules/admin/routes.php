@@ -168,6 +168,11 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.invoice',
         'uses'=>'InvoiceController@index'
     ]);
+    Route::get('admin/invoice/{id}',[
+        'middleware'=>'acl_access::admin/invoice/{id}',
+        'as'=>'admin.invoice',
+        'uses'=>'InvoiceController@index'
+    ]);
     Route::get('admin/invoice/view/{id}',[
         'middleware'=>'acl_access::admin/invoice/view/{id}',
         'as'=>'admin.invoice.view',
