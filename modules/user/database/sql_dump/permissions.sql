@@ -215,5 +215,6 @@ INSERT INTO `permissions` (`id`, `title`, `route_url`, `description`, `created_b
 (129, 'admin/imap_store', 'admin/imap_store', NULL, 1, 0, '2016-06-19 02:47:48', '2016-06-19 02:47:48'),
 (130, 'admin/smtp_store', 'admin/smtp_store', NULL, 1, 0, '2016-06-19 02:47:48', '2016-06-19 02:47:48'),
 (131, 'admin/popping-email-store', 'admin/popping-email-store', NULL, 1, 0, '2016-06-19 02:47:48', '2016-06-19 02:47:48'),
-(132, 'admin/filter_store', 'admin/filter_store', NULL, 1, 0, '2016-06-19 02:47:48', '2016-06-19 02:47:48');
+(132, 'admin/filter_store', 'admin/filter_store', NULL, 1, 0, '2016-06-19 02:47:48', '2016-06-19 02:47:48'),
+(133, 'admin/imap/delete/{id}', 'admin/imap/delete/{id}', NULL, 3, 0, '2016-06-19 05:03:54', '2016-06-19 05:03:54');
 
