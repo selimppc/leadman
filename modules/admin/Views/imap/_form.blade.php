@@ -21,7 +21,7 @@
     {!! Form::label('host', 'Host:', ['class' => 'control-label']) !!}
     <small class="required">(Required)</small>
     <i>(ex: imap.example.com)</i>
-    {!! Form::input('url','host', null, ['class' => 'form-control','id'=>'host','data-fv-uri'=>'true','required']) !!}
+    {!! Form::text('host', null, ['class' => 'form-control','id'=>'host','required']) !!}
     <p id="delay-error"></p>
 </div>
 
