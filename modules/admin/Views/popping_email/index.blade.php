@@ -42,14 +42,14 @@
                     </div>
                     <div  class="col-md-2" >
                         <div class="input-group">
-                            {!! Form::Select('status',array('active'=>'Active','inactive'=>'Inactive','cancel'=>'Cancel'),Input::old('status'),['class'=>'form-control ','required']) !!}
+                            {!! Form::Select('status',array(''=>'Select Status','active'=>'Active','inactive'=>'Inactive','cancel'=>'Cancel'),Input::old('status'),['class'=>'form-control ','required']) !!}
                         </div>
                     </div>
-                    <div  class="col-md-1" >
+                    {{--<div  class="col-md-1" >
                         <div class="input-group">
                             {!! Form::select('schedule', $schedule_id,Input::old('schedule'),['class' => 'form-control','required']) !!}
                         </div>
-                    </div>
+                    </div>--}}
                     <div class="col-md-1">
                        <button class="btn btn-info btn-flat" type="submit" >Search</button>
                     </div>

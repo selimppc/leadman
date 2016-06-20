@@ -37,6 +37,7 @@ class PoppingEmailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index(Request $request)
     {
         $data['pageTitle'] = " Popping Email ";
