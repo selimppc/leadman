@@ -21,7 +21,7 @@ class CreateLeadTable extends Migration
             $table->unsignedInteger('count',false)->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
-            $table->timestamps()->nullable();
+            $table->timestamps();
         });
     }
 

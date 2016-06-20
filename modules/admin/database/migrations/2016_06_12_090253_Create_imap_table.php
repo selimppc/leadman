@@ -19,7 +19,7 @@ class CreateImapTable extends Migration
             $table->unsignedInteger('port',false)->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
-            $table->timestamps()->nullable();
+            $table->timestamps();
         });
     }
 
