@@ -69,6 +69,9 @@
                             <th>Price</th>
                             <th>Schedule</th>
                             <th>Execution Time</th>
+                            @if(Session::get('role_title') != 'user')
+                                <th>User</th>
+                            @endif
                             <th>Status</th>
                             <th>Lead</th>
                             <th>Invoice</th>
@@ -92,19 +95,14 @@
                                 <td>{{ isset($values->execution_time)?$values->execution_time:'' }}</td>
                                 {{--<td>{{ isset($values->status)?$values->status:'' }}</td>--}}
 
-                                @if($values->status == 'active')
-                                    <td>
-                                        <a href="{{ URL::to('admin/popping-email/active-inactive/'.$values->id) }}" class="btn btn-info btn-xs">Inactive</a>
 
-                                    </td>
-                                @elseif($values->status == 'inactive')
-                                    <td>
-                                        <a href="{{ URL::to('admin/popping-email/active-inactive/'.$values->id) }}" class="btn btn-info btn-xs">Active</a>
-
-                                    </td>
-                                @else
-                                    <td></td>
+                                @if(Session::get('role_title') != 'user')
+                                    <td>{{ isset($values->relUser->username)?$values->relUser->username:'' }}</td>
                                 @endif
+
+                                <td>
+                                    <a href="{{ URL::to('admin/popping-email/active-inactive/'.$values->id) }}" class="btn btn-info btn-xs"> {{$values->status == 'new'? 'New': ($values->status == 'inactive'? 'Inactive': 'Active') }}</a>
+                                </td>
 
 
                                 <td>
