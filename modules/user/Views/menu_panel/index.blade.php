@@ -43,7 +43,6 @@
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table-example">
                         <thead>
                         <tr>
-                            <th> Menu Id </th>
                             <th> Menu Type &nbsp;&nbsp;<span style="color: #A54A7B" class="user-guideline" data-placement="top"></span></th>
                             <th> Menu Name </th>
                             <th> URL </th>
@@ -57,7 +56,6 @@
                         @if(isset($model))
                             @foreach($model as $values)
                                 <tr class="gradeX">
-                                    <td>{{$values->id}}</td>
                                     <td>{{ucfirst($values->menu_type)}}</td>
                                     <td>{{ucfirst($values->menu_name)}}</td>
                                     <td>{{$values->route}}</td>

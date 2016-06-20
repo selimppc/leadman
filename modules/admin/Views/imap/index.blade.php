@@ -60,7 +60,6 @@
                     <table  class="display table table-bordered table-striped" id="data-table-example">
                         <thead>
                         <tr>
-                            <th> ID </th>
                             <th> Name </th>
                             <th> Host </th>
                             <th> Port </th>
@@ -70,7 +69,6 @@
                         <tbody>
                         @foreach($imaps as $imap)
                         <tr class="gradeX">
-                            <td>{{$imap->id}}</td>
                             <td>{{$imap->name}}</td>
                             <td>{{$imap->host}}</td>
                             <td>{{$imap->port}}</td>
