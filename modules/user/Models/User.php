@@ -84,7 +84,7 @@ class User extends Model implements AuthenticatableContract,
     }
 
     // TODO :: boot
-   // boot() function used to insert logged user_id at 'created_by' & 'updated_by'
+    // boot() function used to insert logged user_id at 'created_by' & 'updated_by'
 
     public static function boot(){
         parent::boot();
