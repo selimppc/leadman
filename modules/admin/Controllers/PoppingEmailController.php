@@ -8,6 +8,7 @@
 
 namespace Modules\Admin\Controllers;
 
+use App\Helpers\GenerateExecutionTime;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -48,7 +49,6 @@ class PoppingEmailController extends Controller
         $data['schedule_id'] = [''=>'Select Schedule'] + Schedule::select(
             DB::raw("CONCAT('Day ',day,',Time  ', time,'') AS full_name, id")
         )->lists('full_name', 'id')->all();
-
 
 
         if(isset($request->popmail_filter))
@@ -319,7 +319,18 @@ class PoppingEmailController extends Controller
     {
         $model = PoppingEmail::findOrFail($id);
         $input = $request->all();
-            // Transaction Start Here
+
+        $popping_email_id = $input['popping_email_id'];
+        $schedule_id = $input['schedule_id'];
+
+        //generate execution time and change the status active for the popping_email
+        $execution_time = GenerateExecutionTime::run($popping_email_id, $schedule_id);
+        if($execution_time){
+            $input['execution_time']=$execution_time;
+            $input['status']='active';
+        }
+
+        // Transaction Start Here
         DB::beginTransaction();
         try {
             if(empty($input['password']))
