@@ -9,7 +9,8 @@
     <?php  //echo $data->id;  ?>
 
     {!! Form::model($imap, ['method' => 'PATCH', 'url'=> ['admin/imap', $imap->id]]) !!}
-    @include('admin::imap._form')
+
+        @include('admin::imap._form')
     {!! Form::close() !!}
 
 </div>

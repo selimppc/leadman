@@ -5,6 +5,9 @@
         @endforeach
     </ul>
 @endif
+
+
+
     <div class="form-group">
         {!! Form::label('email', 'Email:', ['class' => 'control-label']) !!}
         {!! Form::email('email', null, ['id'=>'email', 'class' => 'form-control', 'required'=>'required']) !!}
