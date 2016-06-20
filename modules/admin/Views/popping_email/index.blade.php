@@ -67,7 +67,7 @@
                             <th>Schedule</th>
                             <th>Execution Time</th>
                             <th>Status</th>
-                            <th>Leads</th>
+                            <th>Relations</th>
                             <th>Action </th>
                         </tr>
                         </thead>
@@ -87,7 +87,10 @@
                                 </td>
                                 <td>{{ isset($values->execution_time)?$values->execution_time:'' }}</td>
                                 <td>{{ isset($values->status)?$values->status:'' }}</td>
-                                <td><a href="{{ URL::to('admin/lead/'.$values->id) }}">Leads</a></td>
+                                <td>
+                                    <a href="{{ URL::to('admin/lead/'.$values->id) }}">Leads</a>
+                                    <a href="{{ URL::to('admin/invoice/'.$values->id) }}">Invoice</a>
+                                </td>
                                 <td>
                                     <a href="{{ url('admin/popping-email/show', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>
                                     <a href="{{ url('admin/popping-email/edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>

@@ -24,7 +24,7 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request,$id=false)
     {
         $data['pageTitle'] = "Invoice";
         $request=$request->all();
@@ -32,7 +32,12 @@ class InvoiceController extends Controller
         {
             $data['invoices']= $this->search($request);
         }else{
-            $data['invoices'] = InvoiceHead::orderBy('id', 'DESC')->with('relPoppingEmail')->paginate(10);
+            if(isset($id))
+            {
+                $data['invoices'] = InvoiceHead::orderBy('id', 'DESC')->with('relPoppingEmail')->where('popping_email_id',$id)->paginate(10);
+            }else{
+                $data['invoices'] = InvoiceHead::orderBy('id', 'DESC')->with('relPoppingEmail')->paginate(10);
+            }
         }
         return view('admin::invoice.index',$data);
     }
