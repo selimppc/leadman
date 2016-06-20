@@ -193,5 +193,10 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.lead',
         'uses'=>'LeadController@index'
     ]);
+    Route::get('admin/lead/{id}',[
+        'middleware'=>'acl_access::admin/lead/{id}',
+        'as'=>'admin.lead',
+        'uses'=>'LeadController@leadByUser'
+    ]);
 
 });

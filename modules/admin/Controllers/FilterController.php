@@ -126,7 +126,19 @@ class FilterController extends Controller
                 Session::flash('error',$e->getMessage());
             }
         }else{
-            Session::flash('error', 'Sorry,Filter is already exist !');
+            DB::begintransaction();
+            try {
+                $model = Filter::findOrFail($id);
+
+                $input = $request->only('filtercol');
+                $model->fill($input)->save(); // store / update / code here
+
+                DB::commit();
+                Session::flash('message', 'Successfully updated!');
+            }catch (Exception $e){
+                DB::rollback();
+                Session::flash('error',$e->getMessage());
+            }
         }
 
         return redirect()->back();

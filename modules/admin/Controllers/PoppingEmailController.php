@@ -47,23 +47,54 @@ class PoppingEmailController extends Controller
 
         if(isset($request->popmail_filter))
         {
-            $data['popping_emails']= PoppingEmail::with(['relSmtp'=>function($query){
-                $query->addSelect('id','name');
-            },'relimap'=>function($query){
-                $query->addSelect('id','name');
-            }])->select('id','email')
-                ->where('email','LIKE','%'.$request->popmail_filter.'%')
-                ->orderBy('id', 'DESC')
-                ->paginate(10);
+            if(Session::get('role_title') == 'user') {
+                $data['popping_emails'] = PoppingEmail::with(['relSmtp' => function ($query) {
+                    $query->addSelect('id', 'name');
+                }, 'relImap' => function ($query) {
+                    $query->addSelect('id', 'name');
+                }, 'relCountry' => function ($query) {
+                    $query->addSelect('id', 'title');
+                }, 'relSchedule' => function ($query) {
+                    $query->addSelect('id', 'day', 'time');
+                }])->where('email', 'LIKE', '%' . $request->popmail_filter . '%')
+                    ->orderBy('id', 'DESC')
+                    ->where('user_id',Auth::id())
+                    ->paginate(10);
+            }else{
+                $data['popping_emails'] = PoppingEmail::with(['relSmtp' => function ($query) {
+                    $query->addSelect('id', 'name');
+                }, 'relImap' => function ($query) {
+                    $query->addSelect('id', 'name');
+                }, 'relCountry' => function ($query) {
+                    $query->addSelect('id', 'title');
+                }, 'relSchedule' => function ($query) {
+                    $query->addSelect('id', 'day', 'time');
+                }])->where('email', 'LIKE', '%' . $request->popmail_filter . '%')
+                    ->orderBy('id', 'DESC')
+                    ->paginate(10);
+
+            }
 
         }else{
-            $data['popping_emails']=PoppingEmail::with(['relSmtp'=>function($query){
-                $query->addSelect('id','name');
-            },'relimap'=>function($query){
-                $query->addSelect('id','name');
+            if(Session::get('role_title') == 'user') {
+                $data['popping_emails'] = PoppingEmail::with(['relSmtp' => function ($query) {
+                    $query->addSelect('id', 'name');
+                }, 'relimap' => function ($query) {
+                    $query->addSelect('id', 'name');
+                }, 'relCountry' => function ($query) {
+                    $query->addSelect('id', 'title');
+                }])->where('user_id',Auth::id())->paginate(10);
+            }else{
+                $data['popping_emails'] = PoppingEmail::with(['relSmtp' => function ($query) {
+                    $query->addSelect('id', 'name');
+                }, 'relimap' => function ($query) {
+                    $query->addSelect('id', 'name');
+                }, 'relCountry' => function ($query) {
+                    $query->addSelect('id', 'title');
+                }])->paginate(10);
             }
-            ])->paginate(10);
         }
+//        dd($data);
         return view('admin::popping_email.index', $data);
     }
     public function search(Request $request)
@@ -230,7 +261,15 @@ class PoppingEmailController extends Controller
     public function show($id)
     {
         $data['pageTitle'] = 'Show the detail';
-        $data['popping_email'] = PoppingEmail::with('relSmtp','relImap','relCountry')->findOrFail($id);
+        $data['popping_email'] = PoppingEmail::with(['relUser'=>function($query){
+            $query->addSelect('id','username');
+        },'relSmtp'=>function($query){
+            $query->addSelect('id','name');
+        },'relimap'=>function($query){
+            $query->addSelect('id','name');
+        },'relCountry'=>function($query){
+            $query->addSelect('id','title');
+        }])->findOrFail($id);
         return view('admin::popping_email.view', $data);
     }
 
