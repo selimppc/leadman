@@ -32,9 +32,7 @@ class CentralSettingsController extends Controller
             $data['ses_user_id'] = session()->get('user_id');
             $model = new CentralSettings();
             if(Auth::user()->role_id=='1' && $data['ses_user_id']=='1'){
-                #$data['settings_data'] = $model->all();
-                $data['settings_data'] = $model->where('id','!=',3)->get();
-
+                $data['settings_data'] = $model->all();
             }
             else{
                 $data['settings_data'] = $model->where('user_type','user')->get();
