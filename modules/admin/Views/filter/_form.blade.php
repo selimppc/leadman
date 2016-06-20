@@ -12,12 +12,12 @@
     {!! Form::text('name', null, ['id'=>'name', 'class' => 'form-control', 'minlength'=>'2', 'required'=>'required']) !!}
 
 </div>
-<div class="form-group">
+{{--<div class="form-group">
     {!! Form::label('filtercol', 'Filter Column:', ['class' => 'control-label']) !!}
     <small class="required">(Required)</small>
     {!! Form::text('filtercol', null, ['id'=>'filtercol', 'class' => 'form-control', 'minlength'=>'2', 'required'=>'required']) !!}
 
-</div>
+</div>--}}
 
 <p> &nbsp; </p>
 
