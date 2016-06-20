@@ -38,10 +38,32 @@ class ExecuationTime extends Command
      */
     public function handle()
     {
-        $popping_emails=PoppingEmail::with('relSchedule')->get();
-        print_r($popping_emails);exit;
-        foreach($popping_emails as $popping_email){
+        $popping_emails=PoppingEmail::with(['relSchedule'])->get();
 
+        while(true)
+        {
+            try
+            {
+                foreach($popping_emails as $popping_email){
+                    $execution =true;
+                    $current_time= date('Y-m-d H:m:s');
+                    $execution_time= date('Y-m-d',strtotime('+ '.$popping_email->relSchedule->day.' day')).' '.$popping_email->relSchedule->time;
+                    if($popping_email->execution_time!=null && $popping_email->execution_time >= $current_time)
+                    {
+                        $execution=false;
+                    }
+                    if($execution) {
+                        $poppingEmail = PoppingEmail::findOrFail($popping_email->id);
+                        $poppingEmail->execution_time = $execution_time;
+                        $poppingEmail->save();
+                    }
+                }
+                break;
+            }catch(Exception $e)
+            {
+                $this->info($e->getMessage() . ' - failed. Retrying...');
+                continue;
+            }
         }
     }
 }
