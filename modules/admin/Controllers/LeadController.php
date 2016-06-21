@@ -24,89 +24,50 @@ class LeadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $input)
+    public function index(Request $input,$id=false)
     {
         $per_page=10;
         $data['pageTitle'] = " Lead ";
-        if(isset($input->email)){
-            $per_page=10;
-            if(!empty($input['email']) && $input['status'] =='select')
-            {
-                $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
-                if(!empty($email)){
-                    $result= Lead::where('popping_email_id',$email->id)->with('relPoppingEmail')->paginate($per_page);
-                }
-            }elseif(empty($input['email']) && $input['status'] !='select')
-            {
-                $result= Lead::where('status',$input['status'])->with('relPoppingEmail')->paginate($per_page);
-            }elseif(!empty($input['email']) && $input['status'] !='select')
-            {
-                $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
-                if(!empty($email)){
-                    $result= Lead::where('popping_email_id',$email->id)->where('status',$input['status'])->with('relPoppingEmail')->paginate($per_page);
-                }
+
+        if(Session::get('role_title') == 'user') {
+            $email=PoppingEmail::select('id')->where('user_id',Auth::id())->where('id',$id)->first();
+            if(!empty($email)){
+                $data['leads']=$this->search($input,$per_page,$id);
             }else{
-                $result= Lead::with('relPoppingEmail')->paginate($per_page);
+                return redirect()->back();
             }
-            $data['leads']=$result;
         }else{
-            $data['leads']= Lead::with('relPoppingEmail')->paginate($per_page);
+            $data['leads']=$this->search($input,$per_page,$id);
+        }
+        if(isset($id))
+        {
+            $data['popping_email_id']=$id;
         }
         return view('admin::lead.index', $data);
     }
-    public function leadByUser(Request $input,$id)
+    private static function search($data,$per_page,$id=false)
     {
-        $access=true;
-        if(Session::get('role_title') == 'user')
+        $query= Lead::with('relPoppingEmail');
+        if(!empty($data['popping_email']))
         {
-            $poppingEmail= PoppingEmail::findOrFail($id);
-            if(isset($poppingEmail->user_id) && $poppingEmail->user_id==Auth::id())
-            {
-                $access=true;
+            $email=PoppingEmail::select('id')->where('email',$data['popping_email'])->first();
+            if(!empty($email) && $email!=null){
+                $query->where('popping_email_id',$email->id);
             }else{
-                $access=false;
+                $query->where('popping_email_id',0);
             }
         }
-        if($access)
-        {
-            $per_page=10;
-            $data['pageTitle'] = " Lead ";
-            if(isset($input->email)){
-                $per_page=10;
-                if(!empty($input['email']) && $input['status'] =='select')
-                {
-                    $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
-                    if(!empty($email)){
-                        $result= Lead::where('popping_email_id',$email->id)->with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
-                    }else{
-                        $result= Lead::with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
-
-                    }
-                }elseif(empty($input['email']) && $input['status'] !='select')
-                {
-                    $result= Lead::where('status',$input['status'])->with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
-                }elseif(!empty($input['email']) && $input['status'] !='select')
-                {
-                    $email=PoppingEmail::select('id')->where('email',$input['email'])->first();
-                    if(!empty($email)){
-                        $result= Lead::where('popping_email_id',$email->id)->where('status',$input['status'])->with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
-                    }else{
-                        $result= Lead::with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
-
-                    }
-                }else{
-                    $result= Lead::with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
-                }
-                $data['leads']=$result;
-            }else{
-                $data['leads']= Lead::with('relPoppingEmail')->where('popping_email_id',$id)->paginate($per_page);
-            }
-            $data['popping_email_id']=2;
-            return view('admin::lead.index', $data);
-        }else{
-            Session::flash('error','Sorry,you don\'t have permission.');
-            return redirect()->back();
+        if(!empty($data['lead_email'])){
+            $query->where('email','like','%'.$data['lead_email'].'%');
         }
+        if(isset($data['status']) && $data['status']!='select'){
+            $query->where('status',$data['status']);
+        }
+        if(!empty($id)){
+            $query->where('popping_email_id',$id);
+        }
+        $result=$query->paginate($per_page);
+        return $result;
     }
 
     /**

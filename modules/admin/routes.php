@@ -208,7 +208,7 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
     Route::get('admin/lead/{id}',[
         'middleware'=>'acl_access::admin/lead/{id}',
         'as'=>'admin.lead',
-        'uses'=>'LeadController@leadByUser'
+        'uses'=>'LeadController@index'
     ]);
 
 });
