@@ -45,7 +45,7 @@
                     </div>
                     <div  class="col-md-2" >
                         <div class="input-group">
-                            {!! Form::Select('status',array(''=>'Select Status','active'=>'Active','inactive'=>'Inactive','cancel'=>'Cancel'),Input::old('status'),['class'=>'form-control ']) !!}
+                            {!! Form::Select('status',array(''=>'Select Status','active'=>'Active','inactive'=>'Inactive'),Input::old('status'),['class'=>'form-control ']) !!}
                         </div>
                     </div>
                     {{--<div  class="col-md-1" >

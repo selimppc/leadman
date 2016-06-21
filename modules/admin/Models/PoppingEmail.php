@@ -106,11 +106,11 @@ class PoppingEmail extends Model
     public static function UserLeadStatus()
     {
         $sql = "select user.username,popping_email.email, count( DISTINCT lead.id ) duplicate_leads, count( DISTINCT lead1.id ) filtered_leads
-    from user
-    RIGHT JOIN popping_email on popping_email.user_id = user.id
+    from popping_email
+    LEFT JOIN user on popping_email.user_id = user.id
     LEFT JOIN lead on lead.popping_email_id = popping_email.id and lead.count > 1
     LEFT JOIN lead as lead1 on lead1.popping_email_id = popping_email.id and lead1.status='filtered'
-    GROUP BY user.id ";
+    GROUP BY popping_email.id ";
         return DB::select(DB::raw($sql));
     }
 
