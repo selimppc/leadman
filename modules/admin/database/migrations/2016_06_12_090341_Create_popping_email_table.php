@@ -35,7 +35,7 @@ class CreatePoppingEmailTable extends Migration
 
             $table->unsignedInteger('user_id',false)->nullable();
             $table->foreign('user_id')->references('id')->on('user');
-            
+
             $table->text('token')->nullable();
             $table->string('code',128)->nullable();
             $table->string('auth_id',64)->nullable();
