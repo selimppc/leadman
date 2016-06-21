@@ -55,61 +55,66 @@ class Invoice extends Command
             ->where('popping_email.status', '=', 'active')
             ->get();
 
+
         while(true)
         {
             try
             {
-                foreach($data as $pop_email)
-                {
-                    $popping_email_id = $pop_email->id;
-                    $price = $pop_email->price;
-                    $lead_count = count($pop_email->relLead);
-                    $total_cost = $price * $lead_count;
-                    $invoice_number = GenerateNumber::run();
+                if(count($data)>0){
+                    foreach($data as $pop_email)
+                    {
+                        $popping_email_id = $pop_email->id;
+                        $price = $pop_email->price;
+                        $lead_count = count($pop_email->relLead);
+                        $total_cost = $price * $lead_count;
+                        $invoice_number = GenerateNumber::run();
 
-                    $array_data = [
-                        'popping_email_id' =>$popping_email_id,
-                        'invoice_number' =>$invoice_number['generated_number'],
-                        'total_cost' =>$total_cost,
-                        'status' =>"open",
-                    ];
+                        $array_data = [
+                            'popping_email_id' =>$popping_email_id,
+                            'invoice_number' =>$invoice_number['generated_number'],
+                            'total_cost' =>$total_cost,
+                            'status' =>"open",
+                        ];
 
+                        /* Transaction Start Here */
+                        DB::beginTransaction();
+                        try{
 
-                    /* Transaction Start Here */
-                    DB::beginTransaction();
-                    try{
+                            //model for invoice head
+                            $model = new InvoiceHead();
+                            if($hd_inv = $model->create($array_data))
+                            {
+                                foreach($pop_email->relLead as $lead){
 
-                        //model for invoice head
-                        $model = new InvoiceHead();
-                        if($hd_inv = $model->create($array_data))
-                        {
-                            foreach($pop_email->relLead as $lead){
+                                    $array_dt = [
+                                        'invoice_head_id'=>$hd_inv->id,
+                                        'lead_id'=>$lead->id,
+                                        'unit_price'=>$price,
+                                    ];
 
-                                $array_dt = [
-                                    'invoice_head_id'=>$hd_inv->id,
-                                    'lead_id'=>$lead->id,
-                                    'unit_price'=>$price,
-                                ];
-
-                                //store into invoice detail and updated status of lead
-                                $model_dt = new InvoiceDetail();
-                                if($model_dt->create($array_dt)){
-                                    $lead_model = Lead::findOrFail($lead->id);
-                                    $lead_model->status = 'invoiced';
-                                    $lead_model->save();
+                                    //store into invoice detail and updated status of lead
+                                    $model_dt = new InvoiceDetail();
+                                    if($model_dt->create($array_dt)){
+                                        $lead_model = Lead::findOrFail($lead->id);
+                                        $lead_model->status = 'invoiced';
+                                        $lead_model->save();
+                                    }
                                 }
+                                // success report
+                                $this->info(' Invoice Stored Successfully !'. $invoice_number['generated_number']);
                             }
-                            // success report
-                            $this->info(' Invoice Stored Successfully !'. $invoice_number['generated_number']);
+                            DB::commit();
+                        }catch(\Exception $e){
+                            //If there are any exceptions, rollback the transaction`
+                            DB::rollback();
+                            $this->info($e->getMessage());
                         }
-                        DB::commit();
-                    }catch(\Exception $e){
-                        //If there are any exceptions, rollback the transaction`
-                        DB::rollback();
-                        $this->info($e->getMessage());
                     }
+                    break;
+                }else{
+                    $this->info('No data found from Lead to create Invoice !');
+                    break;
                 }
-                break;
             }
             catch(Exception $e)
             {
