@@ -25,10 +25,13 @@
                         {!! Form::model($_REQUEST,['url'=>'admin/lead','method'=>'get']) !!}
                     @endif
                     <div class="form-group">
-                        <div class="col-md-5">
-                            {!! Form::text('email',null,['class'=>'form-control','placeholder'=>'Popping Email']) !!}
+                        <div class="col-md-4">
+                            {!! Form::email('popping_email',null,['class'=>'form-control','placeholder'=>'Popping Email']) !!}
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
+                            {!! Form::text('lead_email',null,['class'=>'form-control','placeholder'=>'Lead Email']) !!}
+                        </div>
+                        <div class="col-md-2">
                             <?php
                             $status=Config::get('custom.lead_status');
                             ?>
@@ -45,8 +48,8 @@
                         <thead>
                         <tr>
                             <th> Id </th>
-                            <th> Lead Email </th>
                             <th> Popping Email </th>
+                            <th> Lead Email </th>
                             <th> Status </th>
                         </tr>
                         </thead>
@@ -54,8 +57,8 @@
                         @foreach($leads as $filter)
                             <tr class="gradeX">
                                 <td>{!!  $filter->id !!}</td>
-                                <td>{!!  $filter->email !!}</td>
                                 <td>{!!  $filter->relPoppingEmail['email'] !!}</td>
+                                <td>{!!  $filter->email !!}</td>
                                 <td>{!!  $filter->status !!}</td>
                             </tr>
                         @endforeach
