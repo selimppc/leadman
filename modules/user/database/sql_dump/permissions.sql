@@ -354,5 +354,6 @@ INSERT INTO `permissions` (`id`, `title`, `route_url`, `description`, `created_b
 (134, 'admin/lead/{id}', 'admin/lead/{id}', NULL, 3, 0, '2016-06-20 00:47:08', '2016-06-20 00:47:08'),
 (135, 'admin/invoice/{id}', 'admin/invoice/{id}', NULL, 3, 0, '2016-06-20 02:40:01', '2016-06-20 02:40:01'),
 (136, 'home-test', 'home-test', NULL, 3, 0, '2016-06-20 03:36:47', '2016-06-20 03:36:47'),
-(137, 'admin/popping-email/active-inactive/{id}', 'admin/popping-email/active-inactive/{id}', NULL, 3, 0, '2016-06-20 03:36:47', '2016-06-20 03:36:47');
+(137, 'admin/popping-email/active-inactive/{id}', 'admin/popping-email/active-inactive/{id}', NULL, 3, 0, '2016-06-20 03:36:47', '2016-06-20 03:36:47'),
+(138, 'admin/invoice/update_status/{status}/{id}', 'admin/invoice/update_status/{status}/{id}', NULL, 3, 0, '2016-06-21 03:24:47', '2016-06-21 03:24:47');
 

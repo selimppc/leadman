@@ -12,7 +12,7 @@
 
 Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middleware'=>'auth'],function(){
     include 'rk_route.php';
-    Route::any('/', [
+    /*Route::any('/', [
         'as' => 'dashboard',
         'uses' => 'DashboardController@dashboard'
     ]);
@@ -20,6 +20,18 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
     Route::any('dashboard', [
         'as' => 'dashboard',
         'uses' => 'DashboardController@dashboard'
+    ]);*/
+
+    Route::get('/',[
+            'middleware'=>'acl_access::/',
+            'route'=>'/',
+            'uses'=>'DashboardController@dashboard'
+    ]);
+
+    Route::get('dashboard',[
+            'middleware'=>'acl_access::dashboard',
+            'route'=>'/',
+            'uses'=>'DashboardController@dashboard'
     ]);
 
     Route::any('all_routes_uri', [
