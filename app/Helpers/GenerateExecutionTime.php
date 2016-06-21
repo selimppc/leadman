@@ -22,21 +22,20 @@ class GenerateExecutionTime
     public static function run($popping_email_id, $schedule_id)
     {
 
-        if($popping_email_id && $schedule_id)
-        {
-            $schedule_data = Schedule::findOrFail($schedule_id);
-            $popping_data = PoppingEmail::findOrFail($popping_email_id);
+        //pick data
+        $popping_data = PoppingEmail::findOrFail($popping_email_id);
+        $schedule_data = Schedule::findOrFail($schedule_id);
 
-            $execution_exists = isset($popping_data->execution_time)?$popping_data->execution_time:null;
-            $current_time= date('Y-m-d H:m:s');
+        //check execution time
+        $execution_exists = isset($popping_data->execution_time)?$popping_data->execution_time:null;
+        $current_time= date('Y-m-d H:m:s');
+
+        //generate execution time
+        if($execution_exists!=null && $execution_exists >= $current_time){
+            $result = $execution_exists;
+        }else{
             $generate_execution_time= date('Y-m-d',strtotime('+ '.$schedule_data->day.' day')).' '.$schedule_data->time;
-
             $result = $generate_execution_time;
-
-        }
-        else
-        {
-            $result = null;
         }
 
         return $result;

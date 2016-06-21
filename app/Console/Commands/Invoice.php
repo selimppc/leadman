@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\GenerateExecutionTime;
 use App\Helpers\GenerateNumber;
 use Illuminate\Console\Command;
 use Modules\Admin\InvoiceDetail;
@@ -103,6 +104,13 @@ class Invoice extends Command
                                 // success report
                                 $this->info(' Invoice Stored Successfully !'. $invoice_number['generated_number']);
                             }
+
+                            //Generate Execution Time and Update in Popping_email Table
+                            $generate_execution_time = GenerateExecutionTime::run($pop_email->id, $pop_email->schedule_id);
+                            $pop_email->execution_time = $generate_execution_time;
+                            $pop_email->save();
+
+                            //Commit the changes
                             DB::commit();
                         }catch(\Exception $e){
                             //If there are any exceptions, rollback the transaction`
