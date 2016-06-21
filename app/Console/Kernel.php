@@ -29,8 +29,8 @@ class Kernel extends ConsoleKernel
     {
         /*$schedule->command('inspire')
                  ->hourly();*/
-        $schedule->command('leadman:email-fetch')->everyMinute();
-        $schedule->command('leadman:create-invoice')->everyMinute();
-        $schedule->command('leadman:execute-time')->everyMinute();
+        $schedule->command('leadman:email-fetch')->everyMinute()->withoutOverlapping();
+        $schedule->command('leadman:create-invoice')->everyFiveMinutes();
+        $schedule->command('leadman:execute-time')->hourly();
     }
 }

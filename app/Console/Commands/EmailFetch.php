@@ -66,12 +66,9 @@ class EmailFetch extends Command
                     {
                         //TODO:: call GoogleClientCall
                         $result = GoogleClientCall::run($pop_email->email, $pop_email->token);
-
-                        #print_r($result);exit();
                     }
                     else
                     {
-                        #print_r("cpanel");exit();
                         $hostname = $pop_email->relImap->host;
                         $username = $pop_email->relImap->server_username;
                         $password = $pop_email->relImap->server_password;
@@ -93,18 +90,17 @@ class EmailFetch extends Command
                             $filtered = EmailFetch::filtering($val['from_email']);
                             $lead_status = $filtered==0?'open':'filtered';
 
-                            $sql = "INSERT INTO lead (email,popping_email_id,status,count)
+                            /*$sql = "INSERT INTO lead (email,popping_email_id,status,count)
                                         VALUES ('$from_email','$pop_email->id','$lead_status', 1)
                                         ON DUPLICATE KEY UPDATE count=count+1
                                         ";
                             DB::statement($sql);
+                            $this->info('Stored or updated the Lead : '.$from_email);*/
 
-                            $this->info('Stored or updated the Lead : '.$from_email);
-
-                            /*if(!$check_lead){
+                            if(!$check_lead){
                                 $model = new Lead();
                                 try{
-                                    $model->email = $val['from_email'];
+                                    $model->email = $from_email;
                                     $model->popping_email_id = $pop_email->id;
                                     $model->status = $lead_status;
                                     $model->count = 1;
@@ -114,7 +110,7 @@ class EmailFetch extends Command
                                     $this->info('Failed : '.$e->getMessage());
                                 }
                             }else{
-                                $model = Lead::where('email', $val['from_email'])->first();
+                                $model = Lead::where('email', $from_email)->first();
                                 try{
                                     $model->count = $model->count + 1;
                                     $model->save();
@@ -122,7 +118,7 @@ class EmailFetch extends Command
                                 }catch(\Exception $e){
                                     $this->info('Failed : '.$e->getMessage());
                                 }
-                            }*/
+                            }
                         }
 
                     }else{
