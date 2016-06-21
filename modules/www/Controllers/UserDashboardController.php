@@ -32,7 +32,7 @@ class UserDashboardController extends Controller
         //24 data
         $sql_24_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
     from popping_email
-    left JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$last_24'
+    left JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$last_24' and lead.status != 'filtered'
     LEFT JOIN invoice_head on invoice_head.popping_email_id = popping_email.id and invoice_head.created_at > '$last_24'
     WHERE popping_email.user_id = '$user_id'
     GROUP BY popping_email.id ";
@@ -42,7 +42,7 @@ class UserDashboardController extends Controller
         // In Last 7 days
         $result_7_days_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
     from popping_email
-    left JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$last_7_days'
+    left JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$last_7_days' and lead.status != 'filtered'
     LEFT JOIN invoice_head on invoice_head.popping_email_id = popping_email.id and invoice_head.created_at > '$last_7_days'
     WHERE popping_email.user_id = '$user_id'
     GROUP BY popping_email.id ";
