@@ -27,7 +27,7 @@ class InvoiceHead extends Model
     }
     public function relInvoiceDetail()
     {
-        return $this->hasOne('Modules\Admin\InvoiceDetail','invoice_head_id','id');
+        return $this->hasMany('Modules\Admin\InvoiceDetail','invoice_head_id','id');
     }
 
     // TODO :: boot
