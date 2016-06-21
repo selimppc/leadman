@@ -280,24 +280,28 @@
             </div>--}}
             <div class="stat-cell col-sm-12 padding-sm-hr bordered no-border-r valign-top">
                 <!-- Small padding, without top padding, extra small horizontal padding -->
-                <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> Total Paid Invoices </h4>
+                <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> User Invoice Status </h4>
                 <!-- Without margin -->
 
                 <table class="display table table-bordered table-striped" >
                     <thead>
                     <tr>
                         <th>Username</th>
+                        <th>Total Open Invoices</th>
+                        <th>Total Approved Invoices</th>
                         <th>Total Paid Invoices</th>
                         <th>Total Cost</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @if(isset($user_invoices_paid))
-                        @foreach($user_invoices_paid as $user_invoice_paid)
+                    @if(isset($user_invoices_status))
+                        @foreach($user_invoices_status as $user_invoice)
                             <tr>
-                                <td>{{ $user_invoice_paid->username }}</td>
-                                <td>{{ $user_invoice_paid->total_invoice }}</td>
-                                <td>{{ $user_invoice_paid->total_cost }}</td>
+                                <td>{{ $user_invoice->username }}</td>
+                                <td>{{ $user_invoice->open_invoice }}</td>
+                                <td>{{ $user_invoice->approved_invoice }}</td>
+                                <td>{{ $user_invoice->paid_invoice }}</td>
+                                <td>{{ $user_invoice->total_cost }}</td>
                             </tr>
                         @endforeach
                     @endif
@@ -305,78 +309,6 @@
                 </table>
 
             </div>
-
-
-
-        </div>
-    </div>
-    <div class="col-md-12">
-
-        <!-- Javascript -->
-        <script>
-            init.push(function () {
-                var invoice_approved = [
-                    { day: '2014-03-10', v: 20 },
-                    { day: '2014-03-11', v: 10 },
-                    { day: '2014-03-12', v: 15 },
-                    { day: '2014-03-13', v: 12 },
-                    { day: '2014-03-14', v: 5  },
-                    { day: '2014-03-15', v: 5  },
-                    { day: '2014-03-16', v: 20 }
-                ];
-                Morris.Line({
-                    element: 'invoice_approved',
-                    data: invoice_approved,
-                    xkey: 'day',
-                    ykeys: ['v'],
-                    labels: ['Value'],
-                    lineColors: ['#fff'],
-                    lineWidth: 2,
-                    pointSize: 4,
-                    gridLineColor: 'rgba(255,255,255,.5)',
-                    resize: true,
-                    gridTextColor: '#fff',
-                    xLabels: "day",
-                    xLabelFormat: function(d) {
-                        return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov', 'Dec'][d.getMonth()] + ' ' + d.getDate();
-                    },
-                });
-            });
-        </script>
-        <!-- / Javascript -->
-
-
-        <div class="stat-panel">
-            <div class="stat-cell col-sm-12 padding-sm-hr bordered no-border-r valign-top">
-                <!-- Small padding, without top padding, extra small horizontal padding -->
-                <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> Total Approved Invoices </h4>
-                <!-- Without margin -->
-
-                <table class="display table table-bordered table-striped" >
-                    <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Total Approved Invoices</th>
-                        <th>Total Cost</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if(isset($user_invoices_approved))
-                        @foreach($user_invoices_approved as $user_invoice_approved)
-                            <tr>
-                                <td>{{ $user_invoice_approved->username }}</td>
-                                <td>{{ $user_invoice_approved->total_invoice }}</td>
-                                <td>{{ $user_invoice_approved->total_cost }}</td>
-                            </tr>
-                        @endforeach
-                    @endif
-                    </tbody>
-                </table>
-
-            </div>
-            {{--<div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
-                <div id="invoice_approved" class="graph" style="height: 230px;"></div>
-            </div>--}}
 
 
 

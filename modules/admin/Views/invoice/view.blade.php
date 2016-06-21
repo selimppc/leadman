@@ -7,29 +7,29 @@
         <div class="modal-body">
             <table class="table table-bordered table-hover table-striped">
                 <tr>
-                    <th>Email</th>
-                    <td>{{ isset($invoice->relPoppingEmail)?$invoice->relPoppingEmail['email']:'' }}</td>
-                </tr>
-                <tr>
                     <th>Invoice Number</th>
                     <td>{{ isset($invoice->invoice_number)?$invoice->invoice_number:'' }}</td>
-                </tr>
-                <tr>
-                    <th>Unit Price</th>
-                    <td>{{ isset($invoice->relInvoiceDetail)?$invoice->relInvoiceDetail['unit_price']:'' }}</td>
-                </tr>
-                <tr>
                     <th>Total Cost</th>
                     <td>{{ isset($invoice->total_cost)?$invoice->total_cost:'' }}</td>
                 </tr>
                 <tr>
-                    <th>Lead Email</th>
-                    <td>{{ isset($invoice->relInvoiceDetail->relLead)?$invoice->relInvoiceDetail->relLead->email:'' }}</td>
-                </tr>
-                <tr>
+                    <th>Popping Email</th>
+                    <td>{{ isset($invoice->relPoppingEmail)?$invoice->relPoppingEmail['email']:'' }}</td>
                     <th>Status</th>
                     <td>{{ isset($invoice->status)?ucfirst($invoice->status):'' }}</td>
                 </tr>
+            </table>
+            <table class="table table-bordered table-responsive">
+                <tr>
+                    <th>Lead Email</th>
+                    <th>Unit Price</th>
+                </tr>
+                @foreach($invoice->relInvoiceDetail as $invoice_details)
+                    <tr>
+                        <td>{{ $invoice_details->relLead->email }}</td>
+                        <td>{{ $invoice_details->unit_price }}</td>
+                    </tr>
+                @endforeach
             </table>
         </div>
 
