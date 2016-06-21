@@ -209,7 +209,7 @@ class PoppingEmailController extends Controller
             $input_data = Session::get('popping_input');
             $data = [
                 'email'=>$input_data['email'],
-                'password'=>$input_data['password'],
+                #'password'=>$input_data['password'],
                 'smtp_id'=>$input_data['smtp_id'],
                 'imap_id'=>$input_data['imap_id'],
                 'auth_email'=>$input_data['email'],
