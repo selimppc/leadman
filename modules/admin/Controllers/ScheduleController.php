@@ -128,8 +128,15 @@ class ScheduleController extends Controller
      */
     public function destroy($id)
     {
-        Schedule::findOrFail($id)->delete();
-        Session::flash('message', "Schedule Successfully Deleted.");
+        DB::beginTransaction();
+        try {
+            Schedule::findOrFail($id)->delete();
+            DB::commit();
+            Session::flash('message', "Schedule Successfully Deleted.");
+        }catch(\Exception $e) {
+            DB::rollback();
+            Session::flash('error',"Schedule already used");
+        }
         return redirect()->back();
     }
 }
