@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\Inspire::class,
         Commands\EmailFetch::class,
         Commands\Invoice::class,
-        Commands\ExecuationTime::class,
+        #Commands\ExecuationTime::class,
     ];
 
     /**
@@ -31,6 +31,6 @@ class Kernel extends ConsoleKernel
                  ->hourly();*/
         $schedule->command('leadman:email-fetch')->everyMinute()->withoutOverlapping();
         $schedule->command('leadman:create-invoice')->everyFiveMinutes();
-        $schedule->command('leadman:execute-time')->hourly();
+
     }
 }
