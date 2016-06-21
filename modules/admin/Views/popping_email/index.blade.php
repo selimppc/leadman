@@ -123,7 +123,7 @@
                         @endif
                     </table>
 
-{{--                    <span class="pull-right">{!! $popping_emails->appends($_REQUEST) !!} </span>--}}
+                    <span class="pull-right">{!! $popping_emails->appends($_REQUEST) !!} </span>
 
                 </div>
             </div>

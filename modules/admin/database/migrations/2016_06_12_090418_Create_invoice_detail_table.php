@@ -17,6 +17,7 @@ class CreateInvoiceDetailTable extends Migration
             $table->unsignedInteger('invoice_head_id',false)->nullable();
             $table->foreign('invoice_head_id')->references('id')->on('invoice_head');
             $table->unsignedInteger('lead_id',false)->nullable();
+            $table->foreign('lead_id')->references('id')->on('lead');
             $table->float('unit_price')->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
