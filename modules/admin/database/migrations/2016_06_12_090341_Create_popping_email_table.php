@@ -14,7 +14,7 @@ class CreatePoppingEmailTable extends Migration
     {
         Schema::create('popping_email', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email',256)->nullable();
+            $table->string('email',128);
             $table->string('password',64)->nullable();
             $table->unsignedInteger('smtp_id',false)->nullable();
             $table->foreign('smtp_id')->references('id')->on('smtp');
