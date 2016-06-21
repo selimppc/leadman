@@ -23,6 +23,10 @@
                     <td>{{ isset($invoice->total_cost)?$invoice->total_cost:'' }}</td>
                 </tr>
                 <tr>
+                    <th>Lead Email</th>
+                    <td>{{ isset($invoice->relInvoiceDetail->relLead)?$invoice->relInvoiceDetail->relLead->email:'' }}</td>
+                </tr>
+                <tr>
                     <th>Status</th>
                     <td>{{ isset($invoice->status)?ucfirst($invoice->status):'' }}</td>
                 </tr>

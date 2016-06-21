@@ -20,10 +20,15 @@
 
 
                     {{-------------- Filter :Start -------------------------------------------}}
-                    {!! Form::model($_REQUEST,['url'=>'admin/invoice','method'=>'get']) !!}
+                    @if(isset($popping_email_id))
+                        {!! Form::model($_REQUEST,['url'=>'admin/invoice/'.$popping_email_id,'method'=>'get']) !!}
+                    @else
+                        {!! Form::model($_REQUEST,['url'=>'admin/invoice','method'=>'get']) !!}
+                    @endif
                     <div class="form-group">
                         <div class="col-md-5">
-                            {!! Form::email('email',null,['class'=>'form-control','placeholder'=>'Email']) !!}
+                            {!! Form::email('popping_email',null,['class'=>'form-control','placeholder'=>'Popping Email']) !!}
+                            <span class="required">**example@example.com**</span>
                         </div>
                         <div class="col-md-3">
                             {!! Form::text('invoice_number',null,['class'=>'form-control','placeholder'=>'Invoice Number']) !!}
@@ -45,7 +50,7 @@
                         <thead>
                         <tr>
                             <th> Id </th>
-                            <th> Email </th>
+                            <th> Popping Email </th>
                             <th> Invoice Number </th>
                             <th> Total Cost </th>
                             <th> Status </th>
@@ -64,7 +69,15 @@
                                     <td>
                                         <a href="{!! url('admin/invoice/view', $invoice->id) !!}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Invoice Details"><i class="icon-eye-open"></i> </a>
                                         <a href="{!!  url('admin/invoice/delete', $invoice->id) !!}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')" title="Filter Delete"><i class="icon-trash"></i> </a>
-                                        <a href="{!! url('admin/invoice/change_status', $invoice->id) !!}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Change Status"><i class="icon-adjust"></i> </a>
+                                        @if($invoice->status=='open')
+                                            <a onclick="return confirm('Are you confirm?')" href="{!! url('admin/invoice/update_status/approved/'.$invoice->id) !!}" class="btn btn-primary btn-xs" title="Change Status">
+                                                Approve
+                                            </a>
+                                        @elseif($invoice->status=='approved')
+                                            <a onclick="return confirm('Are you confirm?')" href="{!! url('admin/invoice/update_status/paid/'.$invoice->id) !!}" class="btn btn-primary btn-xs" title="Change Status">
+                                                Paid
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                         @endforeach

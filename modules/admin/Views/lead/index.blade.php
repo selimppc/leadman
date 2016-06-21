@@ -27,6 +27,7 @@
                     <div class="form-group">
                         <div class="col-md-4">
                             {!! Form::email('popping_email',null,['class'=>'form-control','placeholder'=>'Popping Email']) !!}
+                            <span class="required">**example@example.com**</span>
                         </div>
                         <div class="col-md-4">
                             {!! Form::text('lead_email',null,['class'=>'form-control','placeholder'=>'Lead Email']) !!}

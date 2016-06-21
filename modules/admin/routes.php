@@ -195,10 +195,10 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.invoice.delete',
         'uses'=>'InvoiceController@destroy'
     ]);
-    Route::patch('admin/invoice/update_status/{id}',[
-        'middleware'=>'acl_access::admin/invoice/update_status/{id}',
+    Route::get('admin/invoice/update_status/{status}/{id}',[
+        'middleware'=>'acl_access::admin/invoice/update_status/{status}/{id}',
         'as'=>'admin.invoice.update_status',
-        'uses'=>'InvoiceController@update'
+        'uses'=>'InvoiceController@change_status'
     ]);
     Route::get('admin/lead',[
         'middleware'=>'acl_access::admin/lead',

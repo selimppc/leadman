@@ -26,7 +26,7 @@ class LeadController extends Controller
      */
     public function index(Request $input,$id=false)
     {
-        $per_page=10;
+        $per_page=30;
         $data['pageTitle'] = " Lead ";
 
         if(Session::get('role_title') == 'user') {
