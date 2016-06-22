@@ -80,8 +80,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(isset($last_day))
-                        @foreach($last_day as $last_day)
+                    @if(isset($result_24))
+                        @foreach($result_24 as $last_day)
                             <tr>
                                 <td><a href="{{ route('user-by-lead', ['user_id'=>$last_day->user_id]) }}">{{ Illuminate\Support\Str::upper($last_day->username) }} </a> </td>
                                 <td>{{ $last_day->no_of_popping_email }}</td>
@@ -142,7 +142,7 @@
 
 
             {{--<div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
-                <div id="last_7day" class="graph" style="height: 230px;"></div>
+                <div id="result_7_days" class="graph" style="height: 230px;"></div>
             </div>--}}
             <div class="stat-cell col-sm-12 padding-sm-hr bordered no-border-r valign-top">
                 <!-- Small padding, without top padding, extra small horizontal padding -->
@@ -160,8 +160,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(isset($last_7day))
-                        @foreach($last_7day as $last_7day)
+                    @if(isset($result_7_days))
+                        @foreach($result_7_days as $last_7day)
                             <tr>
                                 <td><a href="{{ route('user-by-lead') }}">{{ Illuminate\Support\Str::upper($last_7day->username) }}</a></td>
                                 <td>{{ $last_7day->no_of_popping_email }}</td>
