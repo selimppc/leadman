@@ -31,6 +31,10 @@ class DashboardController extends Controller
         $data['user_leads']= PoppingEmail::userLead();
         $data['user_invoices_status']= PoppingEmail::userInvoiceStatus();
         $data['user_lead_status']= PoppingEmail::UserLeadStatus();
+        $data['total_lead']= 500;
+        $data['total_cost']= 40000;
+
+
         return view('admin::dashboard.index',$data);
     }
 
@@ -66,6 +70,10 @@ class DashboardController extends Controller
         }
         echo '<pre>';
         print_r($routes_list);exit;
+    }
+
+    public function user_by_lead(){
+        return view('admin::dashboard.user_by_lead');
     }
 
 }

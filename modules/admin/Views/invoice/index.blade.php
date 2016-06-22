@@ -49,7 +49,7 @@
                     <table  class="display table table-bordered table-striped" id="data-table-example">
                         <thead>
                         <tr>
-                            <th> Id </th>
+                            <th> User </th>
                             <th> Popping Email </th>
                             <th> Invoice Number </th>
                             <th> Total Cost </th>
@@ -61,7 +61,7 @@
                         @if(is_object($invoices))
                             @foreach($invoices as $invoice)
                                 <tr class="gradeX">
-                                    <td>{!!  $invoice->id !!}</td>
+                                    <td>{!!  $invoice->relPoppingEmail['user_id'] !!}</td>
                                     <td>{!!  $invoice->relPoppingEmail['email'] !!}</td>
                                     <td>{!!  $invoice->invoice_number !!}</td>
                                     <td>{!!  $invoice->total_cost !!}</td>

@@ -61,7 +61,10 @@
                                 <td>{!!  $filter->id !!}</td>
                                 <td>{!!  $filter->relPoppingEmail['email'] !!}</td>
                                 <td>{!!  $filter->email !!}</td>
-                                <td>{!!  $filter->count !!}</td>
+                                <td>
+                                    {!!  $filter->count !!}
+                                    <?php  if($filter->count>1)echo "<small>(Duplicate)</small>"; ?>
+                                </td>
                                 <td>{!!  $filter->status !!}</td>
                             </tr>
                         @endforeach

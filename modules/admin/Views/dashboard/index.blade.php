@@ -53,6 +53,18 @@
         <div class="stat-panel">
 
             <div class="stat-cell col-sm-12 padding-sm-hr bordered no-border-r valign-top">
+
+                <div class="col-sm-6"></div>
+                <div class="col-sm-6">
+                    <table class="display table table-bordered table-striped" >
+                        <thead>
+                        <tr>
+                            <th style="color: darkblue">Total Lead : {{ $total_lead }}</th>
+                            <th style="color: darkblue">Total Cost : {{ $total_cost }}</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
                 <!-- Small padding, without top padding, extra small horizontal padding -->
                 <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> 24 Hours </h4>
                 <!-- Without margin -->
@@ -71,7 +83,7 @@
                     @if(isset($last_day))
                         @foreach($last_day as $last_day)
                             <tr>
-                                <td>{{ $last_day->username }}</td>
+                                <td><a href="{{ route('user-by-lead') }}">{{ $last_day->username }}</a> </td>
                                 <td>{{ $last_day->no_of_popping_email }}</td>
                                 <td>{{ $last_day->no_of_lead }}</td>
                                 <td>{{ $last_day->no_of_invoice }}</td>
@@ -151,7 +163,7 @@
                     @if(isset($last_7day))
                         @foreach($last_7day as $last_7day)
                             <tr>
-                                <td>{{ $last_7day->username }}</td>
+                                <td><a href="{{ route('user-by-lead') }}">{{ $last_7day->username }}</a></td>
                                 <td>{{ $last_7day->no_of_popping_email }}</td>
                                 <td>{{ $last_7day->no_of_lead }}</td>
                                 <td>{{ $last_7day->no_of_invoice }}</td>
@@ -220,7 +232,7 @@
                     @if(isset($user_leads))
                         @foreach($user_leads as $user_lead)
                             <tr>
-                                <td>{{ $user_lead->username }}</td>
+                                <td><a href="{{ route('user-by-lead') }}">{{ $user_lead->username }}</a></td>
                                 <td>{{ $user_lead->no_of_popping_email }}</td>
                                 <td>{{ $user_lead->total_lead }}</td>
                             </tr>
@@ -297,7 +309,7 @@
                     @if(isset($user_invoices_status))
                         @foreach($user_invoices_status as $user_invoice)
                             <tr>
-                                <td>{{ $user_invoice->username }}</td>
+                                <td><a href="{{ route('user-by-lead') }}">{{ $user_invoice->username }}</a></td>
                                 <td>{{ $user_invoice->open_invoice }}</td>
                                 <td>{{ $user_invoice->approved_invoice }}</td>
                                 <td>{{ $user_invoice->paid_invoice }}</td>
@@ -372,7 +384,7 @@
                     @if(isset($user_lead_status))
                         @foreach($user_lead_status as $duplicate_lead)
                             <tr>
-                                <td>{{ $duplicate_lead->username }}</td>
+                                <td><a href="{{ route('user-by-lead') }}">{{ $duplicate_lead->username }}</a></td>
                                 <td>{{ $duplicate_lead->email }}</td>
                                 <td>{{ $duplicate_lead->duplicate_leads }}</td>
                                 <td>{{ $duplicate_lead->filtered_leads }}</td>
