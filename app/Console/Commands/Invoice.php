@@ -66,13 +66,15 @@ class Invoice extends Command
                     {
                         if(count($pop_email->relLead)>0){
                             $popping_email_id = $pop_email->id;
+                            $user_id = $pop_email->user_id;
                             $price = $pop_email->price;
                             $lead_count = count($pop_email->relLead);
                             $total_cost = $price * $lead_count;
                             $invoice_number = GenerateNumber::run();
 
                             $array_data = [
-                                'popping_email_id' =>$popping_email_id,
+                                #'popping_email_id' =>$popping_email_id,
+                                'user_id' =>$user_id,
                                 'invoice_number' =>$invoice_number['generated_number'],
                                 'total_cost' =>$total_cost,
                                 'status' =>"open",

@@ -72,4 +72,8 @@ class DashboardController extends Controller
         print_r($routes_list);exit;
     }
 
+    public function user_by_lead(){
+        return view('admin::dashboard.user_by_lead');
+    }
+
 }
