@@ -13,7 +13,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
+use League\Flysystem\File;
 use Modules\Admin\Lead;
 use Modules\Admin\PoppingEmail;
 
@@ -157,5 +159,45 @@ class LeadController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function lead_archive(Request $request)
+    {
+        if(Session::has('archiveLead'))
+        {
+            return redirect('admin/lead-archive');
+        }else {
+            if ($request->isMethod('post')) {
+                $leadPassword = Config::get('custom.lead-archive-password');
+                $password = $request->only('password');
+                if ($leadPassword == $password['password']) {
+                    Session::put('archiveLead', true);
+                    return redirect('admin/lead-archive');
+                } else {
+                    Session::flash('error', 'Sorry,Wrong Password !!!');
+                }
+            } else {
+                Session::flash('leadArchive', 'yes');
+            }
+            return redirect('dashboard');
+        }
+    }
+    public function archive_leads($file_name=false)
+    {
+        if(Session::has('archiveLead'))
+        {
+            if(isset($file_name) && !empty($file_name))
+            {
+                $data['pageTitle'] = 'Archive Lead Details';
+                $data['file_content']=file_get_contents(public_path('lead_files/'.$file_name));
+                return view('admin::lead.archive_lead_details', $data);
+            }else {
+                $data['pageTitle'] = 'Archive Leads';
+                $data['archive_leads'] = scandir(public_path('lead_files'));
+                return view('admin::lead.archive_leads', $data);
+            }
+        }else{
+            return redirect()->back();
+        }
+
     }
 }
