@@ -66,7 +66,7 @@ class PoppingEmail extends Model
     from user
     RIGHT JOIN popping_email on popping_email.user_id = user.id
     LEFT JOIN lead on lead.popping_email_id = popping_email.id and lead.status != 'filtered' and lead.created_at > '$time'
-    LEFT JOIN invoice_head on invoice_head.popping_email_id = popping_email.id and invoice_head.created_at > '$time'
+    LEFT JOIN invoice_head on invoice_head.user_id = popping_email.user_id and invoice_head.created_at > '$time'
     GROUP BY user.id";
         return DB::select(DB::raw($sql));
     }
@@ -85,10 +85,10 @@ class PoppingEmail extends Model
         $sql= "select user.username, count( DISTINCT invoice_head.id ) open_invoice, count( DISTINCT invoice_head1.id ) approved_invoice, count( DISTINCT invoice_head2.id ) paid_invoice, sum(DISTINCT invoice_head3.total_cost) total_cost
     from user
     RIGHT JOIN popping_email on popping_email.user_id = user.id
-    LEFT JOIN invoice_head on invoice_head.popping_email_id = popping_email.id and invoice_head.status = 'open'
-    LEFT JOIN invoice_head as invoice_head1 on invoice_head1.popping_email_id = popping_email.id and invoice_head1.status = 'approved'
-    LEFT JOIN invoice_head as invoice_head2 on invoice_head2.popping_email_id = popping_email.id and invoice_head2.status = 'paid'
-    LEFT JOIN invoice_head as invoice_head3 on invoice_head3.popping_email_id = popping_email.id
+    LEFT JOIN invoice_head on invoice_head.user_id = popping_email.user_id and invoice_head.status = 'open'
+    LEFT JOIN invoice_head as invoice_head1 on invoice_head1.user_id = popping_email.user_id and invoice_head1.status = 'approved'
+    LEFT JOIN invoice_head as invoice_head2 on invoice_head2.user_id = popping_email.user_id and invoice_head2.status = 'paid'
+    LEFT JOIN invoice_head as invoice_head3 on invoice_head3.user_id = popping_email.user_id
 
     GROUP BY user.id";
         return DB::select(DB::raw($sql));
