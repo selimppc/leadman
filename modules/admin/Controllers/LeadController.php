@@ -28,7 +28,6 @@ class LeadController extends Controller
     {
         $per_page=30;
         $data['pageTitle'] = " Lead ";
-
         if(Session::get('role_title') == 'user') {
             $email=PoppingEmail::select('id')->where('status','!=','cancel')->where('user_id',Auth::id())->where('id',$id)->first();
             if(!empty($email)){
@@ -48,6 +47,8 @@ class LeadController extends Controller
     private static function search($data,$per_page,$id=false)
     {
         $query= Lead::with(['relPoppingEmail']);
+
+
         if(!empty($data['popping_email']))
         {
             $email=PoppingEmail::select('id')->where('status','!=','cancel')->where('email',$data['popping_email'])->first();
@@ -58,10 +59,13 @@ class LeadController extends Controller
             }
         }else{
             $emails=PoppingEmail::select('id')->where('status','!=','cancel')->get();
+
             if(count($emails)>=1) {
+                $d=[];
                 foreach ($emails as $email) {
-                    $query->orWhere('popping_email_id', $email->id);
+                    $d[]=$email->id;
                 }
+                $query->whereIn('popping_email_id',$d);
             }else{
                 $query->where('popping_email_id',0);
             }

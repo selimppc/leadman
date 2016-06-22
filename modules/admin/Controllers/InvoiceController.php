@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Modules\Admin\InvoiceDetail;
 use Modules\Admin\InvoiceHead;
 use Modules\Admin\PoppingEmail;
+use Modules\User;
 
 class InvoiceController extends Controller
 {
@@ -34,6 +35,10 @@ class InvoiceController extends Controller
 
         if(Session::get('role_title') == 'user') {
             $email=PoppingEmail::select('id')->where('user_id',Auth::id())->where('id',$id)->first();
+
+            #print_r($email);exit;
+
+
             if(!empty($email)){
                 $data['invoices']=$this->search($input,$per_page,$id);
             }else{
@@ -41,11 +46,14 @@ class InvoiceController extends Controller
             }
         }else{
             $data['invoices']=$this->search($input,$per_page,$id);
+            #print_r($data);exit;
         }
         if(isset($id))
         {
             $data['popping_email_id']=$id;
         }
+
+
 
 
 
