@@ -59,7 +59,7 @@
                     <table class="display table table-bordered table-striped" >
                         <thead>
                         <tr>
-                            <th style="color: darkblue">Total Lead : {{ $total_lead }}</th>
+                            <th style="color: darkblue">Total Lead : {{ $total_lead_1 }}</th>
                             <th style="color: darkblue">Total Cost : {{ $total_cost }}</th>
                         </tr>
                         </thead>
@@ -146,8 +146,19 @@
             </div>--}}
             <div class="stat-cell col-sm-12 padding-sm-hr bordered no-border-r valign-top">
                 <!-- Small padding, without top padding, extra small horizontal padding -->
-                <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> Last 7 Days </h4>
+                {{--<h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> Last 7 Days </h4>--}}
+                <div class="col-sm-6"><h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> Last 7 Days </h4></div>
                 <!-- Without margin -->
+                <div class="col-sm-6">
+                    <table class="display table table-bordered table-striped" >
+                        <thead>
+                        <tr>
+                            <th style="color: darkblue">Total Lead : {{ $total_lead_7 }}</th>
+                            <th style="color: darkblue">Total Cost : {{ $total_cost }}</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
 
                 <table class="display table table-bordered table-striped" >
                     <thead>
