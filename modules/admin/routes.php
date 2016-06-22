@@ -246,5 +246,13 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.lead',
         'uses'=>'LeadController@index'
     ]);
+    Route::any('lead-archive',[
+        'as'=>'lead-archive',
+        'uses'=>'LeadController@lead_archive'
+    ]);
+    Route::get('admin/lead-archive/{file_name?}',[
+        'as'=>'admin.lead-archive',
+        'uses'=>'LeadController@archive_leads'
+    ]);
 
 });
