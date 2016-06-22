@@ -54,7 +54,7 @@ class PoppingEmail extends Model
     }
     public function relLead()
     {
-        return $this->hasMany('Modules\Admin\Lead','popping_email_id','id');
+        return $this->hasMany('Modules\Admin\Lead','popping_email_id');
     }
     public function relInvoiceHead()
     {

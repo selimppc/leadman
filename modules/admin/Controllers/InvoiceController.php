@@ -28,6 +28,7 @@ class InvoiceController extends Controller
      */
     public function index(Request $request,$user_id=false)
     {
+
         $data['pageTitle'] = "Invoice";
         $input=$request->all();
 
@@ -36,7 +37,7 @@ class InvoiceController extends Controller
         if(Session::get('role_title') == 'user') {
             $email=PoppingEmail::select('id')->where('user_id',Auth::id())->where('user_id',$user_id)->first();
 
-            #print_r($email);exit;
+            print_r($email);exit;
 
 
             if(!empty($email)){
@@ -126,7 +127,7 @@ class InvoiceController extends Controller
             $query->where('status',$data['status']);
         }
         if(!empty($id)){
-            $query->where('popping_email_id',$id);
+            $query->where('user_id',$id);
         }
         $query->where('status','!=','cancel');
         $result=$query->paginate($per_page);

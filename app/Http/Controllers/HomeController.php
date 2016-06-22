@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\GenerateExecutionTime;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Modules\Admin\Lead;
 
 
 class HomeController extends Controller
@@ -42,7 +45,18 @@ class HomeController extends Controller
 
 
     public function home_test(){
+
         $data = GenerateExecutionTime::run(1, 1);
         print_r($data);exit();
+    }
+
+    public function arrayToString($array) {
+        $string = '';
+        foreach($array as $key => $value) {
+            $string .= "{$key} => {$value}\n";
+        }
+
+        print_r($string);exit();
+        return $string;
     }
 }

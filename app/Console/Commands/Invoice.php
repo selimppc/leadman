@@ -143,4 +143,45 @@ class Invoice extends Command
 
         return true;
     }
+
+
+    protected function lead_to_txt($invoice_no, $array_data){
+        $invoice_no = $invoice_no;
+        //file Path
+        $path = public_path()."/lead_files/";
+
+        //check permission from config
+        $permissions = intval( config('permissions.directory'), 0);
+
+        if(!File::Exists($path)){
+            //make folder with $path generate recursive with right 0775
+            File::makeDirectory($path, $permissions , true);
+        }
+
+        /* Transaction Start Here */
+        DB::beginTransaction();
+        try{
+            $file_name = $path.$invoice_no.".txt";
+            $handle = fopen($file_name, 'w');
+
+            $string = '';
+            foreach($array_data as $val)
+            {
+                $string .= $val['id']."-".$val['email']."\n";
+            }
+            fwrite($handle,$string);
+            fclose($handle);
+
+            return true;
+
+        }catch(\Exception $e){
+            //If there are any exceptions, rollback the transaction`
+            DB::rollback();
+            return false;
+        }
+
+
+
+
+    }
 }
