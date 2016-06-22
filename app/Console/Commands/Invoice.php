@@ -83,7 +83,7 @@ class Invoice extends Command
                                 'total_cost' =>$total_cost,
                                 'status' =>"open",
                             ];
-                            
+
 
                             /* Transaction Start Here */
                             DB::beginTransaction();
@@ -109,12 +109,13 @@ class Invoice extends Command
                                             $lead_model->save();
                                         }
                                     }
+
                                     // success report
                                     $this->info(' Invoice Stored Successfully !'. $invoice_number['generated_number']);
 
-
                                     //Keep lead data into txt file as per invoice and delete them all
-                                    $result = $this->lead_to_txt($invoice_number, $lead_array);
+                                    $result = $this->lead_to_txt($invoice_number['generated_number'], $lead_array);
+
                                     if($result){
                                         $this->info(' Store new text file with lead data!'. $invoice_number['generated_number'].".txt");
                                     }
