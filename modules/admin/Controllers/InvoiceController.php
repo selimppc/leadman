@@ -26,7 +26,7 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,$id=false)
+    public function index(Request $request,$user_id=false)
     {
         $data['pageTitle'] = "Invoice";
         $input=$request->all();
@@ -34,29 +34,24 @@ class InvoiceController extends Controller
         $per_page=30;
 
         if(Session::get('role_title') == 'user') {
-            $email=PoppingEmail::select('id')->where('user_id',Auth::id())->where('id',$id)->first();
+            $email=PoppingEmail::select('id')->where('user_id',Auth::id())->where('user_id',$user_id)->first();
 
             #print_r($email);exit;
 
 
             if(!empty($email)){
-                $data['invoices']=$this->search($input,$per_page,$id);
+                $data['invoices']=$this->search($input,$per_page,$user_id);
             }else{
                 return redirect()->back();
             }
         }else{
-            $data['invoices']=$this->search($input,$per_page,$id);
+            $data['invoices']=$this->search($input,$per_page,$user_id);
             #print_r($data);exit;
         }
-        if(isset($id))
+        if(isset($user_id))
         {
-            $data['popping_email_id']=$id;
+            $data['user_id']=$user_id;
         }
-
-
-
-
-
 
         /*$request=$request->all();
         if(isset($request['email']))
@@ -73,26 +68,6 @@ class InvoiceController extends Controller
         return view('admin::invoice.index',$data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -102,34 +77,12 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        $data['invoice'] = InvoiceHead::where('id',$id)->with(['relPoppingEmail','relInvoiceDetail'=>function($query){
+        $data['invoice'] = InvoiceHead::where('id',$id)->with(['relUser','relInvoiceDetail'=>function($query){
             $query->with('relLead');
         }])->first();
         return view('admin::invoice.view',$data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
-    {
-
-    }
     public function change_status($status,$id)
     {
         $model = InvoiceHead::findOrFail($id);
@@ -156,14 +109,14 @@ class InvoiceController extends Controller
     }
     public function search($data,$per_page,$id)
     {
-        $query= InvoiceHead::with('relPoppingEmail');
-        if(!empty($data['popping_email']))
+        $query= InvoiceHead::with('relUser');
+        if(!empty($data['user_name']))
         {
-            $email=PoppingEmail::select('id')->where('email',$data['popping_email'])->first();
-            if(!empty($email) && $email!=null){
-                $query->where('popping_email_id',$email->id);
+            $user=User::select('id')->where('username',$data['user_name'])->first();
+            if(!empty($user) && $user!=null){
+                $query->where('user_id',$user->id);
             }else{
-                $query->where('popping_email_id',0);
+                $query->where('user_id',0);
             }
         }
         if(!empty($data['invoice_number'])){

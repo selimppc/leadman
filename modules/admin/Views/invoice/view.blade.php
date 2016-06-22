@@ -13,8 +13,8 @@
                     <td>{{ isset($invoice->total_cost)?$invoice->total_cost:'' }}</td>
                 </tr>
                 <tr>
-                    <th>Popping Email</th>
-                    <td>{{ isset($invoice->relPoppingEmail)?$invoice->relPoppingEmail['email']:'' }}</td>
+                    <th>User</th>
+                    <td>{{ isset($invoice->relUser)?$invoice->relUser['username']:'' }}</td>
                     <th>Status</th>
                     <td>{{ isset($invoice->status)?ucfirst($invoice->status):'' }}</td>
                 </tr>

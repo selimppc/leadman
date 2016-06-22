@@ -26,9 +26,12 @@
                         {!! Form::model($_REQUEST,['url'=>'admin/invoice','method'=>'get']) !!}
                     @endif
                     <div class="form-group">
-                        <div class="col-md-5">
+                        {{--<div class="col-md-5">
                             {!! Form::email('popping_email',null,['class'=>'form-control','placeholder'=>'Popping Email']) !!}
                             <span class="required">**example@example.com**</span>
+                        </div>--}}
+                        <div class="col-md-5">
+                            {!! Form::text('user_name',null,['class'=>'form-control','placeholder'=>'User Name']) !!}
                         </div>
                         <div class="col-md-3">
                             {!! Form::text('invoice_number',null,['class'=>'form-control','placeholder'=>'Invoice Number']) !!}
