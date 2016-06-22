@@ -75,7 +75,7 @@
                             <th>Status</th>
                             <th>Lead</th>
                             <th>Invoice</th>
-                            <th>Action </th>
+                            <th width="12%">Action </th>
                         </tr>
                         </thead>
                         <tbody>

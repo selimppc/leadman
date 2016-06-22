@@ -17,6 +17,7 @@ return [
         'open'=>'open',
         'close'=>'close',
         'invoiced'=>'invoiced',
+        'duplicate'=>'duplicate',
         'filtered'=>'filtered'
     ]
 ];

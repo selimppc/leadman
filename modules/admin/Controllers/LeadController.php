@@ -30,7 +30,7 @@ class LeadController extends Controller
         $data['pageTitle'] = " Lead ";
 
         if(Session::get('role_title') == 'user') {
-            $email=PoppingEmail::select('id')->where('user_id',Auth::id())->where('id',$id)->first();
+            $email=PoppingEmail::select('id')->where('status','!=','cancel')->where('user_id',Auth::id())->where('id',$id)->first();
             if(!empty($email)){
                 $data['leads']=$this->search($input,$per_page,$id);
             }else{
@@ -47,12 +47,21 @@ class LeadController extends Controller
     }
     private static function search($data,$per_page,$id=false)
     {
-        $query= Lead::with('relPoppingEmail');
+        $query= Lead::with(['relPoppingEmail']);
         if(!empty($data['popping_email']))
         {
-            $email=PoppingEmail::select('id')->where('email',$data['popping_email'])->first();
+            $email=PoppingEmail::select('id')->where('status','!=','cancel')->where('email',$data['popping_email'])->first();
             if(!empty($email) && $email!=null){
                 $query->where('popping_email_id',$email->id);
+            }else{
+                $query->where('popping_email_id',0);
+            }
+        }else{
+            $emails=PoppingEmail::select('id')->where('status','!=','cancel')->get();
+            if(count($emails)>=1) {
+                foreach ($emails as $email) {
+                    $query->orWhere('popping_email_id', $email->id);
+                }
             }else{
                 $query->where('popping_email_id',0);
             }
@@ -60,8 +69,18 @@ class LeadController extends Controller
         if(!empty($data['lead_email'])){
             $query->where('email','like','%'.$data['lead_email'].'%');
         }
-        if(isset($data['status']) && $data['status']!='select'){
+        /*if(isset($data['status']) && $data['status']!='select'){
+
             $query->where('status',$data['status']);
+        }*/
+
+        if(isset($data['status']) && $data['status']!='select'){
+            if($data['status']=='duplicate')
+            {
+                $query->where('count','>',1);
+            }else{
+                $query->where('status',$data['status']);
+            }
         }
         if(!empty($id)){
             $query->where('popping_email_id',$id);

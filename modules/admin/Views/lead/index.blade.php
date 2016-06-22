@@ -51,6 +51,7 @@
                             <th> Id </th>
                             <th> Popping Email </th>
                             <th> Lead Email </th>
+                            <th> Count </th>
                             <th> Status </th>
                         </tr>
                         </thead>
@@ -60,6 +61,7 @@
                                 <td>{!!  $filter->id !!}</td>
                                 <td>{!!  $filter->relPoppingEmail['email'] !!}</td>
                                 <td>{!!  $filter->email !!}</td>
+                                <td>{!!  $filter->count !!}</td>
                                 <td>{!!  $filter->status !!}</td>
                             </tr>
                         @endforeach
