@@ -64,7 +64,7 @@
                         @if(is_object($invoices))
                             @foreach($invoices as $invoice)
                                 <tr class="gradeX">
-                                    <td>{!!  $invoice->relUser->username !!}</td>
+                                    <td>{!!  ucfirst($invoice->relUser->username) !!}</td>
                                     {{--<td>{!!  $invoice->relPoppingEmail['email'] !!}</td>--}}
                                     <td>{!!  $invoice->invoice_number !!}</td>
                                     <td>{!!  $invoice->total_cost !!}</td>
