@@ -25,6 +25,15 @@ class InvoiceHead extends Model
     {
         return $this->belongsTo('Modules\Admin\PoppingEmail','popping_email_id','id');
     }
+
+
+
+    public function relUser()
+    {
+        return $this->belongsTo('App\User','user_id','id');
+    }
+
+
     public function relInvoiceDetail()
     {
         return $this->hasMany('Modules\Admin\InvoiceDetail','invoice_head_id','id');

@@ -54,7 +54,7 @@
 
             <div class="stat-cell col-sm-12 padding-sm-hr bordered no-border-r valign-top">
 
-                <div class="col-sm-6"></div>
+                <div class="col-sm-6"><h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> 24 Hours </h4></div>
                 <div class="col-sm-6">
                     <table class="display table table-bordered table-striped" >
                         <thead>
@@ -66,7 +66,7 @@
                     </table>
                 </div>
                 <!-- Small padding, without top padding, extra small horizontal padding -->
-                <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> 24 Hours </h4>
+
                 <!-- Without margin -->
 
                 <table class="display table table-bordered table-striped" >
