@@ -50,7 +50,7 @@
                         <thead>
                         <tr>
                             <th> User </th>
-                            <th> Popping Email </th>
+                            {{--<th> Popping Email </th>--}}
                             <th> Invoice Number </th>
                             <th> Total Cost </th>
                             <th> Status </th>
@@ -61,8 +61,8 @@
                         @if(is_object($invoices))
                             @foreach($invoices as $invoice)
                                 <tr class="gradeX">
-                                    <td>{!!  $invoice->relPoppingEmail['user_id'] !!}</td>
-                                    <td>{!!  $invoice->relPoppingEmail['email'] !!}</td>
+                                    <td>{!!  $invoice->relUser->username !!}</td>
+                                    {{--<td>{!!  $invoice->relPoppingEmail['email'] !!}</td>--}}
                                     <td>{!!  $invoice->invoice_number !!}</td>
                                     <td>{!!  $invoice->total_cost !!}</td>
                                     <td>{!!  $invoice->status !!}</td>

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Modules\Admin\InvoiceDetail;
 use Modules\Admin\InvoiceHead;
 use Modules\Admin\PoppingEmail;
-use Modules\User;
+use App\User;
 
 class InvoiceController extends Controller
 {
