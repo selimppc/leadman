@@ -193,6 +193,8 @@ class LeadController extends Controller
             }else {
                 $data['pageTitle'] = 'Archive Leads';
                 $data['archive_leads'] = scandir(public_path('lead_files'));
+                unset($data['archive_leads'][0]);
+                unset($data['archive_leads'][1]);
                 return view('admin::lead.archive_leads', $data);
             }
         }else{

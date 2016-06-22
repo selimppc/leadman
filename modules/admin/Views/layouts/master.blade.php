@@ -127,7 +127,7 @@
                                                 <span class="required">*</span>
                                             </div>
                                             <div class="col-md-7">
-                                                {!! Form::password('password',['class'=>'form-control','required'=>'required']) !!}
+                                                {!! Form::password('password',['class'=>'form-control','required'=>'required','autofocus']) !!}
                                             </div>
                                             <div class="col-md-2">
                                                 {!! Form::submit('Continue',['class'=>'btn btn-primary']) !!}
