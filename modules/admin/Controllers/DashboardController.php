@@ -45,15 +45,12 @@ class DashboardController extends Controller
         //$total = array();
         $price_popping_email = 0;
         $qty = 1;
-        //$lead_qty = 0;
         if($sql_popping_email)
         {
             foreach($sql_popping_email as $email)
             {
                 $price = $email->price;
-                //print_r($price); exit();
                 $popping_email_id = $email->id;
-                //print_r($popping_email_id); exit();
                 if($sql_lead)
                 {
                     $lead_qty = 0;
