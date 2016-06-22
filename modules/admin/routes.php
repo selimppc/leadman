@@ -11,7 +11,24 @@
 
 
 Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middleware'=>'auth'],function(){
-    include 'rk_route.php';
+
+
+    Route::any('admin/central-settings', [
+        'middleware'=>'acl_access::admin/central-settings',
+        'as' => 'central-settings',
+        'uses' => 'CentralSettingsController@index'
+    ]);
+    Route::any('admin/central-settings-show/{id}', [
+        'middleware'=>'acl_access::admin/central-settings-show/{id}',
+        'as' => 'central-settings-show',
+        'uses' => 'CentralSettingsController@show'
+    ]);
+    Route::any('admin/central-settings-edit/{id}', [
+        'middleware'=>'acl_access::admin/central-settings-edit/{id}',
+        'as' => 'central-settings-edit',
+        'uses' => 'CentralSettingsController@edit'
+    ]);
+
     /*Route::any('/', [
         'as' => 'dashboard',
         'uses' => 'DashboardController@dashboard'
@@ -39,14 +56,11 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'uses' => 'DashboardController@all_routes_uri'
     ]);
 
-    /*Route::any('user-by-lead/{id}', [
-        'as' => 'user-by-lead/{id}',
-        'uses' => 'DashboardController@user_by_lead'
-    ]);*/
-    Route::any('user-by-lead', [
+    Route::any('user-by-lead/{user_id}', [
         'as' => 'user-by-lead',
         'uses' => 'DashboardController@user_by_lead'
     ]);
+
 
     Route::get('callback','PoppingEmailController@callback');
 

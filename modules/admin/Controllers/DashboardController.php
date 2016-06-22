@@ -9,6 +9,7 @@
 namespace Modules\Admin\Controllers;
 
 
+use App\User;
 use Illuminate\Http\Request;
 use Auth;
 use App\Http\Requests;
@@ -68,8 +69,22 @@ class DashboardController extends Controller
         print_r($routes_list);exit;
     }
 
-    public function user_by_lead(){
-        return view('admin::dashboard.user_by_lead');
+    public function user_by_lead($user_id){
+
+        $user_data = User::findOrFail($user_id);
+
+        //sql query for all
+        $sql = "select pe.email, pe.password, count( DISTINCT lead.id ) no_of_lead
+            from popping_email as pe
+            LEFT JOIN lead on lead.popping_email_id = pe.id and lead.status != 'filtered'
+            WHERE pe.user_id = '$user_id'
+            GROUP BY pe.id ";
+        $result = DB::select(DB::raw($sql));
+
+        return view('admin::dashboard.user_by_lead', [
+            'result'=>$result,
+            'user_data'=>$user_data
+        ]);
     }
 
 }
