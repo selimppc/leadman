@@ -39,7 +39,17 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'uses' => 'DashboardController@all_routes_uri'
     ]);
 
+    /*Route::any('user-by-lead/{id}', [
+        'as' => 'user-by-lead/{id}',
+        'uses' => 'DashboardController@user_by_lead'
+    ]);*/
+    Route::any('user-by-lead', [
+        'as' => 'user-by-lead',
+        'uses' => 'DashboardController@user_by_lead'
+    ]);
+
     Route::get('callback','PoppingEmailController@callback');
+
     Route::get('admin/imap',[
         'middleware'=>'acl_access::admin/imap',
         'as'=>'admin.imap',
