@@ -62,7 +62,7 @@ class PoppingEmailController extends Controller
                     $query->addSelect('id', 'name');
                 }, 'relCountry' => function ($query) {
                     $query->addSelect('id', 'title');
-                }])->where('user_id',Auth::id())->paginate(10);
+                }])->where('user_id',Auth::id())->where('status','!=','cancel')->paginate(10);
             }else{
                 $data['popping_emails'] = PoppingEmail::with(['relSmtp' => function ($query) {
                     $query->addSelect('id', 'name');
@@ -70,7 +70,7 @@ class PoppingEmailController extends Controller
                     $query->addSelect('id', 'name');
                 }, 'relCountry' => function ($query) {
                     $query->addSelect('id', 'title');
-                }])->paginate(10);
+                }])->where('status','!=','cancel')->paginate(10);
             }
         }
 //        dd($data);
@@ -110,6 +110,7 @@ class PoppingEmailController extends Controller
         if(Session::get('role_title') == 'user') {
             $query->where('user_id',Auth::id());
         }
+        $query->where('status','!=','cancel');
         $result=$query->paginate(10);
         return $result;
     }
@@ -344,8 +345,9 @@ class PoppingEmailController extends Controller
     public function destroy($id)
     {
         $popping_email=PoppingEmail::findOrFail($id);
-        $popping_email->delete();
-        Session::flash('message', 'Popping Email has been successfully deleted.');
+        $popping_email->status='cancel';
+        $popping_email->save();
+        Session::flash('message', 'Popping Email has been successfully trashed ');
         return redirect()->back();
     }
 
