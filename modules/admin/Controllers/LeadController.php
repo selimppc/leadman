@@ -78,7 +78,7 @@ class LeadController extends Controller
             $query->where('status',$data['status']);
         }*/
 
-        if(isset($data['status']) && $data['status']!='select'){
+        if(!empty($data['status'])){
             if($data['status']=='duplicate')
             {
                 $query->where('count','>',1);
