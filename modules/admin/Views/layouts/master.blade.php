@@ -110,6 +110,49 @@
 
                 @yield('content')
 
+                        <!-- Modal  -->
+                        <div class="modal fade" id="leadPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 style="color: black">Please Enter Password</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        {!! Form::open(['url'=>'lead-archive']) !!}
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                {!! Form::label('Password') !!}
+                                                <span class="required">*</span>
+                                            </div>
+                                            <div class="col-md-7">
+                                                {!! Form::password('password',['class'=>'form-control','required'=>'required','autofocus']) !!}
+                                            </div>
+                                            <div class="col-md-2">
+                                                {!! Form::submit('Continue',['class'=>'btn btn-primary']) !!}
+                                            </div>
+                                        </div>
+                                        {!! Form::close() !!}
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <a href="{{ URL::previous()}}" class="btn btn-default" type="button"> Close </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        @if (Session::has('leadArchive') && Session::get('leadArchive')=='yes')
+                            <script type="text/javascript">
+                                $(function(){
+                                    $("#leadPasswordModal").modal('show');
+                                });
+                            </script>
+                            @endif
+
+                                    <!-- modal -->
             </section>
         </section>
         <!--main content end-->
@@ -120,6 +163,9 @@
 
         </footer>
         <!--footer end-->
+
+
+
 </section>
 <!-- js placed at the end of the document so the pages load faster -->
 

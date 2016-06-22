@@ -19,5 +19,6 @@ return [
         'invoiced'=>'invoiced',
         'duplicate'=>'duplicate',
         'filtered'=>'filtered'
-    ]
+    ],
+    'lead-archive-password'=>'leadpassword'
 ];

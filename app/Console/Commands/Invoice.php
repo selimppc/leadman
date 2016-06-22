@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Helpers\GenerateExecutionTime;
 use App\Helpers\GenerateNumber;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Modules\Admin\InvoiceDetail;
 use Modules\Admin\InvoiceHead;
 use Modules\Admin\Lead;
@@ -50,12 +51,11 @@ class Invoice extends Command
         $current_date = date('Y-m-d h:i:s');
 
         $data = PoppingEmail::with(['relLead' => function($query) {
-            $query->where('lead.status', 'open');
+            #$query->where('lead.status', 'open');
         }])
-            ->where('execution_time', '<=', $current_date)
+            #->where('execution_time', '<=', $current_date)
             ->where('popping_email.status', '=', 'active')
             ->get();
-
 
         while(true)
         {
@@ -65,6 +65,10 @@ class Invoice extends Command
                     foreach($data as $pop_email)
                     {
                         if(count($pop_email->relLead)>0){
+                            //convert object to an array
+                            $lead_array = $pop_email->relLead->toArray();
+
+                            // visualize data for storing
                             $popping_email_id = $pop_email->id;
                             $user_id = $pop_email->user_id;
                             $price = $pop_email->price;
@@ -79,6 +83,7 @@ class Invoice extends Command
                                 'total_cost' =>$total_cost,
                                 'status' =>"open",
                             ];
+
 
                             /* Transaction Start Here */
                             DB::beginTransaction();
@@ -104,8 +109,17 @@ class Invoice extends Command
                                             $lead_model->save();
                                         }
                                     }
+
                                     // success report
                                     $this->info(' Invoice Stored Successfully !'. $invoice_number['generated_number']);
+
+                                    //Keep lead data into txt file as per invoice and delete them all
+                                    $result = $this->lead_to_txt($invoice_number['generated_number'], $lead_array);
+
+                                    if($result){
+                                        $this->info(' Store new text file with lead data!'. $invoice_number['generated_number'].".txt");
+                                    }
+
                                 }
 
                                 //Generate Execution Time and Update in Popping_email Table
@@ -145,7 +159,12 @@ class Invoice extends Command
     }
 
 
-    protected function lead_to_txt($invoice_no, $array_data){
+    /**
+     * @param $invoice_no
+     * @param $array_data
+     * @return bool
+     */
+    private function lead_to_txt($invoice_no, $array_data){
         $invoice_no = $invoice_no;
         //file Path
         $path = public_path()."/lead_files/";
@@ -158,25 +177,43 @@ class Invoice extends Command
             File::makeDirectory($path, $permissions , true);
         }
 
+        //make data in string to store in txt file
+        $string = '';
+        foreach($array_data as $val)
+        {
+            $string .= $val['id']."-".$val['email']."\n";
+        }
+
+        //create array of lead id
+        $lead_ids = array();
+        foreach($array_data as $value)
+        {
+            $lead_ids[] = array(
+                'id'=>$value['id'],
+            );
+        }
+
+
         /* Transaction Start Here */
         DB::beginTransaction();
         try{
             $file_name = $path.$invoice_no.".txt";
             $handle = fopen($file_name, 'w');
-
-            $string = '';
-            foreach($array_data as $val)
-            {
-                $string .= $val['id']."-".$val['email']."\n";
-            }
-            fwrite($handle,$string);
+            $a = fwrite($handle,$string);
             fclose($handle);
+
+            /* data delete from Lead table by Lead_ID */
+            DB::table('lead')->whereIn('id', $lead_ids)->delete();
+
+            //Commit the changes
+            DB::commit();
 
             return true;
 
         }catch(\Exception $e){
             //If there are any exceptions, rollback the transaction`
             DB::rollback();
+            $this->info($e->getMessage());
             return false;
         }
 
