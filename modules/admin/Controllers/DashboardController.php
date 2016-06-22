@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Modules\Admin\PoppingEmail;
+use Modules\Admin\Lead;
 
 class DashboardController extends Controller
 {
@@ -32,9 +33,43 @@ class DashboardController extends Controller
         $data['user_leads']= PoppingEmail::userLead();
         $data['user_invoices_status']= PoppingEmail::userInvoiceStatus();
         $data['user_lead_status']= PoppingEmail::UserLeadStatus();
-        $data['total_lead']= 500;
-        $data['total_cost']= 40000;
 
+        //===== For Total Lead ***//
+        $sql_lead = DB::table('lead')->get();
+        //print_r(count($sql_lead)); exit();
+        $data['total_lead']= count($sql_lead);
+
+        //===== For Total Cost ***//
+        $sql_popping_email = DB::table('popping_email')->get();
+        $total = 0;
+        //$total = array();
+        $price_popping_email = 0;
+        $qty = 1;
+        if($sql_popping_email)
+        {
+            foreach($sql_popping_email as $email)
+            {
+                $price = $email->price;
+                $popping_email_id = $email->id;
+                if($sql_lead)
+                {
+                    $lead_qty = 0;
+                    foreach($sql_lead as $lead)
+                    {
+                        if($lead->popping_email_id == $popping_email_id){
+                            $lead_qty += $qty;
+                        }
+                    }
+                    //print_r($lead_qty); exit();
+                    $price_popping_email = $price * $lead_qty;
+                }
+                //print_r($price_popping_email); exit();
+                $total += $price_popping_email;
+                //$total[] = $price_popping_email;
+            }
+        }
+        //print_r($total); exit();
+        $data['total_cost']= $total;
 
         return view('admin::dashboard.index',$data);
     }
@@ -84,6 +119,7 @@ class DashboardController extends Controller
             WHERE pe.user_id = '$user_id'
             GROUP BY pe.id ";
         $result = DB::select(DB::raw($sql));
+
 
         return view('admin::dashboard.user_by_lead', [
             'result'=>$result,
