@@ -26,9 +26,9 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $data['pageTitle'] = 'Dashboard';
-        $data['last_day']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
+        $data['result_24']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
 
-        $data['last_7day']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
+        $data['result_7_days']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
         $data['user_leads']= PoppingEmail::userLead();
         $data['user_invoices_status']= PoppingEmail::userInvoiceStatus();
         $data['user_lead_status']= PoppingEmail::UserLeadStatus();

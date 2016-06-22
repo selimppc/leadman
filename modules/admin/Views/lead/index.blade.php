@@ -36,7 +36,7 @@
                             <?php
                             $status=Config::get('custom.lead_status');
                             ?>
-                            {!! Form::select('status',['select'=>'Select status']+$status,null,['class'=>'form-control','placeholder'=>'Status']) !!}
+                            {!! Form::select('status',[null=>'Select status']+$status,null,['class'=>'form-control','placeholder'=>'Status']) !!}
                         </div>
                         <div class="col-md-1">
                             {!! Form::submit('Search',['class'=>'btn btn-warning']) !!}
