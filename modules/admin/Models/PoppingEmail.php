@@ -72,7 +72,7 @@ class PoppingEmail extends Model
     }
     public static function userLead()
     {
-        $sql= "select user.username, count( DISTINCT lead.id ) total_lead, count( DISTINCT popping_email.id) no_of_popping_email
+        $sql= "select user.id as user_id, user.username, count( DISTINCT lead.id ) total_lead, count( DISTINCT popping_email.id) no_of_popping_email
     from user
     RIGHT JOIN popping_email on popping_email.user_id = user.id
     LEFT JOIN lead on lead.popping_email_id = popping_email.id

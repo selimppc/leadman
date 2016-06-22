@@ -163,7 +163,7 @@
                     @if(isset($result_7_days))
                         @foreach($result_7_days as $last_7day)
                             <tr>
-                                <td><a href="{{ route('user-by-lead',['user_id'=>$last_day->user_id]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($last_7day->username) }}</a></td>
+                                <td><a href="{{ route('user-by-lead',['user_id'=>$last_7day->user_id]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($last_7day->username) }}</a></td>
                                 <td>{{ $last_7day->no_of_popping_email }}</td>
                                 <td>{{ $last_7day->no_of_lead }}</td>
                                 <td>{{ $last_7day->no_of_invoice }}</td>
@@ -232,7 +232,7 @@
                     @if(isset($user_leads))
                         @foreach($user_leads as $user_lead)
                             <tr>
-                                <td><a href="{{ route('user-by-lead',['user_id'=>$last_day->user_id]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($user_lead->username) }}</a></td>
+                                <td><a href="{{ route('user-by-lead',['user_id'=>$user_lead->user_id]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($user_lead->username) }}</a></td>
                                 <td>{{ $user_lead->no_of_popping_email }}</td>
                                 <td>{{ $user_lead->total_lead }}</td>
                             </tr>
