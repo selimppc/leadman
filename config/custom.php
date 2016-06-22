@@ -16,6 +16,7 @@ return [
     'lead_status'=>[
         'open'=>'open',
         'close'=>'close',
-        'invoiced'=>'invoiced'
+        'invoiced'=>'invoiced',
+        'filtered'=>'filtered'
     ]
 ];

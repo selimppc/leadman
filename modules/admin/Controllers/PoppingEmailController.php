@@ -53,34 +53,7 @@ class PoppingEmailController extends Controller
 
         if(isset($request->popmail_filter))
         {
-            if(Session::get('role_title') == 'user') {
-                $data['popping_emails'] = PoppingEmail::with(['relSmtp' => function ($query) {
-                    $query->addSelect('id', 'name');
-                }, 'relImap' => function ($query) {
-                    $query->addSelect('id', 'name');
-                }, 'relCountry' => function ($query) {
-                    $query->addSelect('id', 'title');
-                }, 'relSchedule' => function ($query) {
-                    $query->addSelect('id', 'day', 'time');
-                }])->where('email', 'LIKE', '%' . $request->popmail_filter . '%')
-                    ->orderBy('id', 'DESC')
-                    ->where('user_id',Auth::id())
-                    ->paginate(10);
-            }else{
-                $data['popping_emails'] = PoppingEmail::with(['relSmtp' => function ($query) {
-                    $query->addSelect('id', 'name');
-                }, 'relImap' => function ($query) {
-                    $query->addSelect('id', 'name');
-                }, 'relCountry' => function ($query) {
-                    $query->addSelect('id', 'title');
-                }, 'relSchedule' => function ($query) {
-                    $query->addSelect('id', 'day', 'time');
-                }])->where('email', 'LIKE', '%' . $request->popmail_filter . '%')
-                    ->orderBy('id', 'DESC')
-                    ->paginate(10);
-
-            }
-
+            $data['popping_emails'] = $this->search($request->all());
         }else{
             if(Session::get('role_title') == 'user') {
                 $data['popping_emails'] = PoppingEmail::with(['relSmtp' => function ($query) {
@@ -103,27 +76,42 @@ class PoppingEmailController extends Controller
 //        dd($data);
         return view('admin::popping_email.index', $data);
     }
-    public function search(Request $request)
+    private static function search($data)
     {
-        $data['pageTitle'] = " Popping Email ";
-        $data['country_id'] = Country::lists('title','id');
-        $data['smtp_id'] = Smtp::lists('name','id');
-        $data['imap_id'] = Imap::lists('name','id');
-        if($request->isMethod('post'))
-        {
-            $popmail_filter_name = $request->only('popmail_filter');
-            Session::put('popmail_filter',$popmail_filter_name['popmail_filter']);
-        }else{
-            $popmail_filter_name['popmail_filter']= session('popmail_filter');
+        $query= PoppingEmail::with(['relSmtp' => function ($query) {
+            $query->addSelect('id', 'name');
+        }, 'relImap' => function ($query) {
+            $query->addSelect('id', 'name');
+        }, 'relCountry' => function ($query) {
+            $query->addSelect('id', 'title');
+        }, 'relSchedule' => function ($query) {
+            $query->addSelect('id', 'day', 'time');
+        }]);
+        // if only email
+        if(!empty($data['popmail_filter'])){
+            $query->where('email','like','%'.$data['popmail_filter'].'%');
         }
-
-        $obj = (object) $popmail_filter_name;
-        $obj->popmail_filter=$popmail_filter_name['popmail_filter'];
-
-        $data['popping_emails']= PoppingEmail::with(['relSmtp','relimap'])->where('email','LIKE','%'.$popmail_filter_name["popmail_filter"].'%')
-            ->orderBy('id', 'DESC')->paginate(10);
-        $data['popmail_filter']=$obj;
-        return view('admin::popping_email.index', $data);
+        // if only smtp
+        if(!empty($data['smtp'])){
+            $query->where('smtp_id',$data['smtp']);
+        }
+        // if only imap
+        if(!empty($data['imap'])){
+            $query->where('imap_id',$data['imap']);
+        }
+        // if only country
+        if(!empty($data['country'])){
+            $query->where('country_origin',$data['country']);
+        }
+        // if only status
+        if(!empty($data['status'])){
+            $query->where('status',$data['status']);
+        }
+        if(Session::get('role_title') == 'user') {
+            $query->where('user_id',Auth::id());
+        }
+        $result=$query->paginate(10);
+        return $result;
     }
 
     /**
@@ -145,8 +133,6 @@ class PoppingEmailController extends Controller
     public function auth_process(Request $request)
     {
         $input = $request->all();
-
-        $input['status'] = 'new';
 
         #print_r($input);exit;
 
@@ -185,6 +171,7 @@ class PoppingEmailController extends Controller
                 /* Transaction Start Here */
                 DB::beginTransaction();
                 try {
+                    $input['status'] = 'new';
                     // store / update / code here
                     PoppingEmail::create($input);
                     if(Session::has('popping_input')) {
@@ -222,7 +209,7 @@ class PoppingEmailController extends Controller
             $input_data = Session::get('popping_input');
             $data = [
                 'email'=>$input_data['email'],
-                'password'=>$input_data['password'],
+                #'password'=>$input_data['password'],
                 'smtp_id'=>$input_data['smtp_id'],
                 'imap_id'=>$input_data['imap_id'],
                 'auth_email'=>$input_data['email'],
@@ -231,7 +218,7 @@ class PoppingEmailController extends Controller
                 'code'=>$_GET['code'],
                 'token'=>$client->getAccessToken(),
                 'user_id'=> Auth::user()->id,
-                'statu'=> 'new',
+                'status'=> 'new',
             ];
 
             $email_exists = PoppingEmail::where('email', $input_data['email'])->exists();

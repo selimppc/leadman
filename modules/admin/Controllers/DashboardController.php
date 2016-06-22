@@ -29,10 +29,8 @@ class DashboardController extends Controller
 
         $data['last_7day']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
         $data['user_leads']= PoppingEmail::userLead();
-        $data['user_invoices_approved']= PoppingEmail::userInvoice('approved');
-        $data['user_invoices_paid']= PoppingEmail::userInvoice('paid');
+        $data['user_invoices_status']= PoppingEmail::userInvoiceStatus();
         $data['user_lead_status']= PoppingEmail::UserLeadStatus();
-//        dd($data['user_lead_status']);
         return view('admin::dashboard.index',$data);
     }
 

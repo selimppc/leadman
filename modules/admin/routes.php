@@ -12,7 +12,7 @@
 
 Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middleware'=>'auth'],function(){
     include 'rk_route.php';
-    Route::any('/', [
+    /*Route::any('/', [
         'as' => 'dashboard',
         'uses' => 'DashboardController@dashboard'
     ]);
@@ -20,6 +20,18 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
     Route::any('dashboard', [
         'as' => 'dashboard',
         'uses' => 'DashboardController@dashboard'
+    ]);*/
+
+    Route::get('/',[
+            'middleware'=>'acl_access::/',
+            'route'=>'/',
+            'uses'=>'DashboardController@dashboard'
+    ]);
+
+    Route::get('dashboard',[
+            'middleware'=>'acl_access::dashboard',
+            'route'=>'/',
+            'uses'=>'DashboardController@dashboard'
     ]);
 
     Route::any('all_routes_uri', [
@@ -195,10 +207,10 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.invoice.delete',
         'uses'=>'InvoiceController@destroy'
     ]);
-    Route::patch('admin/invoice/update_status/{id}',[
-        'middleware'=>'acl_access::admin/invoice/update_status/{id}',
+    Route::get('admin/invoice/update_status/{status}/{id}',[
+        'middleware'=>'acl_access::admin/invoice/update_status/{status}/{id}',
         'as'=>'admin.invoice.update_status',
-        'uses'=>'InvoiceController@update'
+        'uses'=>'InvoiceController@change_status'
     ]);
     Route::get('admin/lead',[
         'middleware'=>'acl_access::admin/lead',
@@ -208,7 +220,7 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
     Route::get('admin/lead/{id}',[
         'middleware'=>'acl_access::admin/lead/{id}',
         'as'=>'admin.lead',
-        'uses'=>'LeadController@leadByUser'
+        'uses'=>'LeadController@index'
     ]);
 
 });

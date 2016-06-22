@@ -45,7 +45,7 @@
                     </div>
                     <div  class="col-md-2" >
                         <div class="input-group">
-                            {!! Form::Select('status',array(''=>'Select Status','active'=>'Active','inactive'=>'Inactive','cancel'=>'Cancel'),Input::old('status'),['class'=>'form-control ']) !!}
+                            {!! Form::Select('status',array(''=>'Select Status','active'=>'Active','inactive'=>'Inactive'),Input::old('status'),['class'=>'form-control ']) !!}
                         </div>
                     </div>
                     {{--<div  class="col-md-1" >
@@ -79,46 +79,48 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($popping_emails as $values)
-                            <tr class="gradeX">
-                                <td>{{ isset($values->email)?$values->email:''  }}</td>
-                                <td>{{ isset($values->relSmtp->name)?$values->relSmtp->name:'' }}</td>
-                                <td>{{ isset($values->relImap->name)?$values->relImap->name:'' }}</td>
-                                <td>{{ isset($values->country_origin)?$values->relCountry->title:'' }}</td>
-                                <td>{{ isset($values->price)?$values->price:'' }}</td>
-                                <td>
-                                    @if(isset($values->relSchedule->day))
-                                        Day-{{ $values->relSchedule->day }}
-                                        Time-{{ $values->relSchedule->time }}
+                        @if(isset($popping_emails) && !empty($popping_emails))
+                            @foreach($popping_emails as $values)
+                                <tr class="gradeX">
+                                    <td>{{ isset($values->email)?$values->email:''  }}</td>
+                                    <td>{{ isset($values->relSmtp->name)?$values->relSmtp->name:'' }}</td>
+                                    <td>{{ isset($values->relImap->name)?$values->relImap->name:'' }}</td>
+                                    <td>{{ isset($values->country_origin)?$values->relCountry->title:'' }}</td>
+                                    <td>{{ isset($values->price)?$values->price:'' }}</td>
+                                    <td>
+                                        @if(isset($values->relSchedule->day))
+                                            Day-{{ $values->relSchedule->day }}
+                                            Time-{{ $values->relSchedule->time }}
+                                        @endif
+                                    </td>
+                                    <td>{{ isset($values->execution_time)?$values->execution_time:'' }}</td>
+                                    {{--<td>{{ isset($values->status)?$values->status:'' }}</td>--}}
+
+
+                                    @if(Session::get('role_title') != 'user')
+                                        <td>{{ isset($values->relUser->username)?$values->relUser->username:'' }}</td>
                                     @endif
-                                </td>
-                                <td>{{ isset($values->execution_time)?$values->execution_time:'' }}</td>
-                                {{--<td>{{ isset($values->status)?$values->status:'' }}</td>--}}
+
+                                    <td>
+                                        <a href="{{ URL::to('admin/popping-email/active-inactive/'.$values->id) }}" class="btn btn-info btn-xs"> {{$values->status == 'new'? 'New': ($values->status == 'inactive'? 'Inactive': 'Active') }}</a>
+                                    </td>
 
 
-                                @if(Session::get('role_title') != 'user')
-                                    <td>{{ isset($values->relUser->username)?$values->relUser->username:'' }}</td>
-                                @endif
+                                    <td>
+                                        <a href="{{ URL::to('admin/lead/'.$values->id) }}" class="btn btn-primary btn-xs">Lead</a>
 
-                                <td>
-                                    <a href="{{ URL::to('admin/popping-email/active-inactive/'.$values->id) }}" class="btn btn-info btn-xs"> {{$values->status == 'new'? 'New': ($values->status == 'inactive'? 'Inactive': 'Active') }}</a>
-                                </td>
-
-
-                                <td>
-                                    <a href="{{ URL::to('admin/lead/'.$values->id) }}" class="btn btn-primary btn-xs">Lead</a>
-
-                                </td>
-                                <td>
-                                    <a href="{{ URL::to('admin/invoice/'.$values->id) }}" class="btn btn-primary btn-xs">Invoice</a>
-                                </td>
-                                <td>
-                                    <a href="{{ url('admin/popping-email/show', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>
-                                    <a href="{{ url('admin/popping-email/edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>
-                                    {{--<a href="{{ url('admin/popping-email/delete', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" title="Popping Email Delete"><i class="icon-trash"></i></a>--}}
-                                </td>
-                            </tr>
-                        @endforeach
+                                    </td>
+                                    <td>
+                                        <a href="{{ URL::to('admin/invoice/'.$values->id) }}" class="btn btn-primary btn-xs">Invoice</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ url('admin/popping-email/show', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>
+                                        <a href="{{ url('admin/popping-email/edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>
+                                        <a href="{{ url('admin/popping-email/delete', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" title="Popping Email Delete"><i class="icon-trash"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </table>
 
                     <span class="pull-right">{!! $popping_emails->appends($_REQUEST) !!} </span>

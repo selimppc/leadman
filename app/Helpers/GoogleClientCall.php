@@ -25,20 +25,20 @@ class GoogleClientCall
      */
     public static function run($pop_email, $token){
 
-        session_start();
-        define('SCOPES', implode(' ', array(
+        #session_start();
+        /*define('SCOPES', implode(' ', array(
                 Google_Service_Gmail::MAIL_GOOGLE_COM,
                 Google_Service_Gmail::GMAIL_COMPOSE,
                 Google_Service_Gmail::GMAIL_READONLY,
                 Google_Service_Gmail::GMAIL_MODIFY,
                 "https://www.googleapis.com/auth/urlshortener"
             )
-        ));
+        ));*/
 
         //client
         $client = new Google_Client();
         $client->setAuthConfigFile(public_path().'/api/lead-man-api.json');
-        $client->addScope(SCOPES);
+        #$client->addScope(SCOPES);
         $client->setLoginHint($pop_email);
         $client->setAccessType('offline');
         $client->setApprovalPrompt("force");

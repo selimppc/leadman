@@ -28,7 +28,7 @@
                         <thead>
                         <tr>
                             <th> Name </th>
-                            <th> Filter Column </th>
+
                             <th> Action </th>
                         </tr>
                         </thead>
@@ -36,7 +36,6 @@
                         @foreach($filters as $filter)
                             <tr class="gradeX">
                                 <td>{!!  $filter->name !!}</td>
-                                <td>{!!  $filter->filtercol !!}</td>
                                 <td>
                                     <a href="{!! url('admin/filter/edit', $filter->id) !!}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Filter Edit"><i class="icon-edit"></i> </a>
                                     <a href="{!!  url('admin/filter/delete', $filter->id) !!}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')" title="Filter Delete"><i class="icon-trash"></i> </a>
