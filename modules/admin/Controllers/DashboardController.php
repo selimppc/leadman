@@ -35,16 +35,31 @@ class DashboardController extends Controller
         $data['user_lead_status']= PoppingEmail::UserLeadStatus();
 
         //===== For Total Lead ***//
-        $sql_lead = DB::table('lead')->get();
+        $sql_lead = DB::table('lead')->where('status','!=', 'filtered')->get();
+        $lead_qtt_1 = 0;
+        $lead_qtt_7 = 0;
+        if($sql_lead){
+            foreach($sql_lead as $lead_qt){
+                if($lead_qt->created_at > date('Y-m-d h:i:s', strtotime("-1 day", time() ))){
+                    $lead_qtt_1 += 1;
+                }
+                if($lead_qt->created_at > date('Y-m-d h:i:s', strtotime("-7 day", time() ))){
+                    $lead_qtt_7 += 1;
+                }
+                //$lead_qtt_7 += $qtt7;
+            }
+        }
         //print_r(count($sql_lead)); exit();
-        $data['total_lead']= count($sql_lead);
+        $data['total_lead_1']= $lead_qtt_1;
+        $data['total_lead_7']= $lead_qtt_7;
+
+
 
         //===== For Total Cost ***//
         $sql_popping_email = DB::table('popping_email')->get();
         $total = 0;
         //$total = array();
         $price_popping_email = 0;
-        $qty = 1;
         if($sql_popping_email)
         {
             foreach($sql_popping_email as $email)
@@ -53,15 +68,22 @@ class DashboardController extends Controller
                 $popping_email_id = $email->id;
                 if($sql_lead)
                 {
-                    $lead_qty = 0;
+                    $lead_qty_1 = 0;
+                    $lead_qty_7 = 0;
                     foreach($sql_lead as $lead)
                     {
-                        if($lead->popping_email_id == $popping_email_id){
-                            $lead_qty += $qty;
+                        if($lead->popping_email_id == $popping_email_id && $lead->created_at > date('Y-m-d h:i:s', strtotime("-1 day", time() )) ){
+                            $lead_qty_1 += 1;
+                        }
+                        if($lead->popping_email_id == $popping_email_id && $lead->created_at > date('Y-m-d h:i:s', strtotime("-7 day", time() )) ){
+                            $lead_qty_7 += 1;
                         }
                     }
                     //print_r($lead_qty); exit();
-                    $price_popping_email = $price * $lead_qty;
+                    /*if($lead_qty_1){*/
+                        $price_popping_email = $price * $lead_qty_1;
+                   /* }*/
+
                 }
                 //print_r($price_popping_email); exit();
                 $total += $price_popping_email;
