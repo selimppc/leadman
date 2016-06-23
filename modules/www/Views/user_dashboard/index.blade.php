@@ -405,7 +405,7 @@
 <script type="text/javascript"> window.jQuery || document.write('<script src="{{ URL::asset('assets/landerapp/js/jquery.min.js') }}">'+"<"+"/script>"); </script>
 
 <!-- LanderApp's javascripts -->
-<script src="{{ URL::asset('assets/landerapp/js/bootstrap.min.js') }}"></script>
+{{--<script src="{{ URL::asset('assets/landerapp/js/bootstrap.min.js') }}"></script>--}}
 <script src="{{ URL::asset('assets/landerapp/js/landerapp.min.js') }}"></script>
 
 <script type="text/javascript">
