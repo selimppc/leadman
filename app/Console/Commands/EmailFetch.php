@@ -86,9 +86,61 @@ class EmailFetch extends Command
                             //Check email exists
                             $check_lead = Lead::where('email', $val['from_email'])->exists();
 
-                            //Filter Email
-                            $filtered = EmailFetch::filtering($val['from_email']);
-                            $lead_status = $filtered==0?'open':'filtered';
+                            if($pop_email->keyword){
+                                if(strpos($val['from_email'],$pop_email->keyword) !== false){
+                                    if(!$check_lead){
+                                        $model = new Lead();
+                                        try{
+                                            $model->email = $from_email;
+                                            $model->popping_email_id = $pop_email->id;
+                                            $model->status = 'open';
+                                            $model->count = 1;
+                                            $model->save();
+                                            $this->info('Stored Lead : '.$model->email);
+                                        }catch(\Exception $e){
+                                            $this->info('Failed : '.$e->getMessage());
+                                        }
+                                    }else{
+                                        $model = Lead::where('email', $from_email)->first();
+                                        try{
+                                            $model->count = $model->count + 1;
+                                            $model->save();
+                                            $this->info('Updated Count for the Lead : '.$model->email);
+                                        }catch(\Exception $e){
+                                            $this->info('Failed : '.$e->getMessage());
+                                        }
+                                    }
+                                }
+                            }else{
+                                //Filter Email
+                                $filtered = EmailFetch::filtering($val['from_email']);
+                                $lead_status = $filtered==0?'open':'filtered';
+
+                                if(!$check_lead){
+                                    $model = new Lead();
+                                    try{
+                                        $model->email = $from_email;
+                                        $model->popping_email_id = $pop_email->id;
+                                        $model->status = $lead_status;
+                                        $model->count = 1;
+                                        $model->save();
+                                        $this->info('Stored Lead : '.$model->email);
+                                    }catch(\Exception $e){
+                                        $this->info('Failed : '.$e->getMessage());
+                                    }
+                                }else{
+                                    $model = Lead::where('email', $from_email)->first();
+                                    try{
+                                        $model->count = $model->count + 1;
+                                        $model->save();
+                                        $this->info('Updated Count for the Lead : '.$model->email);
+                                    }catch(\Exception $e){
+                                        $this->info('Failed : '.$e->getMessage());
+                                    }
+                                }
+
+                            }
+
 
                             /*$sql = "INSERT INTO lead (email,popping_email_id,status,count)
                                         VALUES ('$from_email','$pop_email->id','$lead_status', 1)
@@ -97,28 +149,7 @@ class EmailFetch extends Command
                             DB::statement($sql);
                             $this->info('Stored or updated the Lead : '.$from_email);*/
 
-                            if(!$check_lead){
-                                $model = new Lead();
-                                try{
-                                    $model->email = $from_email;
-                                    $model->popping_email_id = $pop_email->id;
-                                    $model->status = $lead_status;
-                                    $model->count = 1;
-                                    $model->save();
-                                    $this->info('Stored Lead : '.$model->email);
-                                }catch(\Exception $e){
-                                    $this->info('Failed : '.$e->getMessage());
-                                }
-                            }else{
-                                $model = Lead::where('email', $from_email)->first();
-                                try{
-                                    $model->count = $model->count + 1;
-                                    $model->save();
-                                    $this->info('Updated Count for the Lead : '.$model->email);
-                                }catch(\Exception $e){
-                                    $this->info('Failed : '.$e->getMessage());
-                                }
-                            }
+
                         }
 
                     }else{
@@ -168,6 +199,37 @@ class EmailFetch extends Command
 
         return $match;
     }
+
+
+
+    /**
+     * @param $email
+     * @return int
+     */
+    protected static function check_by_keyword($email){
+
+
+        $match = 0;
+        if(isset($list)) {
+            foreach ($list as $word) {
+                // This pattern takes care of word boundaries, and is case insensitive
+                $name = $word['name'];
+
+                $pattern = "/\b$name\b/i";
+                $match += preg_match($pattern, $email);
+
+                /*if (strpos($email, $name) !== false) {
+                    echo 'true';
+                }*/
+            }
+        }
+
+        return $match;
+    }
+
+
+
+
 
 
 
