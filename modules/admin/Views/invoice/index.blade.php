@@ -61,10 +61,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if(is_object($invoices))
+                        @if(isset($invoices))
                             @foreach($invoices as $invoice)
                                 <tr class="gradeX">
-                                    <td>{!!  ucfirst($invoice->relUser->username) !!}</td>
+                                    <td>{!!  ucfirst(count($invoice->relUser)>0?$invoice->relUser->username:"") !!}</td>
                                     {{--<td>{!!  $invoice->relPoppingEmail['email'] !!}</td>--}}
                                     <td>{!!  $invoice->invoice_number !!}</td>
                                     <td>{!!  $invoice->total_cost !!}</td>
