@@ -32,7 +32,7 @@
                         @foreach($archive_leads as $file)
                             <tr class="gradeX">
                                 <td>{!!  ++$i !!}</td>
-                                <td><a href="{{ url('admin/lead-archive/'.$file) }}">{!!  $file !!}</a></td>
+                                <td><a data-toggle="modal" data-target="#etsbModal" href="{{ url('admin/lead-archive/'.$file) }}">{!!  $file !!}</a></td>
                             </tr>
                         @endforeach
                     </table>
@@ -43,28 +43,6 @@
     </div>
 </div>
 <!-- page end-->
-
-
-<!-- addData -->
-<div class="modal fade" id="addData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Add Filter</h4>
-            </div>
-            <div class="modal-body">
-                {!! Form::open(['url' => 'admin/filter']) !!}
-                @include('admin::filter._form')
-                {!! Form::close() !!}
-
-            </div>
-
-        </div>
-    </div>
-</div>
-<!-- modal -->
-
 
 <!-- Modal  -->
 <div class="modal fade" id="etsbModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
