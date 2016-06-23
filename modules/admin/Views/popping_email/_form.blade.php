@@ -39,6 +39,11 @@
     {!! Form::text('price', null, ['class' => 'form-control']) !!}
 </div>
 
+<div class="form-group">
+    {!! Form::label('keyword', 'Keyword:', ['class' => 'control-label']) !!}
+    {!! Form::text('keyword', null, ['class' => 'form-control']) !!}
+</div>
+
 @endif
 
 <div class="form-group">

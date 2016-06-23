@@ -40,6 +40,10 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Keyword</th>
+                    <td>{{ isset($popping_email->keyword)?$popping_email->keyword:'' }}</td>
+                </tr>
+                <tr>
                     <th>Next Execution Time</th>
                     <td>{{ isset($popping_email->execution_time)?$popping_email->execution_time:'' }}</td>
                 </tr>

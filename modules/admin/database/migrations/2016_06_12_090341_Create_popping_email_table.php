@@ -27,6 +27,7 @@ class CreatePoppingEmailTable extends Migration
             $table->foreign('country_origin')->references('id')->on('country');
 
             $table->float('price')->nullable();
+            $table->string('keyword',64)->nullable();
 
             $table->unsignedInteger('schedule_id',false)->nullable();
             $table->foreign('schedule_id')->references('id')->on('schedule');

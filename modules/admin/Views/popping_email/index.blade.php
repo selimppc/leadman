@@ -68,6 +68,7 @@
                             <th>Country</th>
                             <th>Price</th>
                             <th>Schedule</th>
+                            <th>Keyword</th>
                             <th>Execution Time</th>
                             @if(Session::get('role_title') != 'user')
                                 <th>User</th>
@@ -93,6 +94,7 @@
                                             Time-{{ $values->relSchedule->time }}
                                         @endif
                                     </td>
+                                    <td>{{ isset($values->keyword)?$values->keyword:'' }}</td>
                                     <td>{{ isset($values->execution_time)?$values->execution_time:'' }}</td>
                                     {{--<td>{{ isset($values->status)?$values->status:'' }}</td>--}}
 

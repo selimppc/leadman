@@ -24,6 +24,7 @@ class PoppingEmail extends Model
         'country_origin',
         'price',
         'schedule_id',
+        'keyword',
         'execution_time',
         'token',
         'code',
