@@ -454,7 +454,15 @@ class UserController extends Controller
                 $model->status = 'cancel';
                 $model->last_visit = Null;
             }
-            $model->save();
+            if($model->save()){
+                DB::table('popping_email')
+                    ->where('user_id', $id)
+                    ->update(['status' => 'cancel']);
+
+                DB::table('invoice_head')
+                    ->where('user_id', $id)
+                    ->update(['status' => 'cancel']);
+            }
 
             DB::commit();
             Session::flash('message', "Successfully Deleted.");
