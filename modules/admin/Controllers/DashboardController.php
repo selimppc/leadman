@@ -24,6 +24,152 @@ use Modules\Admin\Lead;
 
 class DashboardController extends Controller
 {
+
+
+    public function admin_user_dashboard()
+    {
+        $user_login = Session::get('role_title');
+
+        if($user_login == 'user'){
+
+            // set the default timezone to use. Available since PHP 5.1
+            date_default_timezone_set('Asia/Dacca');
+            $current_date = date('Y-m-d h:i:s');
+
+            $last_24 = date('Y-m-d h:i:s', strtotime("-1 day", time() ));
+            $last_7_days = date('Y-m-d h:i:s', strtotime("-7 day", time() ));
+
+            $user_id = Auth::id();
+
+            //24 data
+            $sql_24_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
+    from popping_email
+    left JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$last_24' and lead.status != 'filtered'
+    LEFT JOIN invoice_head on invoice_head.user_id = popping_email.user_id and invoice_head.created_at > '$last_24'
+    WHERE popping_email.user_id = '$user_id'
+    GROUP BY popping_email.id ";
+            $result_24 = DB::select(DB::raw($sql_24_sql));
+
+
+            // In Last 7 days
+            $result_7_days_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
+    from popping_email
+    left JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$last_7_days' and lead.status != 'filtered'
+    LEFT JOIN invoice_head on invoice_head.user_id = popping_email.user_id and invoice_head.created_at > '$last_7_days'
+    WHERE popping_email.user_id = '$user_id'
+    GROUP BY popping_email.id ";
+            $result_7_days = DB::select(DB::raw($result_7_days_sql));
+
+
+            //-- Numbers of email -> link to list of email.
+            $no_of_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
+    from popping_email
+    left JOIN lead on lead.popping_email_id = popping_email.id
+    WHERE popping_email.user_id = '$user_id'
+    GROUP BY popping_email.id ";
+            $no_of_email = DB::select(DB::raw($no_of_email_sql));
+
+
+            //-- Show no of duplicate email stat
+            $no_duplicate_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
+    from popping_email
+    left JOIN lead on lead.popping_email_id = popping_email.id
+    WHERE lead.count > 1 and popping_email.user_id = '$user_id'
+    GROUP BY popping_email.id ";
+            $no_duplicate_email = DB::select(DB::raw($no_duplicate_email_sql));
+
+
+            //-- Show filtered  email stat
+            $no_filtered_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
+    from popping_email
+    left JOIN lead on lead.popping_email_id = popping_email.id
+    WHERE lead.status='filtered' and popping_email.user_id = '$user_id'
+    GROUP BY popping_email.id ";
+            $no_filtered_email = DB::select(DB::raw($no_filtered_email_sql));
+
+
+            return view('www::user_dashboard.index', [
+                'result_24' => $result_24,
+                'result_7_days' => $result_7_days,
+                'no_of_email' => $no_of_email,
+                'no_duplicate_email' => $no_duplicate_email,
+                'no_filtered_email' => $no_filtered_email,
+            ]);
+
+        }else{
+            $data['pageTitle'] = 'Dashboard';
+            $data['result_24']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
+
+            $data['result_7_days']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
+            $data['user_leads']= PoppingEmail::userLead();
+            $data['user_invoices_status']= PoppingEmail::userInvoiceStatus();
+            $data['user_lead_status']= PoppingEmail::UserLeadStatus();
+
+            //===== For Total Lead ***//
+            $sql_lead = DB::table('lead')->where('status','!=', 'filtered')->get();
+            $lead_qtt_1 = 0;
+            $lead_qtt_7 = 0;
+            if($sql_lead){
+                foreach($sql_lead as $lead_qt){
+                    if($lead_qt->created_at > date('Y-m-d h:i:s', strtotime("-1 day", time() ))){
+                        $lead_qtt_1 += 1;
+                    }
+                    if($lead_qt->created_at > date('Y-m-d h:i:s', strtotime("-7 day", time() ))){
+                        $lead_qtt_7 += 1;
+                    }
+                    //$lead_qtt_7 += $qtt7;
+                }
+            }
+            //print_r(count($sql_lead)); exit();
+            $data['total_lead_1']= $lead_qtt_1;
+            $data['total_lead_7']= $lead_qtt_7;
+
+
+
+            //===== For Total Cost ***//
+            $sql_popping_email = DB::table('popping_email')->get();
+            $total = 0;
+            //$total = array();
+            $price_popping_email = 0;
+            if($sql_popping_email)
+            {
+                foreach($sql_popping_email as $email)
+                {
+                    $price = $email->price;
+                    $popping_email_id = $email->id;
+                    if($sql_lead)
+                    {
+                        $lead_qty_1 = 0;
+                        $lead_qty_7 = 0;
+                        foreach($sql_lead as $lead)
+                        {
+                            if($lead->popping_email_id == $popping_email_id && $lead->created_at > date('Y-m-d h:i:s', strtotime("-1 day", time() )) ){
+                                $lead_qty_1 += 1;
+                            }
+                            if($lead->popping_email_id == $popping_email_id && $lead->created_at > date('Y-m-d h:i:s', strtotime("-7 day", time() )) ){
+                                $lead_qty_7 += 1;
+                            }
+                        }
+                        //print_r($lead_qty); exit();
+                        /*if($lead_qty_1){*/
+                        $price_popping_email = $price * $lead_qty_1;
+                        /* }*/
+
+                    }
+                    //print_r($price_popping_email); exit();
+                    $total += $price_popping_email;
+                    //$total[] = $price_popping_email;
+                }
+            }
+            //print_r($total); exit();
+            $data['total_cost']= $total;
+
+            return view('admin::dashboard.index',$data);
+        }
+
+    }
+
+
     public function dashboard()
     {
         $data['pageTitle'] = 'Dashboard';
