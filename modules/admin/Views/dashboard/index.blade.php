@@ -59,8 +59,8 @@
                     <table class="display table table-bordered table-striped" >
                         <thead>
                         <tr>
-                            <th style="color: darkblue">Total Lead : {{ $total_lead_1 }}</th>
-                            <th style="color: darkblue">Total Cost : {{ $total_cost }}</th>
+                            <th style="color: darkblue">Total Lead : {{ $result_24_lead[0]->total_lead }}</th>
+                            <th style="color: darkblue">Total Cost : {{ $result_24_amount[0]->total_cost }}</th>
                         </tr>
                         </thead>
                     </table>
@@ -153,8 +153,8 @@
                     <table class="display table table-bordered table-striped" >
                         <thead>
                         <tr>
-                            <th style="color: darkblue">Total Lead : {{ $total_lead_7 }}</th>
-                            <th style="color: darkblue">Total Cost : {{ $total_cost }}</th>
+                            <th style="color: darkblue">Total Lead : {{ $result_7_days_lead[0]->total_lead }}</th>
+                            <th style="color: darkblue">Total Cost : {{ $result_7_days_amount[0]->total_cost }}</th>
                         </tr>
                         </thead>
                     </table>
