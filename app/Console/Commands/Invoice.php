@@ -93,7 +93,7 @@ class Invoice extends Command
                                 $model = new InvoiceHead();
                                 if($hd_inv = $model->create($array_data))
                                 {
-                                    foreach($pop_email->relLead as $lead){
+                                    /*foreach($pop_email->relLead as $lead){
 
                                         $array_dt = [
                                             'invoice_head_id'=>$hd_inv->id,
@@ -108,7 +108,7 @@ class Invoice extends Command
                                             $lead_model->status = 'invoiced';
                                             $lead_model->save();
                                         }
-                                    }
+                                    }*/
 
                                     // success report
                                     $this->info(' Invoice Stored Successfully !'. $invoice_number['generated_number']);
@@ -128,7 +128,7 @@ class Invoice extends Command
                                 $model->execution_time = $generate_execution_time;
                                 $model->save();
 
-                                $this->info('... Next Execution Time !'. $generate_execution_time);
+                                $this->info('... Next Execution Time : '. $generate_execution_time);
 
                                 //Commit the changes
                                 DB::commit();
@@ -216,9 +216,12 @@ class Invoice extends Command
             $this->info($e->getMessage());
             return false;
         }
-
-
-
-
     }
+
+
+
+
+
+
+    
 }
