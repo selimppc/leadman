@@ -70,7 +70,7 @@
                                     <td>{!!  $invoice->total_cost !!}</td>
                                     <td>{!!  $invoice->status !!}</td>
                                     <td>
-                                        <a href="{!! url('admin/invoice/view', $invoice->id) !!}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Invoice Details"><i class="icon-eye-open"></i> </a>
+                                        {{--<a href="{!! url('admin/invoice/view', $invoice->id) !!}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Invoice Details"><i class="icon-eye-open"></i> </a>--}}
                                         <a href="{!!  url('admin/invoice/delete', $invoice->id) !!}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')" title="Filter Delete"><i class="icon-trash"></i> </a>
                                         @if($invoice->status=='open')
                                             <a onclick="return confirm('Are you confirm?')" href="{!! url('admin/invoice/update_status/approved/'.$invoice->id) !!}" class="btn btn-primary btn-xs" title="Change Status">

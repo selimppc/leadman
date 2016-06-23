@@ -187,7 +187,7 @@ class LeadController extends Controller
         {
             if(isset($file_name) && !empty($file_name))
             {
-                $data['pageTitle'] = 'Archive Lead Details';
+                $data['pageTitle'] = 'Archive Lead Details for '.$file_name;
                 $data['file_content']=file_get_contents(public_path('lead_files/'.$file_name));
                 return view('admin::lead.archive_lead_details', $data);
             }else {
