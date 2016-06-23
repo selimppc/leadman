@@ -70,6 +70,20 @@ class PoppingEmail extends Model
     GROUP BY user.id";
         return DB::select(DB::raw($sql));
     }
+    public static function totalAmount($time){
+        $sql= "select sum(DISTINCT invoice_head.total_cost) total_cost
+    from invoice_head
+    where created_at > '$time'
+    ";
+        return DB::select(DB::raw($sql));
+    }
+    public static function totalLead($time){
+        $sql= "select count( DISTINCT lead.id ) total_lead
+    from lead
+    where created_at > '$time'
+    ";
+        return DB::select(DB::raw($sql));
+    }
     public static function userLead()
     {
         $sql= "select user.id as user_id, user.username, count( DISTINCT lead.id ) total_lead, count( DISTINCT popping_email.id) no_of_popping_email
