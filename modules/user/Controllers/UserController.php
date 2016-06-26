@@ -465,7 +465,7 @@ class UserController extends Controller
             UserActivity::where('user_id',$id)->delete();
             UserLoginHistory::where('user_id',$id)->delete();
             UserProfile::where('user_id',$id)->delete();
-            UserResetPassword::where('user_id',$id)->delete(); 
+            UserResetPassword::where('user_id',$id)->delete();
             UserImage::where('user_id',$id)->delete();
             PoppingEmail::where('user_id',$id)->delete();
             InvoiceHead::where('user_id',$id)->delete();
