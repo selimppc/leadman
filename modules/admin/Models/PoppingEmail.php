@@ -113,7 +113,9 @@ from user
     }
     public static function userInvoiceStatus()
     {
-        $sql= "select user.username, count( DISTINCT invoice_head.id ) open_invoice, count( DISTINCT invoice_head1.id ) approved_invoice, count( DISTINCT invoice_head2.id ) paid_invoice, sum(DISTINCT invoice_head3.total_cost) total_cost
+
+
+        /*$sql= "select user.username, count( DISTINCT invoice_head.id ) open_invoice, count( DISTINCT invoice_head1.id ) approved_invoice, count( DISTINCT invoice_head2.id ) paid_invoice, sum(DISTINCT invoice_head3.total_cost) total_cost
     from user
     INNER JOIN popping_email on popping_email.user_id = user.id and popping_email.status != 'cancel'
     LEFT JOIN invoice_head on invoice_head.user_id = popping_email.user_id and invoice_head.status != 'cancel' and invoice_head.status = 'open'
@@ -121,7 +123,27 @@ from user
     LEFT JOIN invoice_head as invoice_head2 on invoice_head2.user_id = popping_email.user_id and invoice_head2.status != 'cancel' and invoice_head2.status = 'paid'
     LEFT JOIN invoice_head as invoice_head3 on invoice_head3.user_id = popping_email.user_id and invoice_head3.status != 'cancel'
 
-    GROUP BY user.id";
+    GROUP BY user.id";*/
+
+
+
+
+        $sql= "select
+ user.username,
+ IFNULL(ih1.oi, 0) AS open_invoice,
+ IFNULL(ih2.ai, 0) AS approved_invoice,
+ IFNULL(ih3.pi, 0) AS paid_invoice,
+ IFNULL(i.tc, 0) AS total_cost
+from user
+
+ INNER JOIN ( select id, user_id, count(id) as nope from popping_email where status != 'cancel' group by user_id ) p on (p.user_id = user.id)
+
+ LEFT JOIN (select id,user_id, count(id) as oi from invoice_head where status != 'cancel' and invoice_head.status = 'open' group by id ) ih1 on (user.id = ih1.user_id)
+ LEFT JOIN (select id,user_id, count(id) as ai from invoice_head where status != 'cancel' and invoice_head.status = 'approved' group by id ) ih2 on (user.id = ih2.user_id)
+ LEFT JOIN (select id,user_id, count(id) as pi from invoice_head where status != 'cancel' and invoice_head.status = 'paid' group by id ) ih3 on (user.id = ih3.user_id)
+
+ LEFT JOIN (select id, user_id, sum(total_cost) as tc, count(id) as noi from invoice_head where status != 'cancel' group by user_id ) i on (i.user_id = p.user_id)
+ GROUP BY user.id";
         return DB::select(DB::raw($sql));
     }
     public static function userInvoice($status)
