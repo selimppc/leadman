@@ -88,7 +88,7 @@ from user
         return DB::select(DB::raw($sql));
     }
     public static function totalAmount($time){
-        $sql= "select sum(DISTINCT invoice_head.total_cost) total_cost
+        $sql= "select sum(invoice_head.total_cost) total_cost
     from invoice_head
     where created_at > '$time'
     ";
