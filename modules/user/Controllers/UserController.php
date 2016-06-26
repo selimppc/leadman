@@ -9,6 +9,9 @@ use App\RoleUser;
 use App\UserActivity;
 use App\UserImage;
 use Mockery\CountValidator\Exception;
+use Modules\Admin\InvoiceHead;
+use Modules\Admin\Lead;
+use Modules\Admin\PoppingEmail;
 use Validator;
 use App\Country;
 use App\Helpers\ImageResize;
@@ -450,7 +453,20 @@ class UserController extends Controller
 
         DB::beginTransaction();
         try {
-            if($model->status =='active'){
+            /*
+             * Child Lead delete
+             * */
+            $popping_emails= PoppingEmail::select('id')->where('user_id',$id)->get();
+            foreach ($popping_emails as $popping_email) {
+                Lead::where('popping_email_id',$popping_email->id)->delete();
+            }
+            RoleUser::where('user_id',$id)->delete();
+            PoppingEmail::where('user_id',$id)->delete();
+            InvoiceHead::where('user_id',$id)->delete();
+            user::findOrFail($id)->delete();
+
+
+            /*if($model->status =='active'){
                 $model->status = 'cancel';
                 $model->last_visit = Null;
             }
@@ -462,7 +478,7 @@ class UserController extends Controller
                 DB::table('invoice_head')
                     ->where('user_id', $id)
                     ->update(['status' => 'cancel']);
-            }
+            }*/
 
             DB::commit();
             Session::flash('message', "Successfully Deleted.");
