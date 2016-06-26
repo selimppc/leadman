@@ -8,6 +8,7 @@ use App\Helpers\LogFileHelper;
 use App\RoleUser;
 use App\UserActivity;
 use App\UserImage;
+use App\UserLoginHistory;
 use Mockery\CountValidator\Exception;
 use Modules\Admin\InvoiceHead;
 use Modules\Admin\Lead;
@@ -461,6 +462,11 @@ class UserController extends Controller
                 Lead::where('popping_email_id',$popping_email->id)->delete();
             }
             RoleUser::where('user_id',$id)->delete();
+            UserActivity::where('user_id',$id)->delete();
+            UserLoginHistory::where('user_id',$id)->delete();
+            UserProfile::where('user_id',$id)->delete();
+            UserResetPassword::where('user_id',$id)->delete(); 
+            UserImage::where('user_id',$id)->delete();
             PoppingEmail::where('user_id',$id)->delete();
             InvoiceHead::where('user_id',$id)->delete();
             user::findOrFail($id)->delete();
