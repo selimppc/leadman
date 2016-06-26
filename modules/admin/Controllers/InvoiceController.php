@@ -37,7 +37,7 @@ class InvoiceController extends Controller
         if(Session::get('role_title') == 'user') {
             $email=PoppingEmail::select('id')->where('user_id',Auth::id())->where('user_id',$user_id)->first();
 
-            print_r($email);exit;
+            #print_r($email);exit;
 
 
             if(!empty($email)){

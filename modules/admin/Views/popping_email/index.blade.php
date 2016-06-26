@@ -113,7 +113,7 @@
 
                                     </td>
                                     <td>
-                                        <a href="{{ URL::to('admin/invoice/'.$values->id) }}" class="btn btn-primary btn-xs">Invoice</a>
+                                        <a href="{{ URL::to('admin/invoice/'.$values->user_id) }}" class="btn btn-primary btn-xs">Invoice</a>
                                     </td>
                                     <td>
                                         <a href="{{ url('admin/popping-email/show', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email View"><i class="icon-eye-open"></i></a>

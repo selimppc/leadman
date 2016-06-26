@@ -54,6 +54,7 @@ class DashboardController extends Controller
         $data['user_invoices_status']= PoppingEmail::userInvoiceStatus();
         $data['user_lead_status']= PoppingEmail::UserLeadStatus();
 
+//        dd($data['result_7_days']);
         return view('admin::dashboard.index',$data);
     }
 
