@@ -41,7 +41,7 @@ from popping_email as p
 
  LEFT JOIN (select id, user_id, sum(total_cost) as tc, count(id) as noi from invoice_head where status != 'cancel' and invoice_head.created_at > '$last_24' group by user_id ) i on (i.user_id = p.user_id)
 
- WHERE p.user_id = '$user_id' ";
+ WHERE p.user_id = '$user_id' and p.status != 'cancel' ";
         $result_24 = DB::select(DB::raw($sql_24_sql));
         /*$sql_24_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
     from popping_email
@@ -64,7 +64,7 @@ from popping_email as p
 
  LEFT JOIN (select id, user_id, sum(total_cost) as tc, count(id) as noi from invoice_head where status != 'cancel' and invoice_head.created_at > '$last_24' group by user_id ) i on (i.user_id = p.user_id)
 
- WHERE p.user_id = '$user_id' ";
+ WHERE p.user_id = '$user_id' and p.status != 'cancel' ";
         $result_7_days = DB::select(DB::raw($result_7_days_sql));
 
 
@@ -72,7 +72,7 @@ from popping_email as p
         $no_of_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
     from popping_email
     left JOIN lead on lead.popping_email_id = popping_email.id
-    WHERE popping_email.user_id = '$user_id'
+    WHERE popping_email.user_id = '$user_id'  and popping_email.status != 'cancel'
     GROUP BY popping_email.id ";
         $no_of_email = DB::select(DB::raw($no_of_email_sql));
 
@@ -81,7 +81,7 @@ from popping_email as p
         $no_duplicate_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
     from popping_email
     left JOIN lead on lead.popping_email_id = popping_email.id
-    WHERE lead.count > 1 and popping_email.user_id = '$user_id'
+    WHERE lead.count > 1 and popping_email.user_id = '$user_id'  and popping_email.status != 'cancel'
     GROUP BY popping_email.id ";
         $no_duplicate_email = DB::select(DB::raw($no_duplicate_email_sql));
 
@@ -90,7 +90,7 @@ from popping_email as p
         $no_filtered_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
     from popping_email
     left JOIN lead on lead.popping_email_id = popping_email.id
-    WHERE lead.status='filtered' and popping_email.user_id = '$user_id'
+    WHERE lead.status='filtered' and popping_email.user_id = '$user_id' and popping_email.status != 'cancel'
     GROUP BY popping_email.id ";
         $no_filtered_email = DB::select(DB::raw($no_filtered_email_sql));
 
