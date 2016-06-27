@@ -60,7 +60,7 @@
                         <thead>
                         <tr>
                             <th style="color: darkblue">Total Lead : {{ $result_24_lead[0]->total_lead }}</th>
-                            <th style="color: darkblue">Total Cost : {{ $result_24_amount[0]->total_cost }}</th>
+                            <th style="color: darkblue">Lead Cost : {{ $result_24_amount[0]->total_cost }}</th>
                         </tr>
                         </thead>
                     </table>
@@ -75,8 +75,9 @@
                         <th>User Name</th>
                         <th>No of Popping Email</th>
                         <th>No of Lead</th>
+                        <th>Lead Cost</th>
                         <th>No of Invoice</th>
-                        <th>Total Cost</th>
+                        <th>Invoice Cost</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -86,8 +87,9 @@
                                 <td><a href="{{ route('user-by-lead', ['user_id'=>$last_day->user_id]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($last_day->username) }} </a> </td>
                                 <td>{{ $last_day->no_of_popping_email }}</td>
                                 <td>{{ $last_day->no_of_lead }}</td>
+                                <td>{{ $last_day->lead_cost }}</td>
                                 <td>{{ $last_day->no_of_invoice }}</td>
-                                <td>{{ $last_day->total_cost }}</td>
+                                <td>{{ $last_day->invoice_cost }}</td>
                             </tr>
                         @endforeach
                     @endif
@@ -154,7 +156,7 @@
                         <thead>
                         <tr>
                             <th style="color: darkblue">Total Lead : {{ $result_7_days_lead[0]->total_lead }}</th>
-                            <th style="color: darkblue">Total Cost : {{ $result_7_days_amount[0]->total_cost }}</th>
+                            <th style="color: darkblue">Lead Cost : {{ $result_7_days_amount[0]->total_cost }}</th>
                         </tr>
                         </thead>
                     </table>
@@ -166,8 +168,9 @@
                         <th>User Name</th>
                         <th>No of Popping Email</th>
                         <th>No of Lead</th>
+                        <th>Lead Cost</th>
                         <th>No of Invoice</th>
-                        <th>Total Cost</th>
+                        <th>Invoice Cost</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -177,8 +180,9 @@
                                 <td><a href="{{ route('user-by-lead',['user_id'=>$last_7day->user_id]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($last_7day->username) }}</a></td>
                                 <td>{{ $last_7day->no_of_popping_email }}</td>
                                 <td>{{ $last_7day->no_of_lead }}</td>
+                                <td>{{ $last_7day->lead_cost }}</td>
                                 <td>{{ $last_7day->no_of_invoice }}</td>
-                                <td>{{ $last_7day->total_cost }}</td>
+                                <td>{{ $last_7day->invoice_cost }}</td>
                             </tr>
                         @endforeach
                     @endif

@@ -69,16 +69,16 @@ class PoppingEmail extends Model
  IFNULL(p.nope, 0) AS no_of_popping_email,
  IFNULL(l.nol, 0) AS no_of_lead,
  IFNULL(i.noi, 0) AS no_of_invoice,
- IFNULL(i.tc, 0) AS total_cost
+ IFNULL(i.tc, 0) AS invoice_cost,
+ IFNULL(l.lc, 0) AS lead_cost
 from user
+INNER JOIN ( select id, user_id, count(id) as nope from popping_email where status != 'cancel' group by user_id ) p on (p.user_id = user.id)
 
- INNER JOIN ( select id, user_id, count(id) as nope from popping_email where status != 'cancel' group by user_id ) p on (p.user_id = user.id)
+LEFT JOIN (select lead.id, lead.popping_email_id, count(lead.id) as nol, sum(popping_email.price) as lc from lead inner join popping_email on popping_email.id = lead.popping_email_id inner join user on user.id  = popping_email.user_id where lead.status != 'close' and lead.status != 'filtered' and lead.created_at > '$time' group by user.id) l on (l.popping_email_id = p.id)
 
- LEFT JOIN (select id, popping_email_id, count(id) as nol from lead where status != 'close' and lead.status != 'filtered' and lead.created_at > '$time' group by popping_email_id ) l on (l.popping_email_id = p.id)
+LEFT JOIN (select id, user_id, sum(total_cost) as tc, count(id) as noi from invoice_head where status != 'cancel' and invoice_head.created_at > '$time' group by user_id ) i on (i.user_id = p.user_id)
 
- LEFT JOIN (select id, user_id, sum(total_cost) as tc, count(id) as noi from invoice_head where status != 'cancel' and invoice_head.created_at > '$time' group by user_id ) i on (i.user_id = p.user_id)
-
- GROUP BY user.id";
+GROUP BY user.id";
         /*$sql= "select user.id as user_id, user.username,count( DISTINCT popping_email.id ) no_of_popping_email,count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) as total_cost
     from user
     INNER JOIN popping_email on popping_email.user_id = user.id and popping_email.status != 'cancel'
@@ -88,9 +88,10 @@ from user
         return DB::select(DB::raw($sql));
     }
     public static function totalAmount($time){
-        $sql= "select sum(invoice_head.total_cost) total_cost
-    from invoice_head
-    where created_at > '$time'
+        $sql= "SELECT sum(popping_email.price) total_cost
+FROM lead
+LEFT JOIN popping_email on lead.popping_email_id=popping_email.id
+WHERE lead.created_at > '$time'
     ";
         return DB::select(DB::raw($sql));
     }
@@ -138,12 +139,13 @@ from user
 
  INNER JOIN ( select id, user_id, count(id) as nope from popping_email where status != 'cancel' group by user_id ) p on (p.user_id = user.id)
 
- LEFT JOIN (select id,user_id, count(id) as oi from invoice_head where status != 'cancel' and invoice_head.status = 'open' group by id ) ih1 on (user.id = ih1.user_id)
- LEFT JOIN (select id,user_id, count(id) as ai from invoice_head where status != 'cancel' and invoice_head.status = 'approved' group by id ) ih2 on (user.id = ih2.user_id)
- LEFT JOIN (select id,user_id, count(id) as pi from invoice_head where status != 'cancel' and invoice_head.status = 'paid' group by id ) ih3 on (user.id = ih3.user_id)
+ LEFT JOIN (select id,user_id, count(id) as oi from invoice_head where status != 'cancel' and invoice_head.status = 'open' group by user_id ) ih1 on (user.id = ih1.user_id)
+ LEFT JOIN (select id,user_id, count(id) as ai from invoice_head where status != 'cancel' and invoice_head.status = 'approved' group by user_id ) ih2 on (user.id = ih2.user_id)
+ LEFT JOIN (select id,user_id, count(id) as pi from invoice_head where status != 'cancel' and invoice_head.status = 'paid' group by user_id ) ih3 on (user.id = ih3.user_id)
 
  LEFT JOIN (select id, user_id, sum(total_cost) as tc, count(id) as noi from invoice_head where status != 'cancel' group by user_id ) i on (i.user_id = p.user_id)
  GROUP BY user.id";
+
         return DB::select(DB::raw($sql));
     }
     public static function userInvoice($status)
