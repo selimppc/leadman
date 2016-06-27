@@ -62,8 +62,9 @@
                         <tr>
                             <th>Popping Email</th>
                             <th>No of Lead</th>
+                            <th>Lead Cost</th>
                             <th>No of Invoice</th>
-                            <th>Total Cost</th>
+                            <th>Invoice Cost</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,8 +73,9 @@
                                 <tr>
                                     <td>{{ $result_24->email }}</td>
                                     <td>{{ $result_24->no_of_lead }}</td>
+                                    <td>{{ $result_24->lead_cost }}</td>
                                     <td>{{ $result_24->no_of_invoice }}</td>
-                                    <td>{{ $result_24->total_cost }}</td>
+                                    <td>{{ $result_24->invoice_cost }}</td>
                                 </tr>
                             @endforeach
                         @endif
@@ -142,8 +144,9 @@
                     <tr>
                         <th>Popping Email</th>
                         <th>No of Lead</th>
+                        <th>Lead Cost</th>
                         <th>No of Invoice</th>
-                        <th>Total Cost</th>
+                        <th>Invoice Cost</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -152,8 +155,9 @@
                             <tr>
                                 <td>{{ $result_7_days->email }}</td>
                                 <td>{{ $result_7_days->no_of_lead }}</td>
+                                <td>{{ $result_7_days->lead_cost }}</td>
                                 <td>{{ $result_7_days->no_of_invoice }}</td>
-                                <td>{{ $result_7_days->total_cost }}</td>
+                                <td>{{ $result_7_days->invoice_cost }}</td>
                             </tr>
                         @endforeach
                     @endif
@@ -399,7 +403,80 @@
             </div>--}}
         </div>
     </div>
+    <div class="col-md-12">
 
+        <!-- Javascript -->
+        <script>
+            init.push(function () {
+                var invoice_paid = [
+                    { day: '2014-03-10', v: 20 },
+                    { day: '2014-03-11', v: 10 },
+                    { day: '2014-03-12', v: 15 },
+                    { day: '2014-03-13', v: 12 },
+                    { day: '2014-03-14', v: 5  },
+                    { day: '2014-03-15', v: 5  },
+                    { day: '2014-03-16', v: 20 }
+                ];
+                Morris.Line({
+                    element: 'invoice_paid',
+                    data: invoice_paid,
+                    xkey: 'day',
+                    ykeys: ['v'],
+                    labels: ['Value'],
+                    lineColors: ['#fff'],
+                    lineWidth: 2,
+                    pointSize: 4,
+                    gridLineColor: 'rgba(255,255,255,.5)',
+                    resize: true,
+                    gridTextColor: '#fff',
+                    xLabels: "day",
+                    xLabelFormat: function(d) {
+                        return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov', 'Dec'][d.getMonth()] + ' ' + d.getDate();
+                    },
+                });
+            });
+        </script>
+        <!-- / Javascript -->
+
+
+        <div class="stat-panel">
+            {{--<div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
+                <div id="invoice_paid" class="graph" style="height: 230px;"></div>
+            </div>--}}
+            <div class="stat-cell col-sm-12 padding-sm-hr bordered no-border-r valign-top">
+                <!-- Small padding, without top padding, extra small horizontal padding -->
+                <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> User Invoice Status </h4>
+                <!-- Without margin -->
+
+                <table class="display table table-bordered table-striped" >
+                    <thead>
+                    <tr>
+                        <th>Total Open Invoices</th>
+                        <th>Total Approved Invoices</th>
+                        <th>Total Paid Invoices</th>
+                        <th>Total Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(isset($invoice_status))
+                        @foreach($invoice_status as $user_invoice)
+                            <tr>
+                                <td>{{ $user_invoice->open_invoice }}</td>
+                                <td>{{ $user_invoice->approved_invoice }}</td>
+                                <td>{{ $user_invoice->paid_invoice }}</td>
+                                <td>{{ $user_invoice->total_cost }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript"> window.jQuery || document.write('<script src="{{ URL::asset('assets/landerapp/js/jquery.min.js') }}">'+"<"+"/script>"); </script>
