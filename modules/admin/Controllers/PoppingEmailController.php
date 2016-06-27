@@ -365,7 +365,8 @@ class PoppingEmailController extends Controller
     /**
      * @param $popping_email_id
      */
-    public function active_inactive($popping_email_id){
+    public function active_inactive($popping_email_id)
+    {
 
         if($popping_email_id){
             $popping_email_data = PoppingEmail::findOrFail($popping_email_id);
