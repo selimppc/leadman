@@ -461,6 +461,8 @@ class UserController extends Controller
             foreach ($popping_emails as $popping_email) {
                 Lead::where('popping_email_id',$popping_email->id)->delete();
             }
+            UserResetPassword::where('user_id',$id)->delete();
+            UserImage::where('user_id',$id)->delete();
             RoleUser::where('user_id',$id)->delete();
             UserActivity::where('user_id',$id)->delete();
             UserLoginHistory::where('user_id',$id)->delete();
