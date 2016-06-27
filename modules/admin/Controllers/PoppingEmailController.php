@@ -16,8 +16,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Mockery\CountValidator\Exception;
 use Modules\Admin\Country;
 use Modules\Admin\Imap;
+use Modules\Admin\InvoiceHead;
+use Modules\Admin\Lead;
 use Modules\Admin\PoppingEmail;
 use Modules\Admin\Schedule;
 use Modules\Admin\Smtp;
@@ -344,10 +347,17 @@ class PoppingEmailController extends Controller
      */
     public function destroy($id)
     {
-        $popping_email=PoppingEmail::findOrFail($id);
-        $popping_email->status='cancel';
-        $popping_email->save();
-        Session::flash('message', 'Popping Email has been successfully trashed ');
+        DB::beginTransaction();
+        try {
+            Lead::Where('popping_email_id',$id)->delete();
+            InvoiceHead::Where('popping_email_id',$id)->delete();
+            PoppingEmail::findOrFail($id)->delete();
+            DB::commit();
+            Session::flash('message', 'Popping Email has been successfully deleted. ');
+        }catch (Exception $e){
+            DB::rollback();
+            Session::flash('error',$e->getMessage());
+        }
         return redirect()->back();
     }
 
