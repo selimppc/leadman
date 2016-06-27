@@ -344,10 +344,18 @@ class PoppingEmailController extends Controller
      */
     public function destroy($id)
     {
-        $popping_email=PoppingEmail::findOrFail($id);
-        $popping_email->status='cancel';
-        $popping_email->save();
-        Session::flash('message', 'Popping Email has been successfully trashed ');
+        try{
+
+            Lead::where('popping_email_id',$id)->delete();
+            PoppingEmail::findOrFail($id)->delete();
+
+            Session::flash('message', 'Popping Email has been successfully trashed ');
+
+        }catch(\Exception $e){
+
+            Session::flash('message', $e->getMessage());
+        }
+
         return redirect()->back();
     }
 
@@ -355,7 +363,8 @@ class PoppingEmailController extends Controller
     /**
      * @param $popping_email_id
      */
-    public function active_inactive($popping_email_id){
+    public function active_inactive($popping_email_id)
+    {
 
         if($popping_email_id){
             $popping_email_data = PoppingEmail::findOrFail($popping_email_id);
