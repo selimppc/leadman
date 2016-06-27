@@ -102,9 +102,7 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        $invoice=InvoiceHead::findOrFail($id);
-        $invoice->status='cancel';
-        $invoice->save();
+        InvoiceHead::findOrFail($id)->delete();
         Session::flash('message', "Invoice has been Successfully Deleted.");
         return redirect()->back();
     }
