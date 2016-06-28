@@ -31,6 +31,22 @@ class UserDashboardController extends Controller
 
         //24 data
         $sql_24_sql = "select
+p.email,
+IFNULL(l.nol, 0) AS no_of_lead,
+IFNULL(l.lc, 0) AS lead_cost,
+IFNULL(i.noi, 0) AS no_of_invoice,
+IFNULL(i.tc, 0) AS invoice_cost
+from popping_email as p
+
+LEFT JOIN (select lead.popping_email_id, count(lead.id) as nol, sum(popping_email.price) as lc from lead INNER JOIN popping_email on popping_email.id = lead.popping_email_id where lead.status != 'close' and lead.status != 'filtered' and lead.created_at > '$last_24' group by lead.popping_email_id ) l on (l.popping_email_id = p.id)
+
+LEFT JOIN (select invoice_head.popping_email_id, sum(invoice_head.total_cost) as tc, count(invoice_head.id) as noi from invoice_head where invoice_head.status != 'cancel' and invoice_head.created_at > '$last_24' group by popping_email_id ) i on (i.popping_email_id = p.id)
+
+WHERE p.user_id = '$user_id' and p.status != 'cancel'
+";
+        $result_24 = DB::select(DB::raw($sql_24_sql));
+        // working on sql_mode = ""
+        /*$sql_24_sql = "select
  p.email,
  IFNULL(l.nol, 0) AS no_of_lead,
  IFNULL(l.lc, 0) AS lead_cost,
@@ -44,8 +60,8 @@ popping_email as p
 LEFT JOIN (select invoice_head.id, invoice_head.user_id, invoice_head.popping_email_id,  sum(invoice_head.total_cost) as tc, count(invoice_head.id) as noi from invoice_head where invoice_head.status != 'cancel' and invoice_head.created_at > '$last_24' group by popping_email_id ) i on (i.popping_email_id = p.id)
 
 WHERE p.user_id = '5' and p.status != 'cancel'
-";
-        $result_24 = DB::select(DB::raw($sql_24_sql));
+";*/
+        //exit($sql_24_sql);
         /*$sql_24_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) total_cost
     from popping_email
     left JOIN lead on lead.popping_email_id = popping_email.id and lead.created_at > '$last_24' and lead.status != 'filtered'
@@ -57,19 +73,18 @@ WHERE p.user_id = '5' and p.status != 'cancel'
 
         // In Last 7 days
         $result_7_days_sql = "select
- p.email,
- IFNULL(l.nol, 0) AS no_of_lead,
- IFNULL(l.lc, 0) AS lead_cost,
- IFNULL(i.noi, 0) AS no_of_invoice,
- IFNULL(i.tc, 0) AS invoice_cost
-from
-popping_email as p
+p.email,
+IFNULL(l.nol, 0) AS no_of_lead,
+IFNULL(l.lc, 0) AS lead_cost,
+IFNULL(i.noi, 0) AS no_of_invoice,
+IFNULL(i.tc, 0) AS invoice_cost
+from popping_email as p
 
- LEFT JOIN (select lead.id, lead.popping_email_id, count(lead.id) as nol, sum(popping_email.price) as lc from lead INNER JOIN popping_email on popping_email.id = lead.popping_email_id where lead.status != 'close' and lead.status != 'filtered' and lead.created_at > '$last_7_days' group by lead.popping_email_id ) l on (l.popping_email_id = p.id)
+LEFT JOIN (select lead.popping_email_id, count(lead.id) as nol, sum(popping_email.price) as lc from lead INNER JOIN popping_email on popping_email.id = lead.popping_email_id where lead.status != 'close' and lead.status != 'filtered' and lead.created_at > '$last_7_days' group by lead.popping_email_id ) l on (l.popping_email_id = p.id)
 
-LEFT JOIN (select invoice_head.id, invoice_head.user_id, invoice_head.popping_email_id,  sum(invoice_head.total_cost) as tc, count(invoice_head.id) as noi from invoice_head where invoice_head.status != 'cancel' and invoice_head.created_at > '$last_7_days' group by popping_email_id ) i on (i.popping_email_id = p.id)
+LEFT JOIN (select invoice_head.popping_email_id, sum(invoice_head.total_cost) as tc, count(invoice_head.id) as noi from invoice_head where invoice_head.status != 'cancel' and invoice_head.created_at > '$last_7_days' group by popping_email_id ) i on (i.popping_email_id = p.id)
 
-WHERE p.user_id = '5' and p.status != 'cancel'";
+WHERE p.user_id = '$user_id' and p.status != 'cancel'";
         $result_7_days = DB::select(DB::raw($result_7_days_sql));
 
 
