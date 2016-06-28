@@ -62,6 +62,8 @@ class GoogleClientCall
             if ($message_data) {
                 foreach ($message_data as $msg) {
 
+                    $message_id = $msg['messageId'];
+
                     // sender email
                     if (strpos($msg['messageSender'], '<') !== false) {
                         $split = explode('<', $msg['messageSender']);
@@ -83,11 +85,18 @@ class GoogleClientCall
                         $to_email = $msg['messageTo'];
                     }
 
+
                     //
                     $lead_email_data []= [
+                        'messageId' => $message_id,
                         'from_email'=>$user_email,
                         'to_email'=>$to_email,
                     ];
+
+
+                    //modify Message
+                    $modify_message = GmailModifyMessage::modify($gmail_service, $msg['messageId']);
+
                 }
             }
             return $lead_email_data;
