@@ -237,14 +237,14 @@ class PoppingEmailController extends Controller
                     $model->create($data);
 
                     // clean session
-                    Session::forget('popping_input');
+                    //session()->forget('popping_input');
 
                     DB::commit();
                     Session::flash('message', 'Successfully added!');
 
                 }catch (Exception $e) {
                     //If there are any exceptions, rollback the transaction`
-                    Session::forget('popping_input');
+                    //Session::forget('popping_input');
                     DB::rollback();
                     Session::flash('error', "Invalid Request" );
                     //return redirect()->route('popping_email.index');
