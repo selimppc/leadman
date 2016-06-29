@@ -42,7 +42,7 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
     Route::get('/',[
             'middleware'=>'acl_access::/',
             'as'=>'/',
-            'uses'=>'DashboardController@admin_user_dashboard'
+            'uses'=>'DashboardController@dashboard'
     ]);
 
     Route::get('dashboard',[

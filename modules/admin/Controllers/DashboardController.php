@@ -24,18 +24,13 @@ use Modules\Admin\Lead;
 
 class DashboardController extends Controller
 {
-
-
-    public function admin_user_dashboard()
+    public function __construct()
     {
         $user_login = Session::get('role_title');
 
         if($user_login == 'user'){
-
             return redirect()->to('dashboard/user');
 
-        }else{
-            return redirect()->to('dashboard/admin');
         }
 
     }
