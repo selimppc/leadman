@@ -62,7 +62,12 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
     ]);
 
 
-    Route::get('callback','PoppingEmailController@callback');
+    Route::get('callback',[
+        #'middleware'=>'acl_access::callback',
+        'as'=>'callback',
+        'uses'=>'PoppingEmailController@callback'
+    ]);
+
 
     Route::get('admin/imap',[
         'middleware'=>'acl_access::admin/imap',
