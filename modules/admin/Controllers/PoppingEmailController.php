@@ -214,6 +214,9 @@ class PoppingEmailController extends Controller
             $data['code']=$_GET['code'];
             $data['token']=$client->getAccessToken();
             $input_data = Session::get('popping_input');
+
+            print_r($input_data);
+
             $data = [
                 'email'=>$input_data['email'],
                 'password'=>$input_data['password'],
@@ -228,10 +231,11 @@ class PoppingEmailController extends Controller
                 'status'=> 'new',
             ];
 
-            $model = new PoppingEmail();
+            print  "\n";
+            #$model = new PoppingEmail();
             // store / update / code here
-            $model->create($data);
-            
+            #$model->create($data);
+
             print_r($data);
             exit("DATA");
 
@@ -254,6 +258,8 @@ class PoppingEmailController extends Controller
                     print_r("Added");
 
                 }catch (Exception $e) {
+
+                    print_r($e->getMessage());exit();
                     //If there are any exceptions, rollback the transaction`
                     //Session::forget('popping_input');
                     DB::rollback();
