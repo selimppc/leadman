@@ -276,7 +276,7 @@ class PoppingEmailController extends Controller
                 #$request->session()->forget('popping_input');
             }
 
-            exit("END");
+            #exit("END");
             return redirect()->to('admin/popping-email');
         }
     }
