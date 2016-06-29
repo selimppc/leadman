@@ -197,6 +197,8 @@ class PoppingEmailController extends Controller
     }
     public function callback()
     {
+
+        print_r("entered");
         $client = new Google_Client();
         $client->setAuthConfigFile(public_path().'/api/lead-man-api.json');
 
@@ -207,6 +209,7 @@ class PoppingEmailController extends Controller
         }
         else
         {
+            print_r("get code");
             $client->authenticate($_GET['code']);
             $data['code']=$_GET['code'];
             $data['token']=$client->getAccessToken();
@@ -224,6 +227,9 @@ class PoppingEmailController extends Controller
                 'user_id'=> Auth::user()->id,
                 'status'=> 'new',
             ];
+
+            print_r($data);
+            exit("DATA");
 
             $email_exists = PoppingEmail::where('email', $input_data['email'])->exists();
             if($email_exists){
