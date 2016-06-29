@@ -240,17 +240,20 @@ class PoppingEmailController extends Controller
                     //session()->forget('popping_input');
 
                     DB::commit();
-                    Session::flash('message', 'Successfully added!');
+                    #Session::flash('message', 'Successfully added!');
+                    print_r("Added");
 
                 }catch (Exception $e) {
                     //If there are any exceptions, rollback the transaction`
                     //Session::forget('popping_input');
                     DB::rollback();
-                    Session::flash('error', "Invalid Request" );
+                    #Session::flash('error', "Invalid Request" );
                     //return redirect()->route('popping_email.index');
                 }
                 #$request->session()->forget('popping_input');
             }
+
+            exit("END");
             return redirect()->to('admin/popping-email');
         }
     }
