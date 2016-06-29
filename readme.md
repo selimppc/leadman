@@ -17,6 +17,10 @@ migration command for Admin Module
 seed command for country list
 
 
+Needs to give permission to fowling directories
+  1 ** chmod -R 705 modules/admin/logs
+
+
 
 
 

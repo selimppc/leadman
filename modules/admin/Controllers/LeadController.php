@@ -201,6 +201,10 @@ class LeadController extends Controller
                 {
                     unset($data['archive_leads'][1]);
                 }
+                if($data['archive_leads'][2]=='.gitignore')
+                {
+                    unset($data['archive_leads'][2]);
+                }
                 unset($data['archive_leads'][1]);
                 return view('admin::lead.archive_leads', $data);
             }
