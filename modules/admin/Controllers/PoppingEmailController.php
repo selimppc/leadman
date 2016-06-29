@@ -197,9 +197,6 @@ class PoppingEmailController extends Controller
     }
     public function callback()
     {
-
-        print "entered \n" ;
-
         $client = new Google_Client();
         $client->setAuthConfigFile(public_path().'/api/lead-man-api.json');
 
@@ -210,14 +207,10 @@ class PoppingEmailController extends Controller
         }
         else
         {
-            print "get code \n";
             $client->authenticate($_GET['code']);
             $data['code']=$_GET['code'];
             $data['token']=$client->getAccessToken();
             $input_data = Session::get('popping_input');
-
-            print_r($input_data);
-
             $data = [
                 'email'=>$input_data['email'],
                 'password'=>$input_data['password'],
@@ -232,27 +225,12 @@ class PoppingEmailController extends Controller
                 'status'=> 'new',
             ];
 
-            print  "\n";
-            #$model = new PoppingEmail();
-            // store / update / code here
-            #$model->create($data);
-
-            print_r($data);
-            print  "\n";
-
-
             $email_exists = PoppingEmail::where('email', $input_data['email'])->exists();
-            print_r($email_exists);
-            print  "--- popping  --- \n";
-
             if($email_exists){
-                print  "--- popping exists --- \n";
                 Session::flash('error', "This Email already exists." );
             }else{
-
-                print  "--- New  --- \n";
                 /* Transaction Start Here */
-                #DB::beginTransaction();
+                DB::beginTransaction();
                 try {
                     $model = new PoppingEmail();
                     // store / update / code here
@@ -261,29 +239,19 @@ class PoppingEmailController extends Controller
                     // clean session
                     //session()->forget('popping_input');
 
-                    Session::forget('access_token');
-                    Session::forget('code');
-                    Session::forget('popping_input');
-
-                    #DB::commit();
-                    #Session::flash('message', 'Successfully added!');
-                    print_r("Added");
+                    DB::commit();
+                    Session::flash('message', 'Successfully added!');
 
                 }catch (Exception $e) {
-
-                    print_r($e->getMessage());exit();
                     //If there are any exceptions, rollback the transaction`
                     //Session::forget('popping_input');
-                    #DB::rollback();
-                    #Session::flash('error', "Invalid Request" );
+                    DB::rollback();
+                    Session::flash('error', "Invalid Request" );
                     //return redirect()->route('popping_email.index');
                 }
                 #$request->session()->forget('popping_input');
             }
-
-            exit("END");
-            #return redirect()->to('admin/popping-email');
-            #return redirect()->back();
+            return redirect()->to('admin/popping-email');
         }
     }
 
