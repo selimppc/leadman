@@ -237,14 +237,21 @@ class PoppingEmailController extends Controller
             #$model->create($data);
 
             print_r($data);
-            exit("DATA");
+            print  "\n";
+
 
             $email_exists = PoppingEmail::where('email', $input_data['email'])->exists();
+            print_r($email_exists);
+            print  "--- popping  --- \n";
+
             if($email_exists){
+                print  "--- popping exists --- \n";
                 Session::flash('error', "This Email already exists." );
             }else{
+
+                print  "--- New  --- \n";
                 /* Transaction Start Here */
-                DB::beginTransaction();
+                #DB::beginTransaction();
                 try {
                     $model = new PoppingEmail();
                     // store / update / code here
@@ -253,7 +260,7 @@ class PoppingEmailController extends Controller
                     // clean session
                     //session()->forget('popping_input');
 
-                    DB::commit();
+                    #DB::commit();
                     #Session::flash('message', 'Successfully added!');
                     print_r("Added");
 
@@ -262,7 +269,7 @@ class PoppingEmailController extends Controller
                     print_r($e->getMessage());exit();
                     //If there are any exceptions, rollback the transaction`
                     //Session::forget('popping_input');
-                    DB::rollback();
+                    #DB::rollback();
                     #Session::flash('error', "Invalid Request" );
                     //return redirect()->route('popping_email.index');
                 }
