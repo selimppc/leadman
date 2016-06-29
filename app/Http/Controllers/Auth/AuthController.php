@@ -126,7 +126,7 @@ class AuthController extends Controller
     public function getLogin()
     {
         if(Session::has('email')) {
-            return view('admin::layouts.dashboard');
+            return redirect()->to('dashboard');
         }
         else{
             return view('user::signin._form');
