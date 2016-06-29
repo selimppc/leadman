@@ -38,10 +38,6 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        $user_login = Session::get('role_title');
-        if($user_login == 'user'){
-            return redirect()->to('dashboard/user');
-        }else{
             $data['pageTitle'] = 'Dashboard';
             $data['result_24']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
             $data['result_24_lead']= PoppingEmail::totalLead(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
@@ -54,7 +50,6 @@ class DashboardController extends Controller
             $data['user_lead_status']= PoppingEmail::UserLeadStatus();
 
             return view('admin::dashboard.index',$data);
-        }
 
     }
 
