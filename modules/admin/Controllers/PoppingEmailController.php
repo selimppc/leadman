@@ -228,6 +228,10 @@ class PoppingEmailController extends Controller
                 'status'=> 'new',
             ];
 
+            $model = new PoppingEmail();
+            // store / update / code here
+            $model->create($data);
+            
             print_r($data);
             exit("DATA");
 
