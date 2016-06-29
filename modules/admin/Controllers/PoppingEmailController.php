@@ -260,6 +260,10 @@ class PoppingEmailController extends Controller
                     // clean session
                     //session()->forget('popping_input');
 
+                    Session::forget('access_token');
+                    Session::forget('code');
+                    Session::forget('popping_input');
+
                     #DB::commit();
                     #Session::flash('message', 'Successfully added!');
                     print_r("Added");
