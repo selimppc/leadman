@@ -35,7 +35,7 @@ class DashboardController extends Controller
             return redirect()->to('dashboard/user');
 
         }else{
-            return redirect()->to('dashboard');
+            return redirect()->to('dashboard/admin');
         }
 
     }
@@ -43,19 +43,24 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        $data['pageTitle'] = 'Dashboard';
-        $data['result_24']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
-        $data['result_24_lead']= PoppingEmail::totalLead(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
-        $data['result_24_amount']= PoppingEmail::totalAmount(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
-        $data['result_7_days']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
-        $data['result_7_days_lead']= PoppingEmail::totalLead(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
-        $data['result_7_days_amount']= PoppingEmail::totalAmount(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
-        $data['user_leads']= PoppingEmail::userLead();
-        $data['user_invoices_status']= PoppingEmail::userInvoiceStatus();
-        $data['user_lead_status']= PoppingEmail::UserLeadStatus();
+        $user_login = Session::get('role_title');
+        if($user_login == 'user'){
+            return redirect()->to('dashboard/user');
+        }else{
+            $data['pageTitle'] = 'Dashboard';
+            $data['result_24']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
+            $data['result_24_lead']= PoppingEmail::totalLead(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
+            $data['result_24_amount']= PoppingEmail::totalAmount(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
+            $data['result_7_days']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
+            $data['result_7_days_lead']= PoppingEmail::totalLead(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
+            $data['result_7_days_amount']= PoppingEmail::totalAmount(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
+            $data['user_leads']= PoppingEmail::userLead();
+            $data['user_invoices_status']= PoppingEmail::userInvoiceStatus();
+            $data['user_lead_status']= PoppingEmail::UserLeadStatus();
 
-//        dd($data['result_7_days']);
-        return view('admin::dashboard.index',$data);
+            return view('admin::dashboard.index',$data);
+        }
+
     }
 
     private static function leadData($date)

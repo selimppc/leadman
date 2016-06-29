@@ -41,13 +41,13 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
 
     Route::get('/',[
             'middleware'=>'acl_access::/',
-            'route'=>'/',
+            'as'=>'/',
             'uses'=>'DashboardController@admin_user_dashboard'
     ]);
 
     Route::get('dashboard',[
             'middleware'=>'acl_access::dashboard',
-            'route'=>'/',
+            'as'=>'dashboard',
             'uses'=>'DashboardController@dashboard'
     ]);
 
