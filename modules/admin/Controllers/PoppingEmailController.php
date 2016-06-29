@@ -198,7 +198,8 @@ class PoppingEmailController extends Controller
     public function callback()
     {
 
-        print_r("entered");
+        print "entered \n" ;
+
         $client = new Google_Client();
         $client->setAuthConfigFile(public_path().'/api/lead-man-api.json');
 
@@ -209,7 +210,7 @@ class PoppingEmailController extends Controller
         }
         else
         {
-            print_r("get code");
+            print "get code \n";
             $client->authenticate($_GET['code']);
             $data['code']=$_GET['code'];
             $data['token']=$client->getAccessToken();
@@ -280,9 +281,10 @@ class PoppingEmailController extends Controller
                 #$request->session()->forget('popping_input');
             }
 
+            return true;
             #exit("END");
             #return redirect()->to('admin/popping-email');
-            return redirect()->back();
+            #return redirect()->back();
         }
     }
 
