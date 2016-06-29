@@ -277,7 +277,8 @@ class PoppingEmailController extends Controller
             }
 
             #exit("END");
-            return redirect()->to('admin/popping-email');
+            #return redirect()->to('admin/popping-email');
+            return redirect()->back();
         }
     }
 
