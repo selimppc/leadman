@@ -21,6 +21,10 @@ Needs to give permission to fowling directories
   1 ** chmod -R 705 modules/admin/logs
 
 
+Google Credential
+For Live - MailAir.me 3	(email - devdhaka404@gmail.com)
+For Local - Leadman.dev By Naf	(email - devdhaka404@gmail.com)
+
 
 
 
