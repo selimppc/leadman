@@ -169,7 +169,8 @@ class Invoice extends Command {
 		//make data in string to store in txt file
 		$string = '';
 		foreach ($array_data as $val) {
-			$string .= $val['id']."-".$val['email']."\n";
+			#$string .= $val['id']."-".$val['email']."\n";
+			$string .= $val['email']."\n";
 		}
 
 		//create array of lead id
