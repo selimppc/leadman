@@ -14,6 +14,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use League\Flysystem\File;
 use Modules\Admin\Lead;
@@ -189,8 +190,12 @@ class LeadController extends Controller
             {
                 $data['pageTitle'] = 'Archive Lead Details for '.$file_name;
                 $data['file_content']=file_get_contents(public_path('lead_files/'.$file_name));
+                $data['file_name']= $file_name;
+
                 return view('admin::lead.archive_lead_details', $data);
-            }else {
+            }
+            else
+            {
                 $data['pageTitle'] = 'Archive Leads';
                 $data['archive_leads'] = scandir(public_path('lead_files'));
                 if($data['archive_leads'][0]=='.')
@@ -208,9 +213,27 @@ class LeadController extends Controller
                 unset($data['archive_leads'][1]);
                 return view('admin::lead.archive_leads', $data);
             }
-        }else{
+        }
+        else
+        {
             return redirect()->back();
         }
 
     }
+
+    /**
+     * @param $file_name
+     * @return mixed
+     */
+    public function get_download($file_name)
+    {
+
+        //PDF file is stored under project/public/download/info.pdf
+        $file= public_path(). "/lead_files/".$file_name;
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+        return Response::download($file, $file_name, $headers);
+    }
+
 }

@@ -20,6 +20,11 @@
             </div>
         </div>
 
+        <div style="padding: 4%">
+            Download the File
+            <a href="{{ URL::to('admin/lead-archive/get-download/'.$file_name)}}" class="btn btn-success" type="button"> <span class="glyphicon glyphicon-download-alt"> Download File </span> </a>
+        </div>
+
         <div class="modal-footer">
             <a href="{{ URL::previous()}}" class="btn btn-default" type="button"> Close </a>
         </div>

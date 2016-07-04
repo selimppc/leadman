@@ -260,4 +260,10 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'uses'=>'LeadController@archive_leads'
     ]);
 
+
+    Route::get('admin/lead-archive/get-download/{file_name?}',[
+        'as'=>'admin.lead-archive.get-download',
+        'uses'=>'LeadController@get_download'
+    ]);
+
 });
