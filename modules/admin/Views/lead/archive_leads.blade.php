@@ -25,7 +25,7 @@
                         <tr>
                             <th> Id </th>
                             <th> File Name </th>
-                            <th> F=Download File </th>
+                            <th> Download File </th>
                         </tr>
                         </thead>
                         <tbody>
