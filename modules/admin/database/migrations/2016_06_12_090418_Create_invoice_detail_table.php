@@ -15,9 +15,9 @@ class CreateInvoiceDetailTable extends Migration
         Schema::create('invoice_detail', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('invoice_head_id',false)->nullable();
-            $table->foreign('invoice_head_id')->references('id')->on('invoice_head');
+            #$table->foreign('invoice_head_id')->references('id')->on('invoice_head');
             $table->unsignedInteger('lead_id',false)->nullable();
-            $table->foreign('lead_id')->references('id')->on('lead');
+            #$table->foreign('lead_id')->references('id')->on('lead');
             $table->float('unit_price')->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
