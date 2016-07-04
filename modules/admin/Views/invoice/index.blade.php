@@ -55,6 +55,7 @@
                             <th> User </th>
                             {{--<th> Popping Email </th>--}}
                             <th> Invoice Number </th>
+                            <th> Date </th>
                             <th> Total Cost </th>
                             <th> Status </th>
                             @if(Session::get('role_title') != 'user')
@@ -71,6 +72,7 @@
                                     <td>
                                         <a href="{!! url('admin/invoice/view', $invoice->id) !!}" class="btn btn-success btn-xs" data-toggle="modal" data-target="#etsbModal" title="Invoice Details"> {!!  $invoice->invoice_number !!} </a>
                                     </td>
+                                    <td>{!!  date('F d, Y', strtotime($invoice->created_at)) !!}</td>
                                     <td>{!!  $invoice->total_cost !!}</td>
                                     <td>{!!  $invoice->status !!}</td>
                                     @if(Session::get('role_title') != 'user')
