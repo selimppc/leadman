@@ -68,7 +68,9 @@
                                 <tr class="gradeX">
                                     <td>{!!  ucfirst(count($invoice->relUser)>0?$invoice->relUser->username:"") !!}</td>
                                     {{--<td>{!!  $invoice->relPoppingEmail['email'] !!}</td>--}}
-                                    <td>{!!  $invoice->invoice_number !!}</td>
+                                    <td>
+                                        <a href="{!! url('admin/invoice/view', $invoice->id) !!}" class="btn btn-success btn-xs" data-toggle="modal" data-target="#etsbModal" title="Invoice Details"> {!!  $invoice->invoice_number !!} </a>
+                                    </td>
                                     <td>{!!  $invoice->total_cost !!}</td>
                                     <td>{!!  $invoice->status !!}</td>
                                     @if(Session::get('role_title') != 'user')
