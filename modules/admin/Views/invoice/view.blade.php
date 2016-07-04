@@ -44,7 +44,7 @@
                         </tr>
                     @endforeach
                 @else
-                    {{ " NO Data Found ! " }}
+                    <span style="color: blue"> {{ " NO Data Found ! " }} </span>
                 @endif
             </table>
         </div>
