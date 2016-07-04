@@ -1,4 +1,4 @@
-<div class="modal-dialog">
+<div class="modal-dialog  modal-lg">
     <div class="modal-content">
         <div class="modal-header">
             {{--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>--}}
@@ -9,19 +9,19 @@
                 <h4 class="text-center">Invoice Informations</h4>
                 <tr>
                     <th>Invoice Number</th>
-                    <td>{{ isset($invoice->invoice_number)?$invoice->invoice_number:'' }}</td>
+                    <td>{{ isset($invoice_head->invoice_number)?$invoice_head->invoice_number:'' }}</td>
                 </tr>
                 <tr>
                     <th>Total Cost</th>
-                    <td>{{ isset($invoice->total_cost)?$invoice->total_cost:'' }}</td>
+                    <td>{{ isset($invoice_head->total_cost)?$invoice_head->total_cost:'' }}</td>
                 </tr>
                 <tr>
                     <th>User</th>
-                    <td>{{ isset($invoice->relUser)?$invoice->relUser['username']:'' }}</td>
+                    <td>{{ isset($invoice_head->relUser)?$invoice_head->relUser['username']:'' }}</td>
                 </tr>
                 <tr>
                     <th>Status</th>
-                    <td>{{ isset($invoice->status)?ucfirst($invoice->status):'' }}</td>
+                    <td>{{ isset($invoice_head->status)?ucfirst($invoice_head->status):'' }}</td>
                 </tr>
             </table>
 
@@ -30,15 +30,22 @@
             <table class="table table-bordered table-responsive">
                 <h4 class="text-center">Invoice Details</h4>
                 <tr>
-                    <th>Lead Email</th>
-                    <th>Unit Price</th>
+                    <th>Date</th>
+                    <th>No of Lead</th>
+                    <th>Cost</th>
                 </tr>
-                @foreach($invoice->relInvoiceDetail as $invoice_details)
-                    <tr>
-                        <td>{{ $invoice_details->relLead->email }}</td>
-                        <td>{{ $invoice_details->unit_price }}</td>
-                    </tr>
-                @endforeach
+
+                @if($date_wise)
+                    @foreach($date_wise as $values)
+                        <tr>
+                            <td>{{ date('F d, Y', strtotime($values->created_at))  }}</td>
+                            <td>{{ $values->no_of_lead }}</td>
+                            <td>{{ number_format($values->cost, 2) }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    {{ " NO Data Found ! " }}
+                @endif
             </table>
         </div>
 

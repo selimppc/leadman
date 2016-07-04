@@ -73,7 +73,7 @@
                                     <td>{!!  $invoice->status !!}</td>
                                     @if(Session::get('role_title') != 'user')
                                     <td>
-                                        {{--<a href="{!! url('admin/invoice/view', $invoice->id) !!}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Invoice Details"><i class="icon-eye-open"></i> </a>--}}
+                                        <a href="{!! url('admin/invoice/view', $invoice->id) !!}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Invoice Details"><i class="icon-eye-open"></i> view </a>
 
                                         <a href="{!!  url('admin/invoice/delete', $invoice->id) !!}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')" title="Filter Delete"><i class="icon-trash"></i> </a>
                                         @if($invoice->status=='open')
