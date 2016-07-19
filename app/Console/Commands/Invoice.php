@@ -8,6 +8,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Modules\Admin\InvoiceHead;
+use Modules\Admin\InvoiceDetail;
+use Modules\Admin\Lead;
 use Modules\Admin\PoppingEmail;
 
 class Invoice extends Command {
