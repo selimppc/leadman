@@ -168,7 +168,7 @@ class UserController extends Controller
 
         if($data['confirm_password']==$data['password']) {
             //update status and password
-            date_default_timezone_set("Asia/Dacca");
+            #date_default_timezone_set("Asia/Dacca");
             $user_update_data =[
                 'password'=>Hash::make($data['password']),
                 'last_visit'=>date('Y-m-d h:i:s', time()),
@@ -316,7 +316,7 @@ class UserController extends Controller
 
         $input = $request->all();
         #print_r($input);exit;
-        date_default_timezone_set("Asia/Dacca");
+        #date_default_timezone_set("Asia/Dacca");
         $now = new DateTime();
         /* Transaction Start Here */
         DB::beginTransaction();

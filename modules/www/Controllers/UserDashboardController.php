@@ -21,7 +21,7 @@ class UserDashboardController extends Controller
     public function index()
     {
         // set the default timezone to use. Available since PHP 5.1
-        date_default_timezone_set('Asia/Dacca');
+        #date_default_timezone_set('Asia/Dacca');
         $current_date = date('Y-m-d h:i:s');
 
         $last_24 = date('Y-m-d h:i:s', strtotime("-1 day", time() ));

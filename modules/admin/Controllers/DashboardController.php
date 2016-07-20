@@ -49,7 +49,7 @@ class DashboardController extends Controller
     private static function leadData($date)
     {
         // set the default timezone to use. Available since PHP 5.1
-        date_default_timezone_set('Asia/Dacca');
+        #date_default_timezone_set('Asia/Dacca');
         return DB::table('popping_email')
             ->select(DB::raw('popping_email.email as email, COUNT(lead.id) as no_of_lead, no_of_invoice, total_cost'))
             ->leftJoin('lead', function($join) use ($date) {

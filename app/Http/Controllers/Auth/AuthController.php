@@ -93,7 +93,7 @@ class AuthController extends Controller
 
         $input = $request->all();
 
-        date_default_timezone_set("Asia/Dacca");
+        #date_default_timezone_set("Asia/Dacca");
 
         if($input['confirm_password']==$input['password']) {
 
@@ -141,7 +141,7 @@ class AuthController extends Controller
             return redirect()->back()->withInput()->with('error', 'Your session has expired');
         }*/
         $data = Input::all();
-        date_default_timezone_set("Asia/Dacca");
+        #date_default_timezone_set("Asia/Dacca");
 
         //print_r($data);exit;
 
