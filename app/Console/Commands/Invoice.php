@@ -92,6 +92,7 @@ class Invoice extends Command {
 											'invoice_head_id' => $hd_inv->id,
 											'lead_id'         => $lead->id,
 											'unit_price'      => $price,
+											'inv_date'		  => date('Y-m-d');
 										];
 
 										//store into invoice detail and updated status of lead
