@@ -65,7 +65,7 @@ class InvoiceController extends Controller {
 				left JOIN lead on lead.id = inv_dt.lead_id
 				left JOIN invoice_detail as inv_c  on inv_c.id = inv_dt.id
 				WHERE inv_dt.invoice_head_id = '$id'
-				GROUP BY inv_dt.created_at 
+				GROUP BY inv_dt.inv_date 
 				";
 		$date_wise = DB::select(DB::raw($sql));
 
