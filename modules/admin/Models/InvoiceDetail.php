@@ -19,6 +19,7 @@ class InvoiceDetail extends Model
         'invoice_head_id',
         'lead_id',
         'unit_price',
+        'inv_date',
     ];
     public function relInvoiceHead()
     {
