@@ -28,13 +28,13 @@ class GmailModifyMessage
     public static function modify($gmail_service, $message_id)
     {
 
-        $labelsToAdd =  ["UNREAD"];
-        $labelsToRemove = ["INBOX"];
+        $labelsToAdd =  null; // ["UNREAD"];
+        $labelsToRemove = ["UNREAD"];
 
         $mods = new \Google_Service_Gmail_ModifyMessageRequest();
 
         $mods->setAddLabelIds($labelsToAdd);
-        #$mods->setRemoveLabelIds($labelsToRemove);
+        $mods->setRemoveLabelIds($labelsToRemove);
 
         try
         {
