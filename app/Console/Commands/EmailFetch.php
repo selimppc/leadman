@@ -83,16 +83,19 @@ class EmailFetch extends Command
 
                             //from Email
                             $from_email = $val['from_email'];
-                            
+                            $subject = $val['subject'];
+
                             //Check email exists
-                            $check_lead = Lead::where('email', $val['from_email'])->where('popping_email_id', $pop_email->id)->exists();
+                            $check_lead = Lead::where('email', $val['from_email'])->where('subject', $val['subject'])->where('popping_email_id', $pop_email->id)->exists();
 
                             if($pop_email->keyword){
-                                if(strpos($val['from_email'],$pop_email->keyword) !== false){
+                                if(strpos($val['from_email'], $pop_email->keyword) !== false){
                                     if(!$check_lead){
                                         $model = new Lead();
                                         try{
                                             $model->email = $from_email;
+                                            $model->subject = $subject;
+
                                             $model->popping_email_id = $pop_email->id;
                                             $model->status = 'open';
                                             $model->count = 1;
@@ -121,6 +124,7 @@ class EmailFetch extends Command
                                     $model = new Lead();
                                     try{
                                         $model->email = $from_email;
+                                        $model->subject = $subject;
                                         $model->popping_email_id = $pop_email->id;
                                         $model->status = $lead_status;
                                         $model->count = 1;
