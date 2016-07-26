@@ -90,7 +90,7 @@ class EmailFetch extends Command
                             // check constraint from Central Settings Table
                             $check_settings = CentralSettings::where('title', 'email-subject-check')->first();
                             $check_settings_value = $check_settings->status;
-                            
+
                             //Check email exists
                             if($check_settings_value == 'yes')
                             {
@@ -107,7 +107,7 @@ class EmailFetch extends Command
                                         try{
                                             $model->email = $from_email;
                                             $model->subject = $subject;
-
+                                            $model->type = 'keyword';
                                             $model->popping_email_id = $pop_email->id;
                                             $model->status = 'open';
                                             $model->count = 1;
@@ -137,6 +137,7 @@ class EmailFetch extends Command
                                     try{
                                         $model->email = $from_email;
                                         $model->subject = $subject;
+                                        $model->type = null;
                                         $model->popping_email_id = $pop_email->id;
                                         $model->status = $lead_status;
                                         $model->count = 1;

@@ -35,6 +35,7 @@
                                 <td>{!!  ++$i !!}</td>
                                 <td><a data-toggle="modal" data-target="#etsbModal" href="{{ url('admin/lead-archive/'.$file) }}">{!!  $file !!}</a></td>
                                 <td><a href="{{ URL::to('admin/lead-archive/get-download/'.$file)}}" class="btn-xs btn-success" type="button"> <span class="glyphicon glyphicon-download-alt"> Download File </span> </a></td>
+
                             </tr>
                         @endforeach
                     </table>

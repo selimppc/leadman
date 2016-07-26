@@ -65,6 +65,7 @@ class Invoice extends Command {
 
 							// visualize data for storing
 							$popping_email_id = $pop_email->id;
+                            $popping_keyword  = $pop_email->keyword?$pop_email->keyword:null;
 							$user_id          = $pop_email->user_id;
 							$price            = $pop_email->price;
 							$lead_count       = count($pop_email->relLead);
@@ -110,7 +111,7 @@ class Invoice extends Command {
 									$this->info(' Invoice Stored Successfully !'.$invoice_number['generated_number']);
 
 									//Keep lead data into txt file as per invoice and delete them all
-									$result = $this->lead_to_txt($invoice_number['generated_number'], $lead_array);
+									$result = $this->lead_to_txt($invoice_number['generated_number'], $lead_array, $popping_keyword);
 
 									if ($result) {
 										$this->info(' Store new text file with lead data!'.$invoice_number['generated_number'].".txt");
@@ -157,7 +158,9 @@ class Invoice extends Command {
 	 * @param $array_data
 	 * @return bool
 	 */
-	private function lead_to_txt($invoice_no, $array_data) {
+	private function lead_to_txt($invoice_no, $array_data, $popping_keyword)
+    {
+
 		$invoice_no = $invoice_no;
 		//file Path
 		$path = public_path()."/lead_files/";
@@ -177,6 +180,22 @@ class Invoice extends Command {
 			$string .= $val['email']."\n";
 		}
 
+
+        //make data in string to store in txt file
+        $string_with_keyword = '';
+        $string_without_keyword = '';
+        foreach ($array_data as $val)
+        {
+            if($val['type'] == "keyword")
+            {
+                $string_with_keyword .= $val['email']."\n";
+            }
+            else
+            {
+                $string_without_keyword .= $val['email']."\n";
+            }
+        }
+
 		//create array of lead id
 		$lead_ids = array();
 		foreach ($array_data as $value) {
@@ -188,10 +207,17 @@ class Invoice extends Command {
 		/* Transaction Start Here */
 		DB::beginTransaction();
 		try {
-			$file_name = $path.$invoice_no.".txt";
+            //with Keyword
+			$file_name = $path.$invoice_no."-with-keyword-".$popping_keyword.".txt";
 			$handle    = fopen($file_name, 'w');
-			$a         = fwrite($handle, $string);
+			$a         = fwrite($handle, $string_with_keyword);
 			fclose($handle);
+
+            //without Keyword
+            $file_name_key = $path.$invoice_no."-without-keyword.txt";
+            $handle_key    = fopen($file_name_key, 'w');
+            $a         = fwrite($handle_key, $string_without_keyword);
+            fclose($handle_key);
 
 			/* data delete from Lead table by Lead_ID */
 			#DB::table('lead')->whereIn('id', $lead_ids)->delete();

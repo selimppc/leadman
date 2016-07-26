@@ -261,6 +261,18 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
     ]);
 
 
+
+    Route::get('admin/lead-archive/keyword-based/{invoice_id)',[
+        'as'=>'admin.lead-archive.keyword-based',
+        'uses'=>'LeadController@get_lead_by_keyword_type'
+    ]);
+
+    Route::get('admin/lead-archive/without-keyword/{invoice_id)',[
+        'as'=>'admin.lead-archive.without-keyword',
+        'uses'=>'LeadController@get_lead_without_keyword'
+    ]);
+
+
     Route::get('admin/lead-archive/get-download/{file_name?}',[
         'as'=>'admin.lead-archive.get-download',
         'uses'=>'LeadController@get_download'

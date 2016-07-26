@@ -236,4 +236,92 @@ class LeadController extends Controller
         return Response::download($file, $file_name, $headers);
     }
 
+    /**
+     * @param $invoice_no
+     */
+    public function get_lead_by_keyword_type($invoice_no)
+    {
+        $sql = "select pe.email, pe.password, count( DISTINCT lead.id ) no_of_lead
+            from invoice_head as inv_hd
+            LEFT JOIN invoice_detail as inv_dt on inv_dt.invoice_head_id = inv_hd.id 
+            LEFT JOIN lead as lead on lead.id = inv_dt.id and lead.type = 'keyword'
+            WHERE inv_hd.invoice_number = '$invoice_no'
+            GROUP BY inv_hd.id ";
+        $result = DB::select(DB::raw($sql));
+
+        print_r($result);
+        exit();
+
+
+
+    }
+
+    /**
+     * @param $invoice_no
+     */
+    public function get_lead_without_keyword($invoice_no){
+
+    }
+
+
+
+
+
+    /**
+     * @param $invoice_no
+     * @param $array_data
+     * @return bool
+     */
+    private function lead_to_txt($invoice_no, $array_data) {
+        $invoice_no = $invoice_no;
+        //file Path
+        $path = public_path()."/lead_files/";
+
+        //check permission from config
+        $permissions = intval(config('permissions.directory'), 0);
+
+        if (!File::Exists($path)) {
+            //make folder with $path generate recursive with right 0775
+            File::makeDirectory($path, $permissions, true);
+        }
+
+        //make data in string to store in txt file
+        $string = '';
+        foreach ($array_data as $val) {
+            #$string .= $val['id']."-".$val['email']."\n";
+            $string .= $val['email']."\n";
+        }
+
+        //create array of lead id
+        $lead_ids = array();
+        foreach ($array_data as $value) {
+            $lead_ids[] = array(
+                'id' => $value['id'],
+            );
+        }
+
+        /* Transaction Start Here */
+        DB::beginTransaction();
+        try {
+            $file_name = $path.$invoice_no.".txt";
+            $handle    = fopen($file_name, 'w');
+            $a         = fwrite($handle, $string);
+            fclose($handle);
+
+            /* data delete from Lead table by Lead_ID */
+            #DB::table('lead')->whereIn('id', $lead_ids)->delete();
+
+            //Commit the changes
+            DB::commit();
+
+            return true;
+
+        } catch (\Exception $e) {
+            //If there are any exceptions, rollback the transaction`
+            DB::rollback();
+            $this->info($e->getMessage());
+            return false;
+        }
+    }
+
 }
