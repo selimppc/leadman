@@ -13,6 +13,7 @@ use Google_Auth_AssertionCredentials;
 use Google_Service_Datastore;
 use Google_Service_Urlshortener;
 use Google_Service_Urlshortener_Url;
+use Modules\Admin\CentralSettings;
 use Modules\Admin\Lead;
 use Modules\Admin\PoppingEmail;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +53,7 @@ class EmailFetch extends Command
     public function handle()
     {
 
+
         //Popping Email List
         $popping_email = PoppingEmail::with('relSmtp', 'relImap')->where('status', 'active')->get();
 
@@ -85,8 +87,18 @@ class EmailFetch extends Command
                             $from_email = $val['from_email'];
                             $subject = $val['subject'];
 
+                            // check constraint from Central Settings Table
+                            $check_settings = CentralSettings::where('title', 'email-subject-check')->first();
+                            $check_settings_value = $check_settings->status;
+                            
                             //Check email exists
-                            $check_lead = Lead::where('email', $val['from_email'])->where('subject', $val['subject'])->where('popping_email_id', $pop_email->id)->exists();
+                            if($check_settings_value == 'yes')
+                            {
+                                $check_lead = Lead::where('email', $val['from_email'])->where('subject', $val['subject'])->where('popping_email_id', $pop_email->id)->exists();
+                            }else{
+                                $check_lead = Lead::where('email', $val['from_email'])->where('popping_email_id', $pop_email->id)->exists();
+                            }
+
 
                             if($pop_email->keyword){
                                 if(strpos($val['from_email'], $pop_email->keyword) !== false){

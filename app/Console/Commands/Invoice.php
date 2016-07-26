@@ -50,8 +50,8 @@ class Invoice extends Command {
 		$data = PoppingEmail::with(['relLead' => function ($query) {
 					$query->where('lead.status', 'open');
 				}])
-			->where('execution_time', '<=', $current_date)
-			->where('popping_email.status', '=', 'active')
+			#->where('execution_time', '<=', $current_date)
+			#->where('popping_email.status', '=', 'active')
 			->get();
 
 		while (true) {
@@ -85,9 +85,10 @@ class Invoice extends Command {
 
 								//model for invoice head
 								$model = new InvoiceHead();
-								if ($hd_inv = $model->create($array_data)) {
-									foreach ($pop_email->relLead as $lead) {
-
+								if ($hd_inv = $model->create($array_data))
+                                {
+									foreach ($pop_email->relLead as $lead)
+                                    {
 										$array_dt = [
 											'invoice_head_id' => $hd_inv->id,
 											'lead_id'         => $lead->id,
