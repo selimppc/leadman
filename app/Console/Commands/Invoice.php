@@ -50,8 +50,8 @@ class Invoice extends Command {
 		$data = PoppingEmail::with(['relLead' => function ($query) {
 					$query->where('lead.status', 'open');
 				}])
-			#->where('execution_time', '<=', $current_date)
-			#->where('popping_email.status', '=', 'active')
+			->where('execution_time', '<=', $current_date)
+			->where('popping_email.status', '=', 'active')
 			->get();
 
 		while (true) {

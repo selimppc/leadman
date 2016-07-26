@@ -60,7 +60,7 @@
                         <thead>
                         <tr>
                             <th style="color: darkblue">Total Lead : {{ $result_24_lead[0]->total_lead }}</th>
-                            <th style="color: darkblue">Lead Cost : {{ $result_24_amount[0]->total_cost }}</th>
+                            <th style="color: darkblue">Lead Cost : {{ number_format($result_24_amount[0]->total_cost, 2) }}</th>
                         </tr>
                         </thead>
                     </table>
@@ -87,9 +87,9 @@
                                 <td><a href="{{ route('user-by-lead', ['user_id'=>$last_day->user_id]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($last_day->username) }} </a> </td>
                                 <td>{{ $last_day->no_of_popping_email }}</td>
                                 <td>{{ $last_day->no_of_lead }}</td>
-                                <td>{{ $last_day->lead_cost }}</td>
+                                <td>{{ number_format($last_day->lead_cost, 2) }}</td>
                                 <td>{{ $last_day->no_of_invoice }}</td>
-                                <td>{{ $last_day->invoice_cost }}</td>
+                                <td>{{ number_format($last_day->invoice_cost, 2) }}</td>
                             </tr>
                         @endforeach
                     @endif
@@ -156,7 +156,7 @@
                         <thead>
                         <tr>
                             <th style="color: darkblue">Total Lead : {{ $result_7_days_lead[0]->total_lead }}</th>
-                            <th style="color: darkblue">Lead Cost : {{ $result_7_days_amount[0]->total_cost }}</th>
+                            <th style="color: darkblue">Lead Cost : {{ number_format($result_7_days_amount[0]->total_cost, 2) }}</th>
                         </tr>
                         </thead>
                     </table>
@@ -180,9 +180,9 @@
                                 <td><a href="{{ route('user-by-lead',['user_id'=>$last_7day->user_id]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($last_7day->username) }}</a></td>
                                 <td>{{ $last_7day->no_of_popping_email }}</td>
                                 <td>{{ $last_7day->no_of_lead }}</td>
-                                <td>{{ $last_7day->lead_cost }}</td>
+                                <td>{{ number_format($last_7day->lead_cost, 2) }}</td>
                                 <td>{{ $last_7day->no_of_invoice }}</td>
-                                <td>{{ $last_7day->invoice_cost }}</td>
+                                <td>{{ number_format($last_7day->invoice_cost,2 ) }}</td>
                             </tr>
                         @endforeach
                     @endif
@@ -328,7 +328,7 @@
                                 <td>{{ $user_invoice->open_invoice }}</td>
                                 <td>{{ $user_invoice->approved_invoice }}</td>
                                 <td>{{ $user_invoice->paid_invoice }}</td>
-                                <td>{{ $user_invoice->total_cost }}</td>
+                                <td>{{ number_format($user_invoice->total_cost,2) }}</td>
                             </tr>
                         @endforeach
                     @endif
