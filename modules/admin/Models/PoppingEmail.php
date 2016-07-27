@@ -62,6 +62,58 @@ class PoppingEmail extends Model
         return $this->hasMany('Modules\Admin\InvoiceHead','popping_email_id','id');
     }
 
+    // View related function start
+    public static function last24hours(){
+        $sql = "select * from v_result_24";
+        return DB::select(DB::raw($sql));
+    }
+    public static function last24hours_lead(){
+        $sql = "select * from v_result_24_lead";
+        return DB::select(DB::raw($sql));
+    }
+    public static function last24hours_amount(){
+        $sql = "select * from v_result_24_amount";
+        return DB::select(DB::raw($sql));
+    }
+
+    public static function last7days(){
+        $sql = "select * from v_result_7_days";
+        return DB::select(DB::raw($sql));
+    }
+    public static function last7days_lead(){
+        $sql = "select * from v_result_7_days_lead";
+        return DB::select(DB::raw($sql));
+    }
+    public static function last7days_amount(){
+        $sql = "select * from v_result_7_days_amount";
+        return DB::select(DB::raw($sql));
+    }
+    public static function userLeadView()
+    {
+        $sql = "select * from v_user_leads";
+        return DB::select(DB::raw($sql));
+    }
+
+    public static function userInvoiceStatusView()
+    {
+        $sql = "select * from v_user_invoice_status";
+        return DB::select(DB::raw($sql));
+    }
+
+    public static function UserLeadStatusDuplicateView()
+    {
+        $sql = "select * from v_user_lead_status_duplicate";
+        return DB::select(DB::raw($sql));
+    }
+
+    public static function UserLeadStatusFilteredView()
+    {
+        $sql = "select * from v_user_lead_status_filtered";
+        return DB::select(DB::raw($sql));
+    }
+    // View related function End
+
+
     public static function poppingDataByTime($time){
         $sql= "select
  user.id as user_id,
@@ -79,14 +131,9 @@ LEFT JOIN (select lead.id, lead.popping_email_id, count(lead.id) as nol, sum(pop
 LEFT JOIN (select id, user_id, sum(total_cost) as tc, count(id) as noi from invoice_head where status != 'cancel' and invoice_head.created_at > '$time' group by user_id ) i on (i.user_id = p.user_id)
 
 GROUP BY user.id";
-        /*$sql= "select user.id as user_id, user.username,count( DISTINCT popping_email.id ) no_of_popping_email,count( DISTINCT lead.id ) no_of_lead, count( DISTINCT invoice_head.id) no_of_invoice, sum(DISTINCT invoice_head.total_cost) as total_cost
-    from user
-    INNER JOIN popping_email on popping_email.user_id = user.id and popping_email.status != 'cancel'
-    LEFT JOIN lead on lead.popping_email_id = popping_email.id and lead.status != 'close' and lead.status != 'filtered' and lead.created_at > '$time'
-    LEFT JOIN invoice_head on invoice_head.user_id = popping_email.user_id and invoice_head.status != 'cancel' and invoice_head.created_at > '$time'
-    GROUP BY user.id";*/
         return DB::select(DB::raw($sql));
     }
+
     public static function totalAmount($time){
         $sql= "SELECT sum(popping_email.price) total_cost
 FROM lead
@@ -112,23 +159,9 @@ WHERE lead.created_at > '$time'
     GROUP BY user.id ";
         return DB::select(DB::raw($sql));
     }
+
     public static function userInvoiceStatus()
     {
-
-
-        /*$sql= "select user.username, count( DISTINCT invoice_head.id ) open_invoice, count( DISTINCT invoice_head1.id ) approved_invoice, count( DISTINCT invoice_head2.id ) paid_invoice, sum(DISTINCT invoice_head3.total_cost) total_cost
-    from user
-    INNER JOIN popping_email on popping_email.user_id = user.id and popping_email.status != 'cancel'
-    LEFT JOIN invoice_head on invoice_head.user_id = popping_email.user_id and invoice_head.status != 'cancel' and invoice_head.status = 'open'
-    LEFT JOIN invoice_head as invoice_head1 on invoice_head1.user_id = popping_email.user_id and invoice_head1.status != 'cancel' and invoice_head1.status = 'approved'
-    LEFT JOIN invoice_head as invoice_head2 on invoice_head2.user_id = popping_email.user_id and invoice_head2.status != 'cancel' and invoice_head2.status = 'paid'
-    LEFT JOIN invoice_head as invoice_head3 on invoice_head3.user_id = popping_email.user_id and invoice_head3.status != 'cancel'
-
-    GROUP BY user.id";*/
-
-
-
-
         $sql= "select
  user.username,
  IFNULL(ih1.oi, 0) AS open_invoice,

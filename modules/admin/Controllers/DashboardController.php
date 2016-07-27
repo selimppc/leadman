@@ -31,6 +31,8 @@ class DashboardController extends Controller
             return redirect()->to('dashboard/user');
         }else{
             $data['pageTitle'] = 'Dashboard';
+
+            /*$data['pageTitle'] = 'Dashboard';
             $data['result_24']= PoppingEmail::poppingDataByTime(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
             $data['result_24_lead']= PoppingEmail::totalLead(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
             $data['result_24_amount']= PoppingEmail::totalAmount(date('Y-m-d h:i:s', strtotime("-1 day", time() )));
@@ -38,8 +40,20 @@ class DashboardController extends Controller
             $data['result_7_days_lead']= PoppingEmail::totalLead(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
             $data['result_7_days_amount']= PoppingEmail::totalAmount(date('Y-m-d h:i:s', strtotime("-7 day", time() )));
             $data['user_leads']= PoppingEmail::userLead();
-            $data['user_invoices_status']= PoppingEmail::userInvoiceStatus();
-            $data['user_lead_status']= PoppingEmail::UserLeadStatus();
+            $data['user_invoices_status']= PoppingEmail::userInvoiceStatus();*/
+            //$data['user_lead_status']= PoppingEmail::UserLeadStatus();
+
+            //Mysql View
+            $data['result_24']= PoppingEmail::last24hours();
+            $data['result_24_lead']= PoppingEmail::last24hours_lead();
+            $data['result_24_amount']= PoppingEmail::last24hours_amount();
+            $data['result_7_days']= PoppingEmail::last7days();
+            $data['result_7_days_lead']= PoppingEmail::last7days_lead();
+            $data['result_7_days_amount']= PoppingEmail::last7days_amount();
+            $data['user_leads']= PoppingEmail::userLeadView();
+            $data['user_invoices_status']= PoppingEmail::userInvoiceStatusView();
+            $data['user_lead_status_duplicate']= PoppingEmail::UserLeadStatusDuplicateView();
+            $data['user_lead_status_filtered']= PoppingEmail::UserLeadStatusFilteredView();
 
             return view('admin::dashboard.index',$data);
         }

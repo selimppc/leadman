@@ -383,7 +383,7 @@
             {{--</div>--}}
             <div class="stat-cell col-sm-12 padding-sm-hr bordered no-border-r valign-top">
                 <!-- Small padding, without top padding, extra small horizontal padding -->
-                <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> User Lead Status</h4>
+                <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> User Duplicate Lead Status</h4>
                 <!-- Without margin -->
 
                 <table class="display table table-bordered table-striped" >
@@ -392,16 +392,50 @@
                             <th>Username</th>
                             <th>Email</th>
                             <th>No of Duplicate Leads</th>
-                            <th>No of Filtered Leads</th>
                         </tr>
                     </thead>
                     <tbody>
-                    @if(isset($user_lead_status))
-                        @foreach($user_lead_status as $duplicate_lead)
+                    @if(isset($user_lead_status_duplicate))
+                        @foreach($user_lead_status_duplicate as $duplicate_lead)
                             <tr>
                                 <td>{{--<a href="{{ route('user-by-lead') }}">--}}{{ Illuminate\Support\Str::upper($duplicate_lead->username) }}{{--</a>--}}</td>
                                 <td>{{ $duplicate_lead->email }}</td>
                                 <td>{{ $duplicate_lead->duplicate_leads }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+        </div>
+
+        <div class="stat-panel">
+            {{--<div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">--}}
+            {{--<div id="duplicate_leads" class="graph" style="height: 230px;"></div>--}}
+            {{--</div>--}}
+            <div class="stat-cell col-sm-12 padding-sm-hr bordered no-border-r valign-top">
+                <!-- Small padding, without top padding, extra small horizontal padding -->
+                <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i> User Filtered Lead Status</h4>
+                <!-- Without margin -->
+
+                <table class="display table table-bordered table-striped" >
+                    <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>No of Filtered Leads</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(isset($user_lead_status_filtered))
+                        @foreach($user_lead_status_filtered as $duplicate_lead)
+                            <tr>
+                                <td>{{--<a href="{{ route('user-by-lead') }}">--}}{{ Illuminate\Support\Str::upper($duplicate_lead->username) }}{{--</a>--}}</td>
+                                <td>{{ $duplicate_lead->email }}</td>
                                 <td>{{ $duplicate_lead->filtered_leads }}</td>
                             </tr>
                         @endforeach
