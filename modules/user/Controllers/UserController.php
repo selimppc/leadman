@@ -10,6 +10,7 @@ use App\UserActivity;
 use App\UserImage;
 use App\UserLoginHistory;
 use Mockery\CountValidator\Exception;
+use Modules\Admin\InvoiceDetail;
 use Modules\Admin\InvoiceHead;
 use Modules\Admin\Lead;
 use Modules\Admin\PoppingEmail;
@@ -458,9 +459,17 @@ class UserController extends Controller
              * Child Lead delete
              * */
             $popping_emails= PoppingEmail::select('id')->where('user_id',$id)->get();
+
+            $invoices = InvoiceHead::select('id')->where('user_id',$id)->get();
+            foreach ($invoices as $invoice) {
+                InvoiceDetail::where('invoice_head_id',$invoice->id)->delete();
+            }
+            InvoiceHead::where('user_id',$id)->delete();
+
             foreach ($popping_emails as $popping_email) {
                 Lead::where('popping_email_id',$popping_email->id)->delete();
             }
+
             UserResetPassword::where('user_id',$id)->delete();
             UserImage::where('user_id',$id)->delete();
             RoleUser::where('user_id',$id)->delete();
@@ -470,23 +479,8 @@ class UserController extends Controller
             UserResetPassword::where('user_id',$id)->delete();
             UserImage::where('user_id',$id)->delete();
             PoppingEmail::where('user_id',$id)->delete();
-            InvoiceHead::where('user_id',$id)->delete();
             user::findOrFail($id)->delete();
 
-
-            /*if($model->status =='active'){
-                $model->status = 'cancel';
-                $model->last_visit = Null;
-            }
-            if($model->save()){
-                DB::table('popping_email')
-                    ->where('user_id', $id)
-                    ->update(['status' => 'cancel']);
-
-                DB::table('invoice_head')
-                    ->where('user_id', $id)
-                    ->update(['status' => 'cancel']);
-            }*/
 
             DB::commit();
             Session::flash('message', "Successfully Deleted.");

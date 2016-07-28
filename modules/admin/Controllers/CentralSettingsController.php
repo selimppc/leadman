@@ -14,6 +14,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Admin\CentralSettings;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 //use Illuminate\Session;
 
@@ -86,7 +88,8 @@ class CentralSettingsController extends Controller
      */
     public function edit($id)
     {
-        exit('Edit page');
+        $data['data'] = CentralSettings::where('id',$id)->first();
+        return view('admin::settings.central_settings.update',$data);
     }
 
     /**
@@ -98,7 +101,22 @@ class CentralSettingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $model = CentralSettings::findOrFail($id);
+        $input = $request->all();
+        //print_r($input);exit;
+
+        // Transaction Start Here
+        DB::beginTransaction();
+        try {
+            $model->update($input);
+            DB::commit();
+            Session::flash('message', 'Successfully Updated!');
+        }catch (Exception $e) {
+            //If there are any exceptions, rollback the transaction`
+            DB::rollback();
+            Session::flash('error', "Invalid Request" );
+        }
+        return redirect()->back();
     }
 
     /**

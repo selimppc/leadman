@@ -99,6 +99,7 @@ class InvoiceController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($id) {
+		InvoiceDetail::where('invoice_head_id',$id)->delete();
 		InvoiceHead::findOrFail($id)->delete();
 		Session::flash('message', "Invoice has been Successfully Deleted.");
 		return redirect()->back();

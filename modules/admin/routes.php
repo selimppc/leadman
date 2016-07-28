@@ -29,6 +29,12 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'uses' => 'CentralSettingsController@edit'
     ]);
 
+    Route::any('admin/central-settings-update/{id}', [
+        'middleware'=>'acl_access::admin/central-settings-update/{id}',
+        'as' => 'central-settings-update',
+        'uses' => 'CentralSettingsController@update'
+    ]);
+
     /*Route::any('/', [
         'as' => 'dashboard',
         'uses' => 'DashboardController@dashboard'

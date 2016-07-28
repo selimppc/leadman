@@ -20,6 +20,7 @@ use Mockery\CountValidator\Exception;
 use Modules\Admin\Country;
 use Modules\Admin\Imap;
 use Modules\Admin\InvoiceHead;
+use Modules\Admin\InvoiceDetail;
 use Modules\Admin\Lead;
 use Modules\Admin\PoppingEmail;
 use Modules\Admin\Schedule;
@@ -363,8 +364,13 @@ class PoppingEmailController extends Controller
     {
         DB::beginTransaction();
         try {
-            Lead::Where('popping_email_id',$id)->delete();
+            $invoices = InvoiceHead::select('id')->where('popping_email_id',$id)->get();
+            foreach ($invoices as $invoice) {
+                InvoiceDetail::where('invoice_head_id',$invoice->id)->delete();
+            }
             InvoiceHead::Where('popping_email_id',$id)->delete();
+
+            Lead::Where('popping_email_id',$id)->delete();
             PoppingEmail::findOrFail($id)->delete();
             DB::commit();
             Session::flash('message', 'Popping Email has been successfully deleted. ');
