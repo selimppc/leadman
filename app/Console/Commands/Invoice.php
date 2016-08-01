@@ -164,6 +164,7 @@ class Invoice extends Command {
 		$invoice_no = $invoice_no;
 		//file Path
 		$path = public_path()."/lead_files/";
+		$date = date('Y-m-d');
 
 		//check permission from config
 		$permissions = intval(config('permissions.directory'), 0);
@@ -208,13 +209,13 @@ class Invoice extends Command {
 		DB::beginTransaction();
 		try {
 			//with Keyword
-			$file_name = $path.$invoice_no."-with-keyword-".$popping_keyword.".txt";
+			$file_name = $path.$date."-".$invoice_no."-with-keyword-".$popping_keyword.".txt";
 			$handle    = fopen($file_name, 'w');
 			$a         = fwrite($handle, $string_with_keyword);
 			fclose($handle);
 
 			//without Keyword
-			$file_name_key = $path.$invoice_no."-without-keyword.txt";
+			$file_name_key = $path.$date."-".$invoice_no."-without-keyword.txt";
 			$handle_key    = fopen($file_name_key, 'w');
 			$a         = fwrite($handle_key, $string_without_keyword);
 			fclose($handle_key);
