@@ -157,6 +157,7 @@ class Invoice extends Command {
 		$invoice_no = $invoice_no;
 		//file Path
 		$path = public_path()."/lead_files/";
+		$date = date('Y-m-d');
 
 		//check permission from config
 		$permissions = intval(config('permissions.directory'), 0);
@@ -184,7 +185,7 @@ class Invoice extends Command {
 		/* Transaction Start Here */
 		DB::beginTransaction();
 		try {
-			$file_name = $path.$invoice_no.".txt";
+			$file_name = $path.$date."-".$invoice_no.".txt";
 			$handle    = fopen($file_name, 'w');
 			$a         = fwrite($handle, $string);
 			fclose($handle);
