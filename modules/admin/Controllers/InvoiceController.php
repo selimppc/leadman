@@ -60,12 +60,13 @@ class InvoiceController extends Controller {
 		$invoice_head = InvoiceHead::with('relUser')->findOrFail($id);
 
 		//-- sql query
-		$sql = "select inv_dt.created_at, count( DISTINCT inv_dt.lead_id ) as no_of_lead, sum( DISTINCT inv_c.unit_price ) as cost
+		$sql = "select inv_dt.created_at, count( DISTINCT inv_dt.lead_id ) as no_of_lead, sum( inv_c.unit_price ) as cost
 				from invoice_detail as inv_dt
 				left JOIN lead on lead.id = inv_dt.lead_id
 				left JOIN invoice_detail as inv_c  on inv_c.id = inv_dt.id
 				WHERE inv_dt.invoice_head_id = '$id'
-				GROUP BY inv_dt.created_at ";
+				GROUP BY inv_dt.inv_date 
+				";
 		$date_wise = DB::select(DB::raw($sql));
 
 
@@ -98,6 +99,7 @@ class InvoiceController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($id) {
+		InvoiceDetail::where('invoice_head_id',$id)->delete();
 		InvoiceHead::findOrFail($id)->delete();
 		Session::flash('message', "Invoice has been Successfully Deleted.");
 		return redirect()->back();

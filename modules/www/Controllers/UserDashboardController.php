@@ -21,7 +21,7 @@ class UserDashboardController extends Controller
     public function index()
     {
         // set the default timezone to use. Available since PHP 5.1
-        date_default_timezone_set('Asia/Dacca');
+        #date_default_timezone_set('Asia/Dacca');
         $current_date = date('Y-m-d h:i:s');
 
         $last_24 = date('Y-m-d h:i:s', strtotime("-1 day", time() ));
@@ -29,7 +29,7 @@ class UserDashboardController extends Controller
 
         $user_id = Auth::id();
 
-        //24 data
+        //24 data //DONE use v_result_24 by user_id
         $sql_24_sql = "select
 p.email,
 IFNULL(l.nol, 0) AS no_of_lead,
@@ -71,7 +71,7 @@ WHERE p.user_id = '5' and p.status != 'cancel'
         $result_24 = DB::select(DB::raw($sql_24_sql));*/
 
 
-        // In Last 7 days
+        // In Last 7 days //DONE user v_result_7_days by user_id
         $result_7_days_sql = "select
 p.email,
 IFNULL(l.nol, 0) AS no_of_lead,
@@ -88,7 +88,7 @@ WHERE p.user_id = '$user_id' and p.status != 'cancel'";
         $result_7_days = DB::select(DB::raw($result_7_days_sql));
 
 
-        //-- Numbers of email -> link to list of email.
+        //-- Numbers of email -> link to list of email. // DONE use vu_no_of_email by user_id
         $no_of_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
     from popping_email
     left JOIN lead on lead.popping_email_id = popping_email.id
@@ -97,7 +97,7 @@ WHERE p.user_id = '$user_id' and p.status != 'cancel'";
         $no_of_email = DB::select(DB::raw($no_of_email_sql));
 
 
-        //-- Show no of duplicate email stat
+        //-- Show no of duplicate email stat //DONE user v_user_lead_status by user_id
         $no_duplicate_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
     from popping_email
     left JOIN lead on lead.popping_email_id = popping_email.id
@@ -106,7 +106,7 @@ WHERE p.user_id = '$user_id' and p.status != 'cancel'";
         $no_duplicate_email = DB::select(DB::raw($no_duplicate_email_sql));
 
 
-        //-- Show filtered  email stat
+        //-- Show filtered  email stat //DONE user vu_no_filtered_email by user_id
         $no_filtered_email_sql = "select popping_email.email, count( DISTINCT lead.id ) no_of_lead
     from popping_email
     left JOIN lead on lead.popping_email_id = popping_email.id
@@ -114,7 +114,7 @@ WHERE p.user_id = '$user_id' and p.status != 'cancel'";
     GROUP BY popping_email.id ";
         $no_filtered_email = DB::select(DB::raw($no_filtered_email_sql));
 
-        //-- Show invoice Status
+        //-- Show invoice Status //DONE user v_user_invoice_status by user
         $invoice_status_sql = "select
  IFNULL(ih1.oi, 0) AS open_invoice,
  IFNULL(ih2.ai, 0) AS approved_invoice,

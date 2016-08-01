@@ -20,6 +20,7 @@ use Mockery\CountValidator\Exception;
 use Modules\Admin\Country;
 use Modules\Admin\Imap;
 use Modules\Admin\InvoiceHead;
+use Modules\Admin\InvoiceDetail;
 use Modules\Admin\Lead;
 use Modules\Admin\PoppingEmail;
 use Modules\Admin\Schedule;
@@ -314,12 +315,26 @@ class PoppingEmailController extends Controller
         $popping_email_id = $input['popping_email_id'];
         $schedule_id = $input['schedule_id'];
 
-        //generate execution time and change the status active for the popping_email
-        $execution_time = GenerateExecutionTime::run($popping_email_id, $schedule_id);
-        if($execution_time){
-            $input['execution_time']=$execution_time;
-            $input['status']='active';
+
+        $role = Session::get('role_title');
+        if($role == 'admin' || $role == 'super-admin')
+        {
+            if($input['schedule_id'] != null && $input['schedule_id'] != null )
+            {
+                //generate execution time and change the status active for the popping_email
+                $execution_time = GenerateExecutionTime::run($popping_email_id, $schedule_id);
+                if($execution_time){
+                    $input['execution_time']=$execution_time;
+                    $input['status']='active';
+                }
+            }
+            else
+            {
+                Session::flash('message', 'Please add/update Schedule/Time and Price ! ');
+                return redirect()->back();
+            }
         }
+        
 
         // Transaction Start Here
         DB::beginTransaction();
@@ -349,8 +364,13 @@ class PoppingEmailController extends Controller
     {
         DB::beginTransaction();
         try {
-            Lead::Where('popping_email_id',$id)->delete();
+            $invoices = InvoiceHead::select('id')->where('popping_email_id',$id)->get();
+            foreach ($invoices as $invoice) {
+                InvoiceDetail::where('invoice_head_id',$invoice->id)->delete();
+            }
             InvoiceHead::Where('popping_email_id',$id)->delete();
+
+            Lead::Where('popping_email_id',$id)->delete();
             PoppingEmail::findOrFail($id)->delete();
             DB::commit();
             Session::flash('message', 'Popping Email has been successfully deleted. ');
@@ -368,24 +388,53 @@ class PoppingEmailController extends Controller
     public function active_inactive($popping_email_id)
     {
 
-        if($popping_email_id){
+        if($popping_email_id)
+        {
             $popping_email_data = PoppingEmail::findOrFail($popping_email_id);
             $status = $popping_email_data->status;
-            if($status=='new'){
-                $role = Session::get('role_title');
+
+            if($status=='new')
+            {
+                /*$role = Session::get('role_title');
                 if($role == 'admin' || $role == 'super-admin'){
                     $popping_email_data->status='active';
                     $popping_email_data->save();
                 }else{
                     Session::flash('message', 'Contact with Administrator for this Action ! ');
                     return redirect()->back();
-                }
-            }elseif($status=='active'){
+                }*/
+
+                Session::flash('message', 'Please Add Schedule/Time and Price ! ');
+                return redirect()->back();
+
+            }
+            elseif($status=='active')
+            {
                 $popping_email_data->status='inactive';
                 $popping_email_data->save();
-            }elseif($status=='inactive'){
-                $popping_email_data->status='active';
-                $popping_email_data->save();
+            }
+            elseif($status=='inactive')
+            {
+
+                if($popping_email_data->price != null)
+                {
+                    if($popping_email_data->schedule_id != null)
+                    {
+                        $popping_email_data->status='active';
+                        $popping_email_data->save();
+                    }
+                    else
+                    {
+                        Session::flash('message', 'Please add/update Schedule/Time! ');
+                        return redirect()->back();
+                    }
+                }
+                else
+                {
+                    Session::flash('message', 'Please add/update Price ! ');
+                    return redirect()->back();
+                }
+
             }
 
             Session::flash('message', 'Successfully Changed the status ! ');

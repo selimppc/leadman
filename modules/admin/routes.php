@@ -29,6 +29,12 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'uses' => 'CentralSettingsController@edit'
     ]);
 
+    Route::any('admin/central-settings-update/{id}', [
+        'middleware'=>'acl_access::admin/central-settings-update/{id}',
+        'as' => 'central-settings-update',
+        'uses' => 'CentralSettingsController@update'
+    ]);
+
     /*Route::any('/', [
         'as' => 'dashboard',
         'uses' => 'DashboardController@dashboard'
@@ -258,6 +264,18 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
     Route::get('admin/lead-archive/{file_name?}',[
         'as'=>'admin.lead-archive',
         'uses'=>'LeadController@archive_leads'
+    ]);
+
+
+
+    Route::get('admin/lead-archive/keyword-based/{invoice_id)',[
+        'as'=>'admin.lead-archive.keyword-based',
+        'uses'=>'LeadController@get_lead_by_keyword_type'
+    ]);
+
+    Route::get('admin/lead-archive/without-keyword/{invoice_id)',[
+        'as'=>'admin.lead-archive.without-keyword',
+        'uses'=>'LeadController@get_lead_without_keyword'
     ]);
 
 

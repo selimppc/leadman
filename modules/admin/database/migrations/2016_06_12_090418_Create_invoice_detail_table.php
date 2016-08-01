@@ -19,6 +19,7 @@ class CreateInvoiceDetailTable extends Migration
             $table->unsignedInteger('lead_id',false)->nullable();
             #$table->foreign('lead_id')->references('id')->on('lead');
             $table->float('unit_price')->nullable();
+            $table->date('inv_date')->nullable();
             $table->unsignedInteger('created_by',false)->nullable();
             $table->unsignedInteger('updated_by',false)->nullable();
             $table->timestamps();

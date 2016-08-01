@@ -54,7 +54,9 @@
                                     <td>{{isset($row->user_type)? ucfirst($row->user_type):''}}</td>
                                     <td>
                                         <a href="{{ route('central-settings-show', $row->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Settings View"><i class="icon-eye-open"></i></a>
-                                        {{--<a href="{{ route('central-settings-edit', $row->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Settings Edit"><i class="icon-edit"></i></a>--}}
+                                        @if($row->title != 'invoice-number')
+                                            <a href="{{ route('central-settings-edit', $row->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Settings Edit"><i class="icon-edit"></i></a>
+                                        @endif
                                     </td>
                                 </tr>
                         @endforeach

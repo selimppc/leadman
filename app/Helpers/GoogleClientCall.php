@@ -63,6 +63,7 @@ class GoogleClientCall
                 foreach ($message_data as $msg) {
 
                     $message_id = $msg['messageId'];
+                    $message_subject = $msg['messageSubject'];
 
                     // sender email
                     if (strpos($msg['messageSender'], '<') !== false) {
@@ -89,6 +90,7 @@ class GoogleClientCall
                     //
                     $lead_email_data []= [
                         'messageId' => $message_id,
+                        'subject' => $message_subject,
                         'from_email'=>$user_email,
                         'to_email'=>$to_email,
                     ];

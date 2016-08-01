@@ -264,7 +264,20 @@ class CountrySeeder extends Seeder
             "ZW"=>"Zimbabwe ",
         );
 
-        foreach($c_list as $key => $value){
+      $new_list =array(
+
+            "AU"=>"Australia ",
+            "CA"=>"Canada ",
+            "DK"=>"Denmark ",
+            "FR"=>"France ",
+            "DE"=>"Germany ",
+            "NO"=>"Norway ",
+            "SE"=>"Sweden ",
+            "GB"=>"United Kingdom ",
+            "US"=>"United States ",
+            );
+
+        foreach($new_list as $key => $value){
 
             \Modules\Admin\Country::insert(array(
                 'code' => $key,
