@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Modules\Admin\Lead;
+use Modules\Admin\Schedule;
 
 
 class HomeController extends Controller
@@ -45,6 +46,24 @@ class HomeController extends Controller
 
 
     public function home_test(){
+
+        $today = Schedule::TodayByDay();
+        $array_of = Schedule::WeekDays();
+
+        $exists = in_array($today, $array_of);
+
+        $mydate=getdate(date("U"));
+
+        $nextTuesday = strtotime('next tuesday');
+        $weekNo = date('W');
+        $weekNoNextTuesday = date('W', $nextTuesday);
+
+        /*if ($weekNoNextTuesday != $weekNo) {
+            //past tuesday
+        }*/
+        $d = date('Y-m-d', strtotime('next sunday'));;
+        print_r($d);
+        exit("");
 
         $data = GenerateExecutionTime::run(1, 1);
         print_r($data);exit();

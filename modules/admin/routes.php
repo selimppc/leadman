@@ -284,4 +284,26 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'uses'=>'LeadController@get_download'
     ]);
 
+
+    /*
+     *
+     * Create Invoice
+     *
+     */
+
+    Route::any('create_invoice_by_pop_email_id/{popping_email_id}',[
+        'as'=>'create_invoice_by_pop_email_id',
+        'uses'=>'PoppingEmailController@create_invoice_by_pop_email_id'
+    ]);
+
+    Route::any('proceed_create_invoice',[
+        'as'=>'proceed_create_invoice',
+        'uses'=>'PoppingEmailController@proceed_create_invoice'
+    ]);
+
+
+
+
+
+
 });

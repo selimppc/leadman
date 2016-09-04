@@ -39,4 +39,32 @@ class Schedule extends Model
             }
         });
     }
+
+
+    /**
+     * @return array
+     */
+    public function scopeWeekDays(){
+        $arr = array(
+            'Saturday'=>'saturday',
+            'Sunday'=>'sunday',
+            'Monday'=>'monday',
+            'Tuesday'=>'tuesday',
+            'Wednesday'=>'wednesday',
+            'Thursday'=>'thursday',
+            'Friday'=>'friday',
+        );
+
+        return $arr;
+    }
+
+    public function scopeTodayByDay(){
+        //date
+        $current_date = date("Y-m-d");
+        $date1 = strtotime($current_date);
+        $date2 = date("l", $date1);
+        $today = strtolower($date2);
+
+        return $today;
+    }
 }

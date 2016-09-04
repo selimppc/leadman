@@ -12,8 +12,8 @@
 */
 
 
-Route::any('home-test', [
-    'as' => 'home-test',
+Route::any('home_test', [
+    'as' => 'home_test',
     'uses' => 'HomeController@home_test'
 ]);
 

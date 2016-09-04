@@ -14,6 +14,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Mockery\CountValidator\Exception;
 use Modules\Admin\Schedule;
 
@@ -56,6 +57,8 @@ class ScheduleController extends Controller
         try {
             $values = $request->only('day');
             $values['time'] = $request['timee'];
+            $values['day'] = Str::lower($request['day']);
+
             $unique_check = Schedule::where('day', $values['day'])->where('time', $values['time'])->first();
             if (!isset($unique_check)) {
                 Schedule::create($values); // store / update / code here
@@ -108,6 +111,8 @@ class ScheduleController extends Controller
         $model = Schedule::findOrFail($id);
         $input = $request->only('day');
         $input['time']=$request['timee'];
+        $input['day'] = Str::lower($request['day']);
+
         $unique_check= Schedule::where('day',$input['day'])->where('time',$input['time'])->where('id','!=',$id)->first();
         if(!isset($unique_check)) {
             $model->fill($input)->save(); // store / update / code here

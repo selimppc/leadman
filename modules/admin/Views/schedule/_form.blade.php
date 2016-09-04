@@ -6,9 +6,10 @@
     </ul>
 @endif
 <div class="form-group">
-    {!! Form::label('day', 'Day:', ['class' => 'control-label']) !!}
-    <small class="required">(Required)</small>
-    {!! Form::input('number', 'day', null, ['id'=>'number', 'class' => 'form-control', 'required'=>'required','min'=>0]) !!}
+    {!! Form::label('day', 'No of Day / Week day', ['class' => 'control-label']) !!}
+    <small class="required">(Required)</small><br>
+    <small>Example: No of day = 1 || Week day = saturday (small letter) </small>
+    {!! Form::input('text', 'day', null, [ 'class' => 'form-control', 'required'=>'required','min'=>0, 'placeholder'=> "example 1 or saturday "]) !!}
 
 </div>
 <div class="form-group">

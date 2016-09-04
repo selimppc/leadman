@@ -20,6 +20,7 @@ class InvoiceHead extends Model
         'invoice_number',
         'total_cost',
         'status',
+        'comments',
         'user_id'
     ];
     public function relPoppingEmail()
