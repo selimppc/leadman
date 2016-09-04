@@ -31,6 +31,7 @@ class ScheduleController extends Controller
 
 
         $data['schedules'] = Schedule::orderBy('id', 'DESC')->get();
+        $data['week_days'] = Schedule::WeekDays();
 
         return view('admin::schedule.index',$data);
     }
@@ -53,6 +54,7 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
+        
         DB::begintransaction();
         try {
             $values = $request->only('day');
@@ -96,7 +98,11 @@ class ScheduleController extends Controller
     {
         $data = Schedule::findOrFail($id);
         $data->timee=$data->time;
-        return view('admin::schedule.update', ['data'=>$data]);
+        $week_days = Schedule::WeekDays();
+        return view('admin::schedule.update', [
+            'data'=>$data,
+            'week_days'=>$week_days
+        ]);
     }
 
     /**

@@ -46,13 +46,13 @@ class Schedule extends Model
      */
     public function scopeWeekDays(){
         $arr = array(
-            'Saturday'=>'saturday',
-            'Sunday'=>'sunday',
-            'Monday'=>'monday',
-            'Tuesday'=>'tuesday',
-            'Wednesday'=>'wednesday',
-            'Thursday'=>'thursday',
-            'Friday'=>'friday',
+            'saturday'=>'saturday',
+            'sunday'=>'sunday',
+            'monday'=>'monday',
+            'tuesday'=>'tuesday',
+            'wednesday'=>'wednesday',
+            'thursday'=>'thursday',
+            'friday'=>'friday',
         );
 
         return $arr;
