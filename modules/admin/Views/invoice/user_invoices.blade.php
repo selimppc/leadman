@@ -21,6 +21,8 @@
                             <th>Id</th>
                             <th>Invoice Number</th>
                             <th>Popping Email</th>
+                            <th>Price</th>
+                            <th>Total Lead</th>
                             <th>Status</th>
                             <th>Cost</th>
                         </tr>
@@ -29,14 +31,16 @@
                             <tr>
                                 <td>{!! $i++ !!}</td>
                                 <td>{!! $invoice->invoice_number !!}</td>
-                                <td>{!! $invoice->relPoppingEmail['email'] !!}</td>
+                                <td>{!! $invoice->email !!}</td>
+                                <td>{!! $invoice->price !!}</td>
+                                <td>{!! $invoice->total_lead !!}</td>
                                 <td>{!! ucfirst($invoice->status) !!}</td>
                                 <td>{!! $invoice->total_cost !!}</td>
                                 <?php $total_cost+=$invoice->total_cost; ?>
                             </tr>
                         @endforeach
                         <tr>
-                            <th colspan="4" class="text-right">Total Cost</th>
+                            <th colspan="6" class="text-right">Total Cost</th>
                             <th>{!! $total_cost !!}</th>
                         </tr>
                     </table>
