@@ -135,6 +135,13 @@ class InvoiceController extends Controller {
 		return (isset($result)?$result:false);
 
 	}
+	public function user_invoices($user_id)
+    {
+        $data['pageTitle']='User Active Invoices';
+        $data['invoices']= InvoiceHead::with('relPoppingEmail')->where('user_id',$user_id)->where('status','open')->orWhere('status','approved')->get();
+//        dd($data);
+        return view('admin::invoice.user_invoices',$data);
+    }
 
 
 

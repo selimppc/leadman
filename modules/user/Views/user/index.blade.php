@@ -69,6 +69,7 @@
                                     {{--<td>{{$values->expire_date}}</td>--}}
                                     <td>{{date('Y-m-d', strtotime($values->expire_date))}}</td>
                                     <td>
+                                        <a href="{{ route('admin.user-invoice', $values->id) }}" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Invoices</a>
                                         <a href="{{ route('show-user', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" data-placement="top" data-content="view"><i class="fa fa-eye"></i></a>
                                         <a href="{{ route('edit-user', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" data-placement="top" data-content="update"><i class="fa fa-edit"></i></a>
                                         <a href="{{ route('delete-user', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" data-placement="top" data-content="delete"><i class="fa fa-trash-o"></i></a>

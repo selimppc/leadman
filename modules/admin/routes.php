@@ -247,6 +247,11 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'as'=>'admin.invoice.update_status',
         'uses'=>'InvoiceController@change_status'
     ]);
+    Route::get('admin/invoice/user_invoices/{user_id}',[
+        'middleware'=>'acl_access::admin/invoice/user_invoices/{user_id}',
+        'as'=>'admin.user-invoice',
+        'uses'=>'InvoiceController@user_invoices'
+    ]);
     Route::get('admin/lead',[
         'middleware'=>'acl_access::admin/lead',
         'as'=>'admin.lead',
