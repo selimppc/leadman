@@ -39,10 +39,16 @@
                                 <?php $total_cost+=$invoice->total_cost; ?>
                             </tr>
                         @endforeach
+                        @if($total_cost != 0)
                         <tr>
                             <th colspan="6" class="text-right">Total Cost</th>
                             <th>{!! $total_cost !!}</th>
                         </tr>
+                        @else
+                            <tr>
+                                <th colspan="7" class="text-center">Sorry, No data found.</th>
+                            </tr>
+                        @endif
                     </table>
                     <a href="{{ \URL::previous() }}" class="btn btn-info">Back</a>
                 </div>

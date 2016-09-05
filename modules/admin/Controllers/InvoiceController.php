@@ -143,6 +143,9 @@ class InvoiceController extends Controller {
         $invoices=$invoices->select('ih.invoice_number','ih.total_cost','ih.status','pe.email','pe.price',DB::raw('count("ind.id") as total_lead'));
         $invoices=$invoices->leftJoin('popping_email as pe','ih.popping_email_id','=','pe.id');
         $invoices=$invoices->leftJoin('invoice_detail as ind','ih.id','=','ind.invoice_head_id');
+        $invoices=$invoices->where('ih.status','=','open');
+        $invoices=$invoices->orWhere('ih.status','=','approved');
+        $invoices=$invoices->groupBy('ih.id');
         $data['invoices']=$invoices->get();
         return view('admin::invoice.user_invoices',$data);
     }
