@@ -14,8 +14,11 @@
 <h4> User wise Popping and Lead Stat </h4>
 
 <div class="row">
-    <div class="col-md-12">
 
+    <div class="col-md-12">
+        <p class="pull-right">
+            <a class="btn-sm btn-success" href="{{ URL::previous() }}"> Back to Dashboard </a>
+        </p>
         <div class="stat-panel">
 
             <div class="stat-cell col-sm-12 padding-sm-hr bordered no-border-r valign-top">
