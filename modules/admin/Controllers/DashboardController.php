@@ -107,13 +107,15 @@ class DashboardController extends Controller
 
         $user_data = User::findOrFail($user_id);
         $time = isset($time) ? $time : null;
+        $last_24 = date('Y-m-d h:i:s', strtotime("-1 day", time() ));
+        $last_7_days = date('Y-m-d h:i:s', strtotime("-7 day", time() ));
 
         if($time == 24)
         {
             //sql query for all
             $sql = "select pe.email, pe.password, count( DISTINCT lead.id ) no_of_lead, v_dpc.duplicate_leads
             from popping_email as pe
-            LEFT JOIN lead on lead.popping_email_id = pe.id and lead.status != 'filtered'
+            LEFT JOIN lead on lead.popping_email_id = pe.id and lead.status != 'filtered' and lead.created_at > '$last_24'
             LEFT JOIN v_user_lead_status_duplicate_24hours v_dpc on v_dpc.email = pe.email
             WHERE pe.user_id = '$user_id'
             GROUP BY pe.id ";
@@ -123,7 +125,7 @@ class DashboardController extends Controller
             //sql query for all
             $sql = "select pe.email, pe.password, count( DISTINCT lead.id ) no_of_lead, v_dpc.duplicate_leads
             from popping_email as pe
-            LEFT JOIN lead on lead.popping_email_id = pe.id and lead.status != 'filtered'
+            LEFT JOIN lead on lead.popping_email_id = pe.id and lead.status != 'filtered' and lead.created_at > '$last_24'
             LEFT JOIN v_user_lead_status_duplicate_7days v_dpc on v_dpc.email = pe.email
             WHERE pe.user_id = '$user_id'
             GROUP BY pe.id ";
