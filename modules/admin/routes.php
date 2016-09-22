@@ -62,7 +62,7 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'uses' => 'DashboardController@all_routes_uri'
     ]);
 
-    Route::any('user-by-lead/{user_id}', [
+    Route::get('user-by-lead/{user_id}/{time}', [
         'as' => 'user-by-lead',
         'uses' => 'DashboardController@user_by_lead'
     ]);

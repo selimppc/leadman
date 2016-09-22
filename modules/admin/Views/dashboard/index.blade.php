@@ -84,7 +84,7 @@
                     @if(isset($result_24))
                         @foreach($result_24 as $last_day)
                             <tr>
-                                <td><a href="{{ route('user-by-lead', ['user_id'=>$last_day->user_id]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($last_day->username) }} </a> </td>
+                                <td><a href="{{ route('user-by-lead', ['user_id'=>$last_day->user_id, 'time'=>24]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($last_day->username) }} </a> </td>
                                 <td>{{ $last_day->no_of_popping_email }}</td>
                                 <td>{{ $last_day->no_of_lead }}</td>
                                 <td>{{ number_format($last_day->lead_cost, 2) }}</td>
@@ -177,7 +177,7 @@
                     @if(isset($result_7_days))
                         @foreach($result_7_days as $last_7day)
                             <tr>
-                                <td><a href="{{ route('user-by-lead',['user_id'=>$last_7day->user_id]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($last_7day->username) }}</a></td>
+                                <td><a href="{{ route('user-by-lead',['user_id'=>$last_7day->user_id, 'time'=>7]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($last_7day->username) }}</a></td>
                                 <td>{{ $last_7day->no_of_popping_email }}</td>
                                 <td>{{ $last_7day->no_of_lead }}</td>
                                 <td>{{ number_format($last_7day->lead_cost, 2) }}</td>
@@ -247,7 +247,7 @@
                     @if(isset($user_leads))
                         @foreach($user_leads as $user_lead)
                             <tr>
-                                <td><a href="{{ route('user-by-lead',['user_id'=>$user_lead->user_id]) }}" class="text-bold">{{ Illuminate\Support\Str::upper($user_lead->username) }}</a></td>
+                                <td><a href="{{ route('user-by-lead',['user_id'=>$user_lead->user_id, 'time'=>'0']) }}" class="text-bold">{{ Illuminate\Support\Str::upper($user_lead->username) }}</a></td>
                                 <td>{{ $user_lead->no_of_popping_email }}</td>
                                 <td>{{ $user_lead->total_lead }}</td>
                             </tr>

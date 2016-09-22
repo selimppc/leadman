@@ -26,6 +26,10 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
+        $last_24 = date('Y-m-d h:i:s', strtotime("-1 day", time() ));
+        $last_7_days = date('Y-m-d h:i:s', strtotime("-7 day", time() ));
+
+
         $user_login = Session::get('role_title');
         if($user_login == 'user'){
             return redirect()->to('dashboard/user');
@@ -54,6 +58,10 @@ class DashboardController extends Controller
             $data['user_invoices_status']= PoppingEmail::userInvoiceStatusView();
             $data['user_lead_status_duplicate']= PoppingEmail::UserLeadStatusDuplicateView();
             $data['user_lead_status_filtered']= PoppingEmail::UserLeadStatusFilteredView();
+
+            //date
+            $data['last_24'] = $last_24;
+            $data['last_7_days'] = $last_7_days;
 
             return view('admin::dashboard.index',$data);
         }
@@ -94,16 +102,43 @@ class DashboardController extends Controller
         print_r($routes_list);exit;
     }
 
-    public function user_by_lead($user_id){
+    public function user_by_lead($user_id, $time=null)
+    {
 
         $user_data = User::findOrFail($user_id);
+        $time = isset($time) ? $time : null;
 
-        //sql query for all
-        $sql = "select pe.email, pe.password, count( DISTINCT lead.id ) no_of_lead
+        if($time == 24)
+        {
+            //sql query for all
+            $sql = "select pe.email, pe.password, count( DISTINCT lead.id ) no_of_lead, v_dpc.duplicate_leads
             from popping_email as pe
             LEFT JOIN lead on lead.popping_email_id = pe.id and lead.status != 'filtered'
+            LEFT JOIN v_user_lead_status_duplicate_24hours v_dpc on v_dpc.email = pe.email
             WHERE pe.user_id = '$user_id'
             GROUP BY pe.id ";
+        }
+        else if($time == 7)
+        {
+            //sql query for all
+            $sql = "select pe.email, pe.password, count( DISTINCT lead.id ) no_of_lead, v_dpc.duplicate_leads
+            from popping_email as pe
+            LEFT JOIN lead on lead.popping_email_id = pe.id and lead.status != 'filtered'
+            LEFT JOIN v_user_lead_status_duplicate_7days v_dpc on v_dpc.email = pe.email
+            WHERE pe.user_id = '$user_id'
+            GROUP BY pe.id ";
+        }
+        else
+        {
+            //sql query for all
+            $sql = "select pe.email, pe.password, count( DISTINCT lead.id ) no_of_lead, v_dpc.duplicate_leads
+            from popping_email as pe
+            LEFT JOIN lead on lead.popping_email_id = pe.id and lead.status != 'filtered'
+            LEFT JOIN v_user_lead_status_duplicate v_dpc on v_dpc.email = pe.email
+            WHERE pe.user_id = '$user_id'
+            GROUP BY pe.id ";
+        }
+
         $result = DB::select(DB::raw($sql));
 
 

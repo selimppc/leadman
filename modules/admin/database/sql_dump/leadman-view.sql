@@ -407,3 +407,45 @@ DROP TABLE IF EXISTS `v_user_lead_status_filtered`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_user_lead_status_filtered` AS (select `user`.`id` AS `user_id`,`user`.`username` AS `username`,`popping_email`.`email` AS `email`,count(distinct `lead`.`id`) AS `filtered_leads` from ((`popping_email` join `user` on(((`popping_email`.`user_id` = `user`.`id`) and (`popping_email`.`status` <> 'cancel')))) left join `lead` on(((`lead`.`popping_email_id` = `popping_email`.`id`) and (`lead`.`status` = 'filtered')))) group by `popping_email`.`id`);
 
 
+
+
+--
+-- Stand-in structure for view `v_user_lead_status_duplicate_7days`
+--
+CREATE TABLE `v_user_lead_status_duplicate_7days` (
+`user_id` int(10) unsigned
+,`username` varchar(64)
+,`email` varchar(128)
+,`duplicate_leads` bigint(21)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `v_user_lead_status_duplicate_24hours`
+--
+CREATE TABLE `v_user_lead_status_duplicate_24hours` (
+`user_id` int(10) unsigned
+,`username` varchar(64)
+,`email` varchar(128)
+,`duplicate_leads` bigint(21)
+);
+
+
+--
+-- Structure for view `v_user_lead_status_duplicate_7days`
+--
+DROP TABLE IF EXISTS `v_user_lead_status_duplicate_7days`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_user_lead_status_duplicate_7days`  AS  (select `user`.`id` AS `user_id`,`user`.`username` AS `username`,`popping_email`.`email` AS `email`,count(distinct `lead`.`id`) AS `duplicate_leads` from ((`popping_email` join `user` on(((`popping_email`.`user_id` = `user`.`id`) and (`popping_email`.`status` <> 'cancel')))) left join `lead` on(((`lead`.`popping_email_id` = `popping_email`.`id`) and (`lead`.`count` > 1) and (`lead`.`created_at` > (now() - interval 7 day))))) group by `popping_email`.`id`) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `v_user_lead_status_duplicate_24hours`
+--
+DROP TABLE IF EXISTS `v_user_lead_status_duplicate_24hours`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_user_lead_status_duplicate_24hours`  AS  (select `user`.`id` AS `user_id`,`user`.`username` AS `username`,`popping_email`.`email` AS `email`,count(distinct `lead`.`id`) AS `duplicate_leads` from ((`popping_email` join `user` on(((`popping_email`.`user_id` = `user`.`id`) and (`popping_email`.`status` <> 'cancel')))) left join `lead` on(((`lead`.`popping_email_id` = `popping_email`.`id`) and (`lead`.`count` > 1) and (`lead`.`created_at` > (now() - interval 24 hour))))) group by `popping_email`.`id`) ;
+
+-- --------------------------------------------------------

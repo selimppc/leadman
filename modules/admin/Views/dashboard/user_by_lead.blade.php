@@ -29,15 +29,17 @@
                         <th>Popping Email</th>
                         <th>Password</th>
                         <th>No of Lead</th>
+                        <th>No of Duplicate Leads</th>
                     </tr>
                     </thead>
                     <tbody>
                         @if(isset($result))
                             @foreach($result as $value)
                                 <tr>
-                                    <td>{{ $value->email }}</td>
-                                    <td>{{ $value->password }}</td>
-                                    <td>{{ $value->no_of_lead }}</td>
+                                    <td>{{ isset($value->email)?$value->email:null }}</td>
+                                    <td>{{ isset($value->password)?$value->password:null }}</td>
+                                    <td>{{ isset($value->no_of_lead)?$value->no_of_lead:null }}</td>
+                                    <td>{{ isset($value->duplicate_leads)?$value->duplicate_leads:null }}</td>
                                 </tr>
                             @endforeach
                         @endif
