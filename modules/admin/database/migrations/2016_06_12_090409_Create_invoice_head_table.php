@@ -17,7 +17,6 @@ class CreateInvoiceHeadTable extends Migration
             $table->unsignedInteger('user_id',false)->nullable();
             $table->foreign('user_id')->references('id')->on('user');
             $table->unsignedInteger('popping_email_id',false)->nullable();
-            #$table->foreign('popping_email_id')->references('id')->on('popping_email');
             $table->string('invoice_number', 64)->nullable();
             $table->float('total_cost')->nullable();
             $table->text('comments')->nullable();
@@ -26,6 +25,14 @@ class CreateInvoiceHeadTable extends Migration
             $table->unsignedInteger('updated_by',false)->nullable();
             $table->timestamps();
         });
+        Schema::table('invoice_head', function($table) {
+            //if 'popping_email' table  exists
+            if(Schema::hasTable('popping_email'))
+            {
+                $table->foreign('popping_email_id')->references('id')->on('popping_email');
+            }
+        });
+
     }
 
     /**
