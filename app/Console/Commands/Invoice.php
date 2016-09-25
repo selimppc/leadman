@@ -92,6 +92,7 @@ class Invoice extends Command {
 									{
 										$array_dt = [
 											'invoice_head_id' => $hd_inv->id,
+											'popping_email_id' => $popping_email_id,
 											'lead_id'         => $lead->id,
 											'unit_price'      => $price,
 											'inv_date'		  => date('Y-m-d')
