@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Helpers\GoogleClientCall;
 use App\Helpers\ImapCall;
+use App\User;
 use Illuminate\Console\Command;
 use Google_Service_Gmail;
 use Google_Service_Gmail_ModifyMessageRequest;
@@ -117,14 +118,27 @@ class EmailFetch extends Command
                                             $this->info('Failed : '.$e->getMessage());
                                         }
                                     }else{
-                                        $model = Lead::where('email', $from_email)->first();
-                                        try{
-                                            $model->count = $model->count + 1;
-                                            $model->save();
-                                            $this->info('Updated Count for the Lead : '.$model->email);
-                                        }catch(\Exception $e){
-                                            $this->info('Failed : '.$e->getMessage());
+
+										/*
+										Check setting if "duplicate_lead" = yes or no from user table
+										this settings will allow us to store duplicate of not
+										-- it will handled for specific user(s)
+										 */
+                                        $user_data = User::findOrfail($pop_email->user_id);
+                                        $user_check_duplicate_lead = $user_data->duplicate_lead;
+
+                                        if($user_check_duplicate_lead == "yes")
+                                        {
+                                            $model = Lead::where('email', $from_email)->first();
+                                            try{
+                                                $model->count = $model->count + 1;
+                                                $model->save();
+                                                $this->info('Updated Count for the Lead : '.$model->email);
+                                            }catch(\Exception $e){
+                                                $this->info('Failed : '.$e->getMessage());
+                                            }
                                         }
+
                                     }
                                 }
                             }else{
@@ -147,13 +161,24 @@ class EmailFetch extends Command
                                         $this->info('Failed : '.$e->getMessage());
                                     }
                                 }else{
-                                    $model = Lead::where('email', $from_email)->first();
-                                    try{
-                                        $model->count = $model->count + 1;
-                                        $model->save();
-                                        $this->info('Updated Count for the Lead : '.$model->email);
-                                    }catch(\Exception $e){
-                                        $this->info('Failed : '.$e->getMessage());
+
+                                    /*
+                                    Check setting if "duplicate_lead" = yes or no from user table
+                                    this settings will allow us to store duplicate of not
+                                    -- it will handled for specific user(s)
+                                     */
+                                    $user_data = User::findOrfail($pop_email->user_id);
+                                    $user_check_duplicate_lead = $user_data->duplicate_lead;
+                                    if($user_check_duplicate_lead == "yes")
+                                    {
+                                        $model = Lead::where('email', $from_email)->first();
+                                        try{
+                                            $model->count = $model->count + 1;
+                                            $model->save();
+                                            $this->info('Updated Count for the Lead : '.$model->email);
+                                        }catch(\Exception $e){
+                                            $this->info('Failed : '.$e->getMessage());
+                                        }
                                     }
                                 }
 
