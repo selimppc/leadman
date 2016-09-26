@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Support\Facades\Auth;
+use Modules\Admin\PoppingEmail;
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
@@ -81,6 +82,10 @@ class User extends Model implements AuthenticatableContract,
 
     public function relDepartment(){
         return $this->belongsTo('App\Department', 'department_id', 'id');
+    }
+
+    public function relPoppingEmail(){
+        return $this->hasMany('Modules\Admin\PoppingEmail');
     }
 
     // TODO :: boot

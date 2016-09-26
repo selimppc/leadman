@@ -17,6 +17,7 @@ class InvoiceDetail extends Model
     protected $table='invoice_detail';
     protected $fillable=[
         'invoice_head_id',
+        'popping_email_id',
         'lead_id',
         'unit_price',
         'inv_date',

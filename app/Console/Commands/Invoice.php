@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Helpers\GenerateExecutionTime;
 use App\Helpers\GenerateNumber;
+use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -47,19 +48,135 @@ class Invoice extends Command {
 		#date_default_timezone_set('Asia/Dacca');
 		$current_date = date('Y-m-d h:i:s');
 
-		$data = PoppingEmail::with(['relLead' => function ($query) {
+
+		/*$data = PoppingEmail::with(['relLead' => function ($query) {
 			$query->where('lead.status', 'open');
 		}])
 			->where('execution_time', '<=', $current_date)
 			->where('popping_email.status', '=', 'active')
+			->get();*/
+
+		$user_wise_popping_email = User::with(['relPoppingEmail'=> function ($query) use($current_date) {
+			$query->where('popping_email.status', 'active')->where('execution_time', '<=', $current_date);
+		}])
 			->get();
 
 		while (true) {
 			try
 			{
-				if (count($data) > 0) {
-					foreach ($data as $pop_email) {
-						if (count($pop_email->relLead) > 0) {
+				if (count($user_wise_popping_email) > 0)
+				{
+					foreach ($user_wise_popping_email as $user_data)
+					{
+						if(count($user_data['relPoppingEmail']) > 0)
+						{
+							#user ID
+							$user_id = $user_data->id;
+
+							$array_pe = array();
+							$total_cost = 0;
+							foreach($user_data['relPoppingEmail'] as $pop_email)
+							{
+								if(count($pop_email)> 0 )
+								{
+									//cost calculation for lead as per popping_email
+									$unit_price = $pop_email['price'];
+									$lead_data_per_pe = Lead::where('popping_email_id', $pop_email['id'])->get();
+									$lead_count = count($lead_data_per_pe);
+									$sub_cost = $lead_count * $unit_price;
+									$total_cost = $total_cost + $sub_cost;
+
+									$array_pe []= array(
+                                        $pop_email['id'],
+                                    );
+								}
+							}
+							$lead_data = Lead::whereIn('popping_email_id', $array_pe)->get();
+							$invoice_number   = GenerateNumber::run();
+
+							$array_data = [
+								'popping_email_id' => null, //$popping_email_id,
+								'user_id'          => $user_id,
+								'invoice_number'   => $invoice_number['generated_number'],
+								'total_cost'       => $total_cost,
+								'status'           => "open",
+							];
+
+							DB::beginTransaction();
+							try {
+
+								//model for invoice head
+								$model = new InvoiceHead();
+								if ($hd_inv = $model->create($array_data))
+								{
+
+
+									foreach ($lead_data as $lead)
+									{
+										$popping_email_da = PoppingEmail::findOrFail($lead['popping_email_id']);
+
+										$s_popping_email_id = $popping_email_da['id'];
+										$unit_price = $popping_email_da['price'];
+										$array_dt = [
+											'invoice_head_id' => $hd_inv->id,
+											'popping_email_id' => $s_popping_email_id,
+											'lead_id'         => $lead['id'],
+											'unit_price'      => $unit_price,
+											'inv_date'		  => date('Y-m-d')
+										];
+
+										//store into invoice detail and updated status of lead
+										$model_dt = new InvoiceDetail();
+
+										if ($model_dt->create($array_dt))
+										{
+											$lead_model         = Lead::findOrFail($lead['id']);
+											$lead_model->status = 'invoiced';
+											$lead_model->save();
+										}
+
+
+										//Generate Execution Time and Update in Popping_email Table
+										$generate_execution_time = GenerateExecutionTime::run($s_popping_email_id, $popping_email_da['schedule_id']);
+										$model                   = PoppingEmail::findOrFail($s_popping_email_id);
+										$model->execution_time   = $generate_execution_time;
+										$model->save();
+
+										#$this->info('... Next Execution Time : '.$generate_execution_time);
+
+									}
+
+									// success report
+									$this->info(' Invoice Stored Successfully !'.$invoice_number['generated_number']);
+
+									//Keep lead data into txt file as per invoice and delete them all
+									$lead_array = $lead_data->toArray();
+									$popping_keyword= $popping_email_da['keyword']?$popping_email_da['keyword']:null;
+									$result = $this->lead_to_txt($invoice_number['generated_number'], $lead_array, $popping_keyword);
+
+									if ($result)
+									{
+										$this->info(' Store new text file with lead data!'.$invoice_number['generated_number'].".txt");
+									}
+
+								}
+
+								//Commit the changes
+								DB::commit();
+							}
+							catch (\Exception $e)
+							{
+								//If there are any exceptions, rollback the transaction`
+								DB::rollback();
+								$this->info($e->getMessage());
+							}
+
+						}
+
+
+
+						/*if (count($pop_email->relLead) > 0)
+						{
 							//convert object to an array
 							$lead_array = $pop_email->relLead->toArray();
 
@@ -73,14 +190,14 @@ class Invoice extends Command {
 							$invoice_number   = GenerateNumber::run();
 
 							$array_data = [
-								'popping_email_id' => $popping_email_id,
+								'popping_email_id' => null, //$popping_email_id,
 								'user_id'          => $user_id,
 								'invoice_number'   => $invoice_number['generated_number'],
 								'total_cost'       => $total_cost,
 								'status'           => "open",
 							];
 
-							/* Transaction Start Here */
+							# Transaction Start Here
 							DB::beginTransaction();
 							try {
 
@@ -101,7 +218,8 @@ class Invoice extends Command {
 										//store into invoice detail and updated status of lead
 										$model_dt = new InvoiceDetail();
 
-										if ($model_dt->create($array_dt)) {
+										if ($model_dt->create($array_dt))
+										{
 											$lead_model         = Lead::findOrFail($lead->id);
 											$lead_model->status = 'invoiced';
 											$lead_model->save();
@@ -114,7 +232,8 @@ class Invoice extends Command {
 									//Keep lead data into txt file as per invoice and delete them all
 									$result = $this->lead_to_txt($invoice_number['generated_number'], $lead_array, $popping_keyword);
 
-									if ($result) {
+									if ($result)
+									{
 										$this->info(' Store new text file with lead data!'.$invoice_number['generated_number'].".txt");
 									}
 
@@ -130,22 +249,30 @@ class Invoice extends Command {
 
 								//Commit the changes
 								DB::commit();
-							} catch (\Exception $e) {
+							}
+							catch (\Exception $e)
+							{
 								//If there are any exceptions, rollback the transaction`
 								DB::rollback();
 								$this->info($e->getMessage());
 							}
-						} else {
-							$this->info('No data found from Lead to create Invoice !');
 						}
+						else
+						{
+							$this->info('No data found from Lead to create Invoice !');
+						}*/
 
 					}
 					break;
-				} else {
+				}
+				else
+				{
 					$this->info('No data found from Lead to create Invoice !');
 					break;
 				}
-			} catch (Exception $e) {
+			}
+			catch (Exception $e)
+			{
 				$this->info($e->getMessage().' - failed. Retrying...');
 				continue;
 			}
