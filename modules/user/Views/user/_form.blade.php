@@ -84,6 +84,18 @@
             <small class="narration">(Inactive status Selected)</small>
             {!! Form::Select('status',array('active'=>'Active','inactive'=>'Inactive','cancel'=>'Cancel'),Input::old('status'),['class'=>'form-control ','required']) !!}
         </div>
+
+        <div class="col-sm-6">
+            {!! Form::label('duplicate_lead', 'Duplicate Lead:', ['class' => 'control-label']) !!}
+            <div class="form-group">
+                {!! Form::label('duplicate_lead_yes', 'Yes', ['class' => 'control-label'])  !!}
+                {!! Form::radio('duplicate_lead', 'yes', false, ['id' => 'duplicate_lead_yes', 'required'=>'required']) !!}
+                <span style="padding-right: 20px;">&nbsp </span>
+                {!! Form::label('duplicate_lead_no', 'No', ['class' => 'control-label'])  !!}
+                {!! Form::radio('duplicate_lead', 'no', false, ['id'=>'duplicate_lead_no', 'required'=>'required']) !!}
+            </div>
+
+        </div>
     </div>
 </div>
 

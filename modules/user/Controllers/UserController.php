@@ -316,6 +316,7 @@ class UserController extends Controller
     public function add_user(Requests\UserRequest $request){
 
         $input = $request->all();
+
         #print_r($input);exit;
         #date_default_timezone_set("Asia/Dacca");
         $now = new DateTime();
@@ -333,7 +334,7 @@ class UserController extends Controller
                 'role_id'=> $input['role_id'],
                 'expire_date'=> $input['expire_date'],
                 'status'=> $input['status'],
-
+                'duplicate_lead'=> $input['duplicate_lead'],
 
             ];
             #print_r($input_data);exit;
@@ -421,6 +422,7 @@ class UserController extends Controller
                 'role_id'=> $input['role_id'],
                 'expire_date'=> $input['expire_date'],
                 'status'=> $input['status'],
+                'duplicate_lead'=> $input['duplicate_lead'],
             ];
                 DB::beginTransaction();
                 try{

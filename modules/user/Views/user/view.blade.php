@@ -37,6 +37,10 @@
                 <th class="col-lg-4">Status</th>
                 <td>{{ isset($data->status)?ucfirst($data->status):'' }}</td>
             </tr>
+            <tr>
+                <th class="col-lg-4">Duplicate Lead</th>
+                <td>{{ isset($data->duplicate_lead)?ucfirst($data->duplicate_lead):'' }}</td>
+            </tr>
 
         </table>
     </div>
