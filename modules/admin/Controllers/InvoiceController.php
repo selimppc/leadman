@@ -138,15 +138,24 @@ class InvoiceController extends Controller {
 	public function user_invoices($user_id)
     {
         $data['pageTitle']='User Active Invoices';
-        $data['invoices']= InvoiceHead::with(['relPoppingEmail','relInvoiceDetail'])->where('user_id',$user_id)->where('status','open')->orWhere('status','approved')->get();
-        $invoices=DB::table('invoice_head as ih');
+        #$data['invoices']= InvoiceHead::with(['relPoppingEmail','relInvoiceDetail'])->where('user_id',$user_id)->where('status','open')->orWhere('status','approved')->get();
+        /*$invoices=DB::table('invoice_head as ih');
         $invoices=$invoices->select('ih.invoice_number','ih.total_cost','ih.status','pe.email','pe.price',DB::raw('count("ind.id") as total_lead'));
         $invoices=$invoices->leftJoin('popping_email as pe','ih.popping_email_id','=','pe.id');
         $invoices=$invoices->leftJoin('invoice_detail as ind','ih.id','=','ind.invoice_head_id');
         $invoices=$invoices->where('ih.status','=','open');
         $invoices=$invoices->orWhere('ih.status','=','approved');
         $invoices=$invoices->groupBy('ih.id');
-        $data['invoices']=$invoices->get();
+        $data['invoices']=$invoices->get();*/
+
+		$invoices=DB::table('invoice_detail as ind');
+		$invoices=$invoices->select('ih.invoice_number','ih.total_cost','ih.status','pe.email','pe.price',DB::raw('count("ind.id") as total_lead'));
+		$invoices=$invoices->leftJoin('popping_email as pe','ind.popping_email_id','=','pe.id');
+		$invoices=$invoices->leftJoin('invoice_head as ih','ih.id','=','ind.invoice_head_id');
+		$invoices=$invoices->where('ih.status','=','open');
+		$invoices=$invoices->orWhere('ih.status','=','approved');
+		$invoices=$invoices->groupBy('ih.id');
+		$data['invoices']=$invoices->get();
         return view('admin::invoice.user_invoices',$data);
     }
 

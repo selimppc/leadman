@@ -95,7 +95,7 @@ class Invoice extends Command {
 							$invoice_number   = GenerateNumber::run();
 
 							$array_data = [
-								'popping_email_id' => null, //$popping_email_id,
+								#'popping_email_id' => null, //$popping_email_id,
 								'user_id'          => $user_id,
 								'invoice_number'   => $invoice_number['generated_number'],
 								'total_cost'       => $total_cost,
