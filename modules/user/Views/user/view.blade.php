@@ -41,6 +41,10 @@
                 <th class="col-lg-4">Duplicate Lead</th>
                 <td>{{ isset($data->duplicate_lead)?ucfirst($data->duplicate_lead):'' }}</td>
             </tr>
+            <tr>
+                <th class="col-lg-4">Duplicate Lead</th>
+                <td>{{ isset($data->email_subject_check)?ucfirst($data->email_subject_check):'' }}</td>
+            </tr>
 
         </table>
     </div>

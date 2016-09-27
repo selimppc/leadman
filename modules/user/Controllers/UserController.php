@@ -335,7 +335,7 @@ class UserController extends Controller
                 'expire_date'=> $input['expire_date'],
                 'status'=> $input['status'],
                 'duplicate_lead'=> $input['duplicate_lead'],
-
+                'email_subject_check'=> $input['email_subject_check'],
             ];
             #print_r($input_data);exit;
 
@@ -423,6 +423,7 @@ class UserController extends Controller
                 'expire_date'=> $input['expire_date'],
                 'status'=> $input['status'],
                 'duplicate_lead'=> $input['duplicate_lead'],
+                'email_subject_check'=> $input['email_subject_check'],
             ];
                 DB::beginTransaction();
                 try{

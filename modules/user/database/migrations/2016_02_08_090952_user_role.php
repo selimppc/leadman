@@ -59,6 +59,7 @@ class UserRole extends Migration
             $table->unsignedInteger('department_id')->nullable();
             $table->enum('status',array('active','inactive','cancel'))->nullable();
             $table->enum('duplicate_lead',array('yes','no'))->nullable();
+            $table->enum('email_subject_check',array('yes','no'))->nullable();
             $table->integer('created_by', false, 11);
             $table->integer('updated_by', false, 11);
             $table->timestamps();

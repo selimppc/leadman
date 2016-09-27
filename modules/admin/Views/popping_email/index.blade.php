@@ -63,8 +63,8 @@
                         <thead>
                         <tr>
                             <th>Email</th>
-                            <th>Smtp</th>
-                            <th>Imap</th>
+                            {{--<th>Smtp</th>
+                            <th>Imap</th>--}}
                             <th>Country</th>
                             <th>Price</th>
                             <th>Schedule</th>
@@ -85,8 +85,8 @@
                             @foreach($popping_emails as $values)
                                 <tr class="gradeX">
                                     <td>{{ isset($values->email)?$values->email:''  }}</td>
-                                    <td>{{ isset($values->relSmtp->name)?$values->relSmtp->name:'' }}</td>
-                                    <td>{{ isset($values->relImap->name)?$values->relImap->name:'' }}</td>
+                                    {{--<td>{{ isset($values->relSmtp->name)?$values->relSmtp->name:'' }}</td>
+                                    <td>{{ isset($values->relImap->name)?$values->relImap->name:'' }}</td>--}}
                                     <td>{{ isset($values->country_origin)?$values->relCountry->title:'' }}</td>
                                     <td>{{ isset($values->price)?$values->price:'' }}</td>
                                     <td>

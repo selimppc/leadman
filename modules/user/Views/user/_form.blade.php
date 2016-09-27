@@ -99,6 +99,23 @@
     </div>
 </div>
 
+<div class="form-group form-group no-margin-hr panel-padding-h no-padding-t no-border-t">
+    <div class="row">
+
+        <div class="col-sm-6">
+            {!! Form::label('email_subject_check', 'Email Subject Check :', ['class' => 'control-label']) !!}
+            <div class="form-group">
+                {!! Form::label('email_subject_check_yes', 'Yes', ['class' => 'control-label'])  !!}
+                {!! Form::radio('email_subject_check', 'yes', false, ['id' => 'email_subject_check_yes', 'required'=>'required']) !!}
+                <span style="padding-right: 20px;">&nbsp </span>
+                {!! Form::label('email_subject_check_no', 'No', ['class' => 'control-label'])  !!}
+                {!! Form::radio('email_subject_check', 'no', false, ['id'=>'email_subject_check_no', 'required'=>'required']) !!}
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div class="save-margin-btn">
     {!! Form::submit('Save changes', ['id'=>'btn-disabled','class' => 'btn btn-primary','data-placement'=>'top','data-content'=>'click save changes button for save role information']) !!}
     <a href="{{route('user-list')}}" class=" btn btn-default" data-placement="top" data-content="click close button for close this entry form">Close</a>

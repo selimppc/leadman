@@ -89,8 +89,9 @@ class EmailFetch extends Command
                             $subject = $val['subject'];
 
                             // check constraint from Central Settings Table
-                            $check_settings = CentralSettings::where('title', 'email-subject-check')->first();
-                            $check_settings_value = $check_settings->status;
+                            #$check_settings = CentralSettings::where('title', 'email-subject-check')->first();
+                            $check_settings = User::findOrfail($pop_email->user_id);
+                            $check_settings_value = $check_settings->email_subject_check;
 
                             //Check email exists
                             if($check_settings_value == 'yes')
