@@ -77,7 +77,7 @@
                             <th>Lead</th>
                             <th>Invoice</th>
                             <th>Action </th>
-                            <th>Create Invoice </th>
+                            {{--<th>Create Invoice </th>--}}
                         </tr>
                         </thead>
                         <tbody>
@@ -121,9 +121,9 @@
                                         <a href="{{ url('admin/popping-email/edit', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" title="Popping Email Edit"><i class="icon-edit"></i></a>
                                         <a href="{{ url('admin/popping-email/delete', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" title="Popping Email Delete"><i class="icon-trash"></i></a>
                                     </td>
-                                    <td>
+                                    {{--<td>
                                         <a href="{{ url('create_invoice_by_pop_email_id', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Create Invoice">Create Invoice</a>
-                                    </td>
+                                    </td>--}}
                                 </tr>
                             @endforeach
                         @endif
