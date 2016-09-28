@@ -76,8 +76,9 @@
                         <th>No of Popping Email</th>
                         <th>No of Lead</th>
                         <th>Lead Cost</th>
+                        {{--
                         <th>No of Invoice</th>
-                        <th>Invoice Cost</th>
+                        <th>Invoice Cost</th>--}}
                     </tr>
                     </thead>
                     <tbody>
@@ -88,8 +89,8 @@
                                 <td>{{ $last_day->no_of_popping_email }}</td>
                                 <td>{{ $last_day->no_of_lead }}</td>
                                 <td>{{ number_format($last_day->lead_cost, 2) }}</td>
-                                <td>{{ $last_day->no_of_invoice }}</td>
-                                <td>{{ number_format($last_day->invoice_cost, 2) }}</td>
+                                {{--<td>{{ $last_day->no_of_invoice }}</td>
+                                <td>{{ number_format($last_day->invoice_cost, 2) }}</td>--}}
                             </tr>
                         @endforeach
                     @endif
@@ -169,8 +170,8 @@
                         <th>No of Popping Email</th>
                         <th>No of Lead</th>
                         <th>Lead Cost</th>
-                        <th>No of Invoice</th>
-                        <th>Invoice Cost</th>
+                        {{--<th>No of Invoice</th>
+                        <th>Invoice Cost</th>--}}
                     </tr>
                     </thead>
                     <tbody>
@@ -181,8 +182,8 @@
                                 <td>{{ $last_7day->no_of_popping_email }}</td>
                                 <td>{{ $last_7day->no_of_lead }}</td>
                                 <td>{{ number_format($last_7day->lead_cost, 2) }}</td>
-                                <td>{{ $last_7day->no_of_invoice }}</td>
-                                <td>{{ number_format($last_7day->invoice_cost,2 ) }}</td>
+                                {{--<td>{{ $last_7day->no_of_invoice }}</td>
+                                <td>{{ number_format($last_7day->invoice_cost,2 ) }}</td>--}}
                             </tr>
                         @endforeach
                     @endif
