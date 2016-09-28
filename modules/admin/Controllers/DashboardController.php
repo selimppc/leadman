@@ -49,8 +49,10 @@ class DashboardController extends Controller
 
             //Mysql View
             $data['result_24']= PoppingEmail::last24hours();
+
             $data['result_24_lead']= PoppingEmail::last24hours_lead();
             $data['result_24_amount']= PoppingEmail::last24hours_amount();
+
             $data['result_7_days']= PoppingEmail::last7days();
             $data['result_7_days_lead']= PoppingEmail::last7days_lead();
             $data['result_7_days_amount']= PoppingEmail::last7days_amount();
