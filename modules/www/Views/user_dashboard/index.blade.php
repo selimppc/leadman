@@ -63,6 +63,7 @@
                             <th>Popping Email</th>
                             <th>No of Lead</th>
                             <th>Lead Cost</th>
+                            <th>No of Duplicate Lead</th>
                             {{--<th>No of Invoice</th>
                             <th>Invoice Cost</th>--}}
                         </tr>
@@ -74,6 +75,7 @@
                                     <td>{{ $result_24->email }}</td>
                                     <td>{{ $result_24->no_of_lead }}</td>
                                     <td>{{ $result_24->lead_cost }}</td>
+                                    <td>{{ $result_24->duplicate_lead }}</td>
                                     {{--<td>{{ $result_24->no_of_invoice }}</td>
                                     <td>{{ $result_24->invoice_cost }}</td>--}}
                                 </tr>
@@ -145,6 +147,7 @@
                         <th>Popping Email</th>
                         <th>No of Lead</th>
                         <th>Lead Cost</th>
+                        <th>No of Duplicate Lead</th>
                         {{--<th>No of Invoice</th>
                         <th>Invoice Cost</th>--}}
                     </tr>
@@ -156,6 +159,7 @@
                                 <td>{{ $result_7_days->email }}</td>
                                 <td>{{ $result_7_days->no_of_lead }}</td>
                                 <td>{{ $result_7_days->lead_cost }}</td>
+                                <td>{{ $result_7_days->duplicate_lead }}</td>
                                 {{--<td>{{ $result_7_days->no_of_invoice }}</td>
                                 <td>{{ $result_7_days->invoice_cost }}</td>--}}
                             </tr>
@@ -292,7 +296,7 @@
         <!-- / Javascript -->
 
 
-        <div class="stat-panel">
+        {{--<div class="stat-panel">
 
             <div class="stat-cell col-sm-7 padding-sm-hr bordered no-border-r valign-top">
                 <!-- Small padding, without top padding, extra small horizontal padding -->
@@ -318,7 +322,7 @@
                     </tbody>
                 </table>
 
-            </div>
+            </div>--}}
 
 
             {{--<div class="stat-cell col-sm-5 bg-primary padding-sm valign-middle">
