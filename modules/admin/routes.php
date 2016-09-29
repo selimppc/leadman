@@ -301,6 +301,11 @@ Route::Group(['modules'=>'admin','namespace'=>'Modules\Admin\Controllers','middl
         'uses'=>'PoppingEmailController@create_invoice_by_pop_email_id'
     ]);
 
+    Route::any('create_invoice_by_user_id/{user_id}',[
+        'as'=>'create_invoice_by_user_id',
+        'uses'=>'PoppingEmailController@create_invoice_by_user_id'
+    ]);
+
     Route::any('proceed_create_invoice',[
         'as'=>'proceed_create_invoice',
         'uses'=>'PoppingEmailController@proceed_create_invoice'

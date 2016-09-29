@@ -3,15 +3,15 @@
         <div class="modal-header">
              <a href="{{ URL::to('admin/popping-email')}}" class="btn btn-default pull-right" type="button"> &times;</a>
 
-            <h4 class="modal-title">Create Invoice for <b>{{$pop_email->email}}</b></h4>
+            <h4 class="modal-title">Create Invoice for <b>{{isset($pop_email->email)?$pop_email->email:null}}</b></h4>
         </div>
         <div class="modal-body">
 
-            {!! Form::model($pop_email, ['method' => 'PATCH', 'url'=> ['proceed_create_invoice']]) !!}
+            {!! Form::model(isset($pop_email)?$pop_email:null, ['method' => 'PATCH', 'url'=> ['proceed_create_invoice']]) !!}
 
-            {!! Form::hidden('popping_email_id', $pop_email->id ) !!}
+            {!! Form::hidden('user_id', isset($pop_email->id)?$pop_email->id:null ) !!}
 
-            <p>Popping Email : <b>{{$pop_email->email}}</b></p>
+            <p>User Email : <b>{{isset($pop_email->email)?$pop_email->email:null}}</b></p>
 
             <div class="form-group">
                 {!! Form::label('comments', 'Comments:', ['class' => 'control-label']) !!}

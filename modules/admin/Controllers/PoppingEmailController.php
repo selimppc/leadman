@@ -10,6 +10,7 @@ namespace Modules\Admin\Controllers;
 
 use App\Helpers\GenerateExecutionTime;
 use App\Helpers\GenerateNumber;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -461,7 +462,23 @@ class PoppingEmailController extends Controller
         $data['pageTitle'] = 'Create Invoice by Popping Email';
 
         /// create invoice and add comment
-        $data['pop_email'] = PoppingEmail::findOrFail($popping_email_id);
+        $data['pop_email'] = PoppingEmail::where('id', $popping_email_id)->first();
+
+        return view('admin::popping_email.create_invoice', $data );
+
+    }
+
+    /**
+     * Create Invoice According to User ID
+     *
+     */
+    public function create_invoice_by_user_id($user_id)
+    {
+        $data['pageTitle'] = 'Create Invoice by User ID';
+
+        /// create invoice and add comment
+        $data['pop_email'] = User::where('id', $user_id)->first();
+
         return view('admin::popping_email.create_invoice', $data );
 
     }
@@ -470,22 +487,132 @@ class PoppingEmailController extends Controller
     {
         //Input Data
         $input_data = $request->all();
-        $popping_email_id = $input_data['popping_email_id'];
+        $user_id = $input_data['user_id'];
         $comments = $input_data['comments'];
 
 
-        $data = PoppingEmail::with(['relLead' => function ($query) {
+        /*$data = PoppingEmail::with(['relLead' => function ($query) {
             $query->where('lead.status', 'open');
         }])
             ->where('id', '=', $popping_email_id)
             ->where('popping_email.status', '=', 'active')
+            ->get();*/
+
+        $data = User::with(['relPoppingEmail'=> function ($query) {
+            $query->where('popping_email.status', 'active');
+        }])
+            ->where('user.id', '=', $user_id)
+            ->where('user.status', '=', 'active')
             ->get();
 
-        #print_r($data);exit();
 
         if (count($data) > 0) {
-            foreach ($data as $pop_email) {
-                if (count($pop_email->relLead) > 0) {
+            foreach ($data as $user_data ) {
+                $relPoppingEmail= $user_data['relPoppingEmail'];
+
+                $user_id = $user_id;
+                $array_pe = array();
+                $total_cost = 0;
+                foreach($relPoppingEmail as $pop_email)
+                {
+                    if(count($pop_email)> 0 )
+                    {
+                        //cost calculation for lead as per popping_email
+                        $unit_price = $pop_email['price'];
+                        $lead_data_per_pe = Lead::where('popping_email_id', $pop_email['id'])->get();
+                        $lead_count = count($lead_data_per_pe);
+                        $sub_cost = $lead_count * $unit_price;
+                        $total_cost = $total_cost + $sub_cost;
+
+                        $array_pe []= array(
+                            $pop_email['id'],
+                        );
+                    }
+                }
+                $lead_data = Lead::whereIn('popping_email_id', $array_pe)->get();
+                $invoice_number   = GenerateNumber::run();
+
+                $array_data = [
+                    #'popping_email_id' => null, //$popping_email_id,
+                    'user_id'          => $user_id,
+                    'invoice_number'   => $invoice_number['generated_number'],
+                    'total_cost'       => $total_cost,
+                    'comments'       => isset($comments)?$comments:null,
+                    'status'           => "open",
+                ];
+
+                DB::beginTransaction();
+                try {
+
+                    //model for invoice head
+                    $model = new InvoiceHead();
+                    if ($hd_inv = $model->create($array_data))
+                    {
+
+                        foreach ($lead_data as $lead)
+                        {
+                            $popping_email_da = PoppingEmail::findOrFail($lead['popping_email_id']);
+
+                            $s_popping_email_id = $popping_email_da['id'];
+                            $unit_price = $popping_email_da['price'];
+                            $array_dt = [
+                                'invoice_head_id' => $hd_inv->id,
+                                'popping_email_id' => $s_popping_email_id,
+                                'lead_id'         => $lead['id'],
+                                'unit_price'      => $unit_price,
+                                'inv_date'		  => date('Y-m-d')
+                            ];
+
+                            //store into invoice detail and updated status of lead
+                            $model_dt = new InvoiceDetail();
+
+                            if ($model_dt->create($array_dt))
+                            {
+                                $lead_model         = Lead::findOrFail($lead['id']);
+                                $lead_model->status = 'invoiced';
+                                $lead_model->save();
+                            }
+
+
+                            //Generate Execution Time and Update in Popping_email Table
+                            $generate_execution_time = GenerateExecutionTime::run($s_popping_email_id, $popping_email_da['schedule_id']);
+                            $model                   = PoppingEmail::findOrFail($s_popping_email_id);
+                            $model->execution_time   = $generate_execution_time;
+                            $model->save();
+
+                            #$this->info('... Next Execution Time : '.$generate_execution_time);
+
+                        }
+
+                        // success report
+                        #$this->info(' Invoice Stored Successfully !'.$invoice_number['generated_number']);
+                        Session::flash('message', 'Invoice Stored Successfully ! '.$invoice_number['generated_number']);
+
+                        //Keep lead data into txt file as per invoice and delete them all
+                        $lead_array = $lead_data->toArray();
+                        $popping_keyword= $popping_email_da['keyword']?$popping_email_da['keyword']:null;
+                        $result = $this->lead_to_txt($invoice_number['generated_number'], $lead_array, $popping_keyword);
+
+                        if ($result)
+                        {
+                           # $this->info(' Store new text file with lead data!'.$invoice_number['generated_number'].".txt");
+                            Session::flash('message', ' Store new text file with lead data!'.$invoice_number['generated_number'].".txt");
+                        }
+
+                    }
+
+                    //Commit the changes
+                    DB::commit();
+                }
+                catch (\Exception $e)
+                {
+                    //If there are any exceptions, rollback the transaction`
+                    DB::rollback();
+                    $this->info($e->getMessage());
+                }
+
+
+                /*if (count($pop_email->relLead) > 0) {
                     //convert object to an array
                     $lead_array = $pop_email->relLead->toArray();
 
@@ -507,8 +634,8 @@ class PoppingEmailController extends Controller
                         'status'           => "open",
                     ];
 
-                    /* Transaction Start Here */
-                    DB::beginTransaction();
+                    // Transaction Start Here
+                    #DB::beginTransaction();
                     try {
 
                         //model for invoice head
@@ -561,7 +688,7 @@ class PoppingEmailController extends Controller
                     }
                 } else {
                     Session::flash('danger', 'No data found from Lead to create Invoice !');
-                }
+                }*/
             }
         } else {
             Session::flash('danger', 'No data found from Lead to create Invoice !');
