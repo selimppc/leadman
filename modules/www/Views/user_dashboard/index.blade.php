@@ -63,8 +63,8 @@
                             <th>Popping Email</th>
                             <th>No of Lead</th>
                             <th>Lead Cost</th>
-                            <th>No of Invoice</th>
-                            <th>Invoice Cost</th>
+                            {{--<th>No of Invoice</th>
+                            <th>Invoice Cost</th>--}}
                         </tr>
                     </thead>
                     <tbody>
@@ -74,8 +74,8 @@
                                     <td>{{ $result_24->email }}</td>
                                     <td>{{ $result_24->no_of_lead }}</td>
                                     <td>{{ $result_24->lead_cost }}</td>
-                                    <td>{{ $result_24->no_of_invoice }}</td>
-                                    <td>{{ $result_24->invoice_cost }}</td>
+                                    {{--<td>{{ $result_24->no_of_invoice }}</td>
+                                    <td>{{ $result_24->invoice_cost }}</td>--}}
                                 </tr>
                             @endforeach
                         @endif
@@ -145,8 +145,8 @@
                         <th>Popping Email</th>
                         <th>No of Lead</th>
                         <th>Lead Cost</th>
-                        <th>No of Invoice</th>
-                        <th>Invoice Cost</th>
+                        {{--<th>No of Invoice</th>
+                        <th>Invoice Cost</th>--}}
                     </tr>
                     </thead>
                     <tbody>
@@ -156,8 +156,8 @@
                                 <td>{{ $result_7_days->email }}</td>
                                 <td>{{ $result_7_days->no_of_lead }}</td>
                                 <td>{{ $result_7_days->lead_cost }}</td>
-                                <td>{{ $result_7_days->no_of_invoice }}</td>
-                                <td>{{ $result_7_days->invoice_cost }}</td>
+                                {{--<td>{{ $result_7_days->no_of_invoice }}</td>
+                                <td>{{ $result_7_days->invoice_cost }}</td>--}}
                             </tr>
                         @endforeach
                     @endif
