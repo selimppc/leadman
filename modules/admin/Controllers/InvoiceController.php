@@ -153,6 +153,7 @@ class InvoiceController extends Controller {
 		$invoices=$invoices->leftJoin('popping_email as pe','ind.popping_email_id','=','pe.id');
 		$invoices=$invoices->leftJoin('invoice_head as ih','ih.id','=','ind.invoice_head_id');
 		$invoices=$invoices->where('ih.status','=','open');
+		$invoices=$invoices->where('ih.user_id','=',$user_id);
 		$invoices=$invoices->orWhere('ih.status','=','approved');
 		$invoices=$invoices->groupBy('ih.id');
 		$data['invoices']=$invoices->get();
