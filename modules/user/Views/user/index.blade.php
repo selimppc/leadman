@@ -54,7 +54,9 @@
                             <th> Email </th>
                             {{--<th> Department </th>--}}
                             <th> Status &nbsp;&nbsp;<span style="color: #A54A7B" class="user-guideline" data-placement="top" data-content="you can change status from update page"></span></th>
-                            <th> Expire Date </th>
+                            {{--<th> Expire Date </th>--}}
+                            <th> Is Duplicate </th>
+                            <th> Subject Check </th>
                             <th> Action &nbsp;&nbsp;<span style="color: #A54A7B" class="user-guideline" data-placement="top" data-content="view : click for details informations<br>update : click for update informations<br>delete : click for delete informations"></span></th>
                             <th> Create Invoice </th>
                         </tr>
@@ -68,16 +70,18 @@
                                     {{--<td>{{isset($values->relDepartment->title)?ucfirst($values->relDepartment->title):''}}</td>--}}
                                     <td>{{ucfirst($values->status)}}</td>
                                     {{--<td>{{$values->expire_date}}</td>--}}
-                                    <td>{{date('Y-m-d', strtotime($values->expire_date))}}</td>
+                                    <td>{{$values->duplicate_lead}}</td>
+                                    <td>{{$values->email_subject_check}}</td>
+                                    {{--<td>{{date('Y-m-d', strtotime($values->expire_date))}}</td>--}}
                                     <td>
-                                        <a href="{{ route('admin.user-invoice', $values->id) }}" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Invoices</a>
+                                        <a href="{{ route('admin.user-invoice', $values->id) }}" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Inv</a>
                                         <a href="{{ route('show-user', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" data-placement="top" data-content="view"><i class="fa fa-eye"></i></a>
                                         <a href="{{ route('edit-user', $values->id) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#etsbModal" data-placement="top" data-content="update"><i class="fa fa-edit"></i></a>
                                         <a href="{{ route('delete-user', $values->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to Delete?')" data-placement="top" data-content="delete"><i class="fa fa-trash-o"></i></a>
                                     </td>
 
                                     <td>
-                                        <a href="{{ url('create_invoice_by_user_id', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Create Invoice">Create Invoice</a>
+                                        <a href="{{ url('create_invoice_by_user_id', $values->id) }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#etsbModal" title="Create Invoice">Cr Inv</a>
                                     </td>
                                 </tr>
                             @endforeach
