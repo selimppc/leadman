@@ -369,11 +369,11 @@ class PoppingEmailController extends Controller
     {
         DB::beginTransaction();
         try {
-            $invoices = InvoiceHead::select('id')->where('popping_email_id',$id)->get();
+            $invoices = InvoiceDetail::select('invoice_head_id')->where('popping_email_id',$id)->get();
+            InvoiceDetail::where('popping_email_id', $id)->delete();
             foreach ($invoices as $invoice) {
-                InvoiceDetail::where('invoice_head_id',$invoice->id)->delete();
+                InvoiceHead::Where('id',$invoice->invoice_head_id)->delete();
             }
-            InvoiceHead::Where('popping_email_id',$id)->delete();
 
             Lead::Where('popping_email_id',$id)->delete();
             PoppingEmail::findOrFail($id)->delete();
